@@ -1,30 +1,31 @@
 import "react-native-gesture-handler";
 import React, { useEffect, useState } from "react";
 
-import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
+import { createAppContainer } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
 
-import Home from './src/screens/Home'
-import Login from './src/screens/Login'
-import Signup from './src/screens/Signup'
+import Home from "./src/screens/Home";
+import Login from "./src/screens/Login";
+import Signup from "./src/screens/Signup";
 
-const navigator = createStackNavigator({
-  Home: Home,
-  Login: Login,
-  Signup: Signup
-},{
-  initialRouteName: 'Login',
-  defaultNavigationOptions: {
-    title: 'ERTHAL'
+const navigator = createStackNavigator(
+  {
+    Home: Home,
+    Login: Login,
+    Signup: Signup,
+  },
+  {
+    initialRouteName: "Login",
+    defaultNavigationOptions: {
+      title: "ERTEHAL",
+    },
   }
-})
+);
 
-export default createAppContainer(navigator)
+export default createAppContainer(navigator);
 
 // import { Login, Home, Signup } from "./src/screens";
 // import { decode, encode } from "base-64";
-
-
 
 // if (!global.btoa) {
 //   global.btoa = encode;
@@ -56,6 +57,3 @@ export default createAppContainer(navigator)
 //     </NavigationContainer>
 //   );
 // }
-
-
-
