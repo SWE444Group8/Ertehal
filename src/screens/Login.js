@@ -34,7 +34,7 @@ export default function Login({ navigation }) {
               return;
             }
             const user = firestoreDocument.data();
-            navigation.navigate("Home", { user: user});
+            navigation.navigate("Home", { user: user });
           })
           .catch((error) => {
             alert(error);
@@ -48,24 +48,16 @@ export default function Login({ navigation }) {
   return (
     <View style={{ backgroundColor: "#fff", flex: 1 }}>
       <View style={{ backgroundColor: "white", flex: 3 }}>
-        <View>
-          <Image
-            source={require("../../assets/logo3.png")}
-            style={{ width: 400, height: 300, alignSelf: "center" }}
-          ></Image>
-          <Text
-            style={{
-              fontSize: 35,
-              color: "#2f4f4f",
-              alignSelf: "center",
-              paddingBottom: 30,
-            }}
-          >
-            {" "}
-            Hello, welcome back{" "}
-          </Text>
-        </View>
+        <View></View>
+        <Image
+          source={require("../../assets/l.png")}
+          style={{ width: 350, height: 350, alignSelf: "center" }}
+        ></Image>
       </View>
+
+      <Text> </Text>
+      <Text> </Text>
+
       <View style={{ backgroundColor: "#8fbc8f", flex: 4 }}>
         <Text> </Text>
         <Text> </Text>
@@ -92,6 +84,7 @@ export default function Login({ navigation }) {
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
+
         <Text></Text>
         <Text></Text>
 

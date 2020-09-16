@@ -58,8 +58,8 @@ export default function Signup({ navigation }) {
       <View style={{ backgroundColor: "white", flex: 3 }}>
         <View>
           <Image
-            source={require("../../assets/logo3.png")}
-            style={{ width: 400, height: 300, alignSelf: "center" }}
+            source={require("../../assets/l.png")}
+            style={{ width: 250, height: 290, alignSelf: "center" }}
           ></Image>
           <Text
             style={{
