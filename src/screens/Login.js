@@ -60,14 +60,22 @@ export default function Login({ navigation }) {
 
       <View style={{ backgroundColor: "#8fbc8f", flex: 4 }}>
         <Text> </Text>
-        <Text> </Text>
-        <Text> </Text>
-        <Text> </Text>
+        <Text
+          style={{
+            color: "white",
+            alignItems: "center",
+            fontFamily: "Verdana-BoldItalic",
+            fontSize: 15,
+          }}
+        >
+          {" "}
+          WELCOME BACK TO ERTEHAL, CONTINUE TO LOGIN{" "}
+        </Text>
         <Text> </Text>
 
         <TextInput
           style={styles.input}
-          placeholder="E-mail"
+          placeholder="E-Mail"
           placeholderTextColor="#aaaaaa"
           onChangeText={(text) => setEmail(text)}
           value={email}
@@ -86,10 +94,9 @@ export default function Login({ navigation }) {
         />
 
         <Text></Text>
-        <Text></Text>
 
         <TouchableOpacity style={styles.button} onPress={() => onLoginPress()}>
-          <Text style={styles.buttonTitle}>Log in</Text>
+          <Text style={styles.buttonTitle}>LOG IN</Text>
         </TouchableOpacity>
         <Text></Text>
 
@@ -97,7 +104,7 @@ export default function Login({ navigation }) {
           <Text style={styles.footerText}>
             Don't have an account?{" "}
             <Text onPress={onFooterLinkPress} style={styles.footerLink}>
-              Sign up
+              SIGN UP{" "}
             </Text>
           </Text>
         </View>

@@ -61,22 +61,32 @@ export default function Signup({ navigation }) {
             source={require("../../assets/l.png")}
             style={{ width: 250, height: 290, alignSelf: "center" }}
           ></Image>
-          <Text
-            style={{
-              fontSize: 35,
-              color: "#2f4f4f",
-              alignSelf: "center",
-              paddingBottom: 30,
-            }}
-          >
-            {" "}
-            Create account{" "}
-          </Text>
         </View>
       </View>
       <View style={{ backgroundColor: "#8fbc8f", flex: 4 }}>
-        <Text> </Text>
-        <Text> </Text>
+        <Text></Text>
+        <Text
+          style={{
+            color: "white",
+            alignItems: "center",
+            fontFamily: "Verdana-BoldItalic",
+            fontSize: 17,
+          }}
+        >
+          {" "}
+          CREATE YOUR ACCOUNT
+        </Text>
+        <Text
+          style={{
+            color: "white",
+            alignItems: "center",
+            fontFamily: "Verdana-BoldItalic",
+            fontSize: 15,
+          }}
+        >
+          {" "}
+          TO JOIN OUR ERTEHAL FAMILY{" "}
+        </Text>
         <Text> </Text>
 
         <TextInput
@@ -118,13 +128,12 @@ export default function Signup({ navigation }) {
           autoCapitalize="none"
         />
         <Text></Text>
-        <Text></Text>
 
         <TouchableOpacity
           style={styles.button}
           onPress={() => onRegisterPress()}
         >
-          <Text style={styles.buttonTitle}>sign up</Text>
+          <Text style={styles.buttonTitle}>SIGN UP</Text>
         </TouchableOpacity>
         <Text></Text>
 
@@ -132,7 +141,7 @@ export default function Signup({ navigation }) {
           <Text style={styles.footerText}>
             Already got an account?{" "}
             <Text onPress={onFooterLinkPress} style={styles.footerLink}>
-              Log in
+              LOG IN
             </Text>
           </Text>
         </View>
