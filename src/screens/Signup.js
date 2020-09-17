@@ -23,10 +23,23 @@ export default function Signup({ navigation }) {
   };
 
   const onRegisterPress = () => {
-    if (password !== confirmPassword) {
+    if (
+      password.length <= 6 &&
+      password.length != 0 &&
+      confirmPassword.length != 0
+    ) {
+      alert("Invalid password,password must be more than 6 characters");
+      return;
+    }
+    if (
+      password !== confirmPassword &&
+      confirmPassword.length != 0 &&
+      password.length != 0
+    ) {
       alert("Passwords don't match.");
       return;
     }
+
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
@@ -49,7 +62,15 @@ export default function Signup({ navigation }) {
           });
       })
       .catch((error) => {
-        alert(error);
+        if (
+          email.length == 0 ||
+          password.length == 0 ||
+          confirmPassword.length == 0
+        ) {
+          alert("Error:empty input fields");
+        } else {
+          alert(error);
+        }
       });
   };
 

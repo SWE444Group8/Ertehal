@@ -36,12 +36,18 @@ export default function Login({ navigation }) {
             const user = firestoreDocument.data();
             navigation.navigate("Home", { user: user });
           })
+
           .catch((error) => {
             alert(error);
           });
       })
+
       .catch((error) => {
-        alert(error);
+        if (email.length == 0 || password.length == 0) {
+          alert("Error:empty input fields");
+        } else {
+          alert(error);
+        }
       });
   };
 
