@@ -112,15 +112,6 @@ export default function Signup({ navigation }) {
 
         <TextInput
           style={styles.input}
-          placeholder="Full Name"
-          placeholderTextColor="#aaaaaa"
-          onChangeText={(text) => setFullName(text)}
-          value={fullName}
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
-        />
-        <TextInput
-          style={styles.input}
           placeholderTextColor="#aaaaaa"
           placeholder="E-mail"
           onChangeText={(text) => setEmail(text)}
