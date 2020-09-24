@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import {
   StyleSheet,
   View,
@@ -7,8 +8,17 @@ import {
   TextInput,
   Button,
   TouchableOpacity,
+  SafeAreaView,
 } from "react-native";
 import { firebase } from "../firebase/config";
+import {
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  ScrollView,
+  Platform,
+  Keyboard,
+} from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState("");
@@ -17,7 +27,6 @@ export default function Login({ navigation }) {
   const onFooterLinkPress = () => {
     navigation.navigate("Signup");
   };
-
   const onLoginPress = () => {
     firebase
       .auth()
@@ -43,79 +52,90 @@ export default function Login({ navigation }) {
       })
 
       .catch((error) => {
-        if (email.length == 0 || password.length == 0) {
-          alert("Error:empty input fields");
+        if (email.length == 0 && password.length == 0) {
+          alert("Error:Please enter your email and password");
+        } else if (email.length == 0) {
+          alert("Error:Please enter your email");
+        } else if (password.length == 0) {
+          alert("Error:Please enter your password");
         } else {
-          alert(error);
+          alert("Login Faild: Your email and/or password do not match ");
         }
       });
   };
 
   return (
-    <View style={{ backgroundColor: "#fff", flex: 1 }}>
-      <View style={{ backgroundColor: "white", flex: 3 }}>
-        <View></View>
-        <Image
-          source={require("../../assets/l.png")}
-          style={{ width: 350, height: 350, alignSelf: "center" }}
-        ></Image>
-      </View>
-
-      <Text> </Text>
-      <Text> </Text>
-
-      <View style={{ backgroundColor: "#8fbc8f", flex: 4 }}>
-        <Text> </Text>
-        <Text
-          style={{
-            color: "white",
-            alignItems: "center",
-            fontFamily: "Verdana-BoldItalic",
-            fontSize: 15,
-          }}
-        >
-          {" "}
-          WELCOME BACK TO ERTEHAL, CONTINUE TO LOGIN{" "}
-        </Text>
-        <Text> </Text>
-
-        <TextInput
-          style={styles.input}
-          placeholder="E-Mail"
-          placeholderTextColor="#aaaaaa"
-          onChangeText={(text) => setEmail(text)}
-          value={email}
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
-        />
-        <TextInput
-          style={styles.input}
-          placeholderTextColor="#aaaaaa"
-          secureTextEntry
-          placeholder="Password"
-          onChangeText={(text) => setPassword(text)}
-          value={password}
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
-        />
-
-        <Text></Text>
-
-        <TouchableOpacity style={styles.button} onPress={() => onLoginPress()}>
-          <Text style={styles.buttonTitle}>LOG IN</Text>
-        </TouchableOpacity>
-        <Text></Text>
-
-        <View style={styles.footerView}>
-          <Text style={styles.footerText}>
-            Don't have an account?{" "}
-            <Text onPress={onFooterLinkPress} style={styles.footerLink}>
-              SIGN UP{" "}
+    <KeyboardAwareScrollView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={{ backgroundColor: "#8fbc8f", flex: 1 }}>
+          <View style={{ backgroundColor: "white", flex: 2 }}>
+            <View></View>
+            <Image
+              source={require("../../assets/l.png")}
+              style={{ width: 350, height: 350, alignSelf: "center" }}
+            ></Image>
+          </View>
+          <Text> </Text>
+          <Text> </Text>
+          <View style={{ backgroundColor: "#8fbc8f", flex: 4 }}>
+            <Text
+              style={{
+                color: "white",
+                alignItems: "center",
+                fontFamily: "Verdana-BoldItalic",
+                fontSize: 15,
+              }}
+            >
+              {" "}
+              WELCOME BACK TO ERTEHAL, CONTINUE TO LOGIN{" "}
             </Text>
-          </Text>
+            <View style={styles.inner}>
+              <TextInput
+                style={styles.input}
+                placeholder="E-Mail"
+                placeholderTextColor="#aaaaaa"
+                onChangeText={(text) => setEmail(text)}
+                value={email}
+                underlineColorAndroid="transparent"
+                autoCapitalize="none"
+              />
+              <TextInput
+                style={styles.input}
+                placeholderTextColor="#aaaaaa"
+                secureTextEntry
+                placeholder="Password"
+                onChangeText={(text) => setPassword(text)}
+                value={password}
+                underlineColorAndroid="transparent"
+                autoCapitalize="none"
+              />
+
+              <Text></Text>
+
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => onLoginPress()}
+              >
+                <Text style={styles.buttonTitle}>LOG IN</Text>
+              </TouchableOpacity>
+              <Text></Text>
+
+              <View style={styles.footerView}>
+                <Text style={styles.footerText}>
+                  Don't have an account?{" "}
+                  <Text onPress={onFooterLinkPress} style={styles.footerLink}>
+                    SIGN UP{" "}
+                  </Text>
+                </Text>
+              </View>
+            </View>
+          </View>
         </View>
-      </View>
-    </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAwareScrollView>
   );
 }
 
@@ -126,6 +146,10 @@ const styles = StyleSheet.create({
     color: "green",
     backgroundColor: "green",
   },
+  con: {
+    flex: 1,
+  },
+
   input: {
     width: 350,
     height: 55,
@@ -157,6 +181,11 @@ const styles = StyleSheet.create({
     color: "#2e2e2d",
     alignSelf: "center",
     borderRadius: 14,
+  },
+  inner: {
+    padding: 34,
+    flex: 1,
+    justifyContent: "space-around",
   },
   footerLink: {
     color: "#788eec",

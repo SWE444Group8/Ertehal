@@ -11,9 +11,17 @@ import {
   Button,
   TouchableOpacity,
 } from "react-native";
+import {
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  ScrollView,
+  Platform,
+  Keyboard,
+} from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function Signup({ navigation }) {
-  const [fullName, setFullName] = useState("");
+  //const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -21,20 +29,27 @@ export default function Signup({ navigation }) {
   const onFooterLinkPress = () => {
     navigation.navigate("Login");
   };
+  const strongRegex = new RegExp(
+    "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*-_])(?=.{8,})"
+  );
 
   const onRegisterPress = () => {
     if (
-      password.length <= 6 &&
+      !strongRegex.test(password) &&
       password.length != 0 &&
-      confirmPassword.length != 0
+      confirmPassword.length != 0 &&
+      email.length != 0 &&
+      password == confirmPassword
     ) {
-      alert("Invalid password,password must be more than 6 characters");
+      alert(
+        "Invalid password,Your password must be at least 8 characters long, contain at least one number , have a mixture of uppercase and lowercase letters and at least one special character."
+      );
       return;
-    }
-    if (
+    } else if (
       password !== confirmPassword &&
       confirmPassword.length != 0 &&
-      password.length != 0
+      password.length != 0 &&
+      email.length != 0
     ) {
       alert("Passwords don't match.");
       return;
@@ -47,8 +62,6 @@ export default function Signup({ navigation }) {
         const uid = response.user.uid;
         const data = {
           id: uid,
-          email,
-          fullName,
         };
         const usersRef = firebase.firestore().collection("users");
         usersRef
@@ -67,7 +80,12 @@ export default function Signup({ navigation }) {
           password.length == 0 ||
           confirmPassword.length == 0
         ) {
-          alert("Error:empty input fields");
+          alert("Error:Please fill up your information");
+        } else if (email.length == 0) {
+          alert("Error:Please enter your email");
+        } else if (password.length == 0) {
+          alert("Error:Please enter your password");
+        } else if (confirmPassword.length == 0) {
         } else {
           alert(error);
         }
@@ -75,90 +93,98 @@ export default function Signup({ navigation }) {
   };
 
   return (
-    <View style={{ backgroundColor: "#fff", flex: 1 }}>
-      <View style={{ backgroundColor: "white", flex: 3 }}>
-        <View>
-          <Image
-            source={require("../../assets/l.png")}
-            style={{ width: 250, height: 290, alignSelf: "center" }}
-          ></Image>
-        </View>
-      </View>
-      <View style={{ backgroundColor: "#8fbc8f", flex: 4 }}>
-        <Text></Text>
-        <Text
-          style={{
-            color: "white",
-            alignItems: "center",
-            fontFamily: "Verdana-BoldItalic",
-            fontSize: 17,
-          }}
-        >
-          {" "}
-          CREATE YOUR ACCOUNT
-        </Text>
-        <Text
-          style={{
-            color: "white",
-            alignItems: "center",
-            fontFamily: "Verdana-BoldItalic",
-            fontSize: 15,
-          }}
-        >
-          {" "}
-          TO JOIN OUR ERTEHAL FAMILY{" "}
-        </Text>
-        <Text> </Text>
-
-        <TextInput
-          style={styles.input}
-          placeholderTextColor="#aaaaaa"
-          placeholder="E-mail"
-          onChangeText={(text) => setEmail(text)}
-          value={email}
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
-        />
-        <TextInput
-          style={styles.input}
-          placeholderTextColor="#aaaaaa"
-          secureTextEntry
-          placeholder="Password"
-          onChangeText={(text) => setPassword(text)}
-          value={password}
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
-        />
-        <TextInput
-          style={styles.input}
-          placeholderTextColor="#aaaaaa"
-          secureTextEntry
-          placeholder="Confirm Password"
-          onChangeText={(text) => setConfirmPassword(text)}
-          value={confirmPassword}
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
-        />
-        <Text></Text>
-
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => onRegisterPress()}
-        >
-          <Text style={styles.buttonTitle}>SIGN UP</Text>
-        </TouchableOpacity>
-        <Text></Text>
-
-        <View style={styles.footerView}>
-          <Text style={styles.footerText}>
-            Already got an account?{" "}
-            <Text onPress={onFooterLinkPress} style={styles.footerLink}>
-              LOG IN
+    <KeyboardAwareScrollView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={{ backgroundColor: "#fff", flex: 1 }}>
+          <View style={{ backgroundColor: "white", flex: 3 }}>
+            <View>
+              <Image
+                source={require("../../assets/l.png")}
+                style={{ width: 250, height: 290, alignSelf: "center" }}
+              ></Image>
+            </View>
+          </View>
+          <View style={{ backgroundColor: "#8fbc8f", flex: 4 }}>
+            <Text></Text>
+            <Text
+              style={{
+                color: "white",
+                alignItems: "center",
+                fontFamily: "Verdana-BoldItalic",
+                fontSize: 17,
+              }}
+            >
+              {" "}
+              CREATE YOUR ACCOUNT
             </Text>
-          </Text>
+            <Text
+              style={{
+                color: "white",
+                alignItems: "center",
+                fontFamily: "Verdana-BoldItalic",
+                fontSize: 15,
+              }}
+            >
+              {" "}
+              TO JOIN OUR ERTEHAL FAMILY{" "}
+            </Text>
+
+            <View style={styles.inner}>
+              <TextInput
+                style={styles.input}
+                placeholderTextColor="#aaaaaa"
+                placeholder="E-mail"
+                onChangeText={(text) => setEmail(text)}
+                value={email}
+                underlineColorAndroid="transparent"
+                autoCapitalize="none"
+              />
+              <TextInput
+                style={styles.input}
+                placeholderTextColor="#aaaaaa"
+                secureTextEntry
+                placeholder="Password"
+                onChangeText={(text) => setPassword(text)}
+                value={password}
+                underlineColorAndroid="transparent"
+                autoCapitalize="none"
+              />
+              <TextInput
+                style={styles.input}
+                placeholderTextColor="#aaaaaa"
+                secureTextEntry
+                placeholder="Confirm Password"
+                onChangeText={(text) => setConfirmPassword(text)}
+                value={confirmPassword}
+                underlineColorAndroid="transparent"
+                autoCapitalize="none"
+              />
+              <Text></Text>
+
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => onRegisterPress()}
+              >
+                <Text style={styles.buttonTitle}>SIGN UP</Text>
+              </TouchableOpacity>
+              <Text></Text>
+
+              <View style={styles.footerView}>
+                <Text style={styles.footerText}>
+                  Already got an account?{" "}
+                  <Text onPress={onFooterLinkPress} style={styles.footerLink}>
+                    LOG IN
+                  </Text>
+                </Text>
+              </View>
+            </View>
+          </View>
         </View>
-      </View>
-    </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAwareScrollView>
   );
 }
 
@@ -200,6 +226,11 @@ const styles = StyleSheet.create({
     color: "#2e2e2d",
     alignSelf: "center",
     borderRadius: 14,
+  },
+  inner: {
+    padding: 60,
+    flex: 1,
+    justifyContent: "space-around",
   },
   footerLink: {
     color: "#788eec",

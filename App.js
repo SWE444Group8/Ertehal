@@ -8,7 +8,6 @@ import Home from "./src/screens/Home";
 import Login from "./src/screens/Login";
 import Signup from "./src/screens/Signup";
 
-
 const navigator = createStackNavigator(
   {
     Home: Home,
