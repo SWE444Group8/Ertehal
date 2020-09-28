@@ -27,6 +27,7 @@ export default function Login({ navigation }) {
   const onFooterLinkPress = () => {
     navigation.navigate("Signup");
   };
+
   const onLoginPress = () => {
     firebase
       .auth()
