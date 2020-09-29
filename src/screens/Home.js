@@ -5,7 +5,7 @@ const Home = ({ navigation }) => {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text>Home</Text>
-      <Button title="Log out" onPress={() => navigation.navigate("Login")} />
+      <Button title="Log out" onPress={() => navigation.navigate("ProfileScreen")} />
     </View>
   );
 };

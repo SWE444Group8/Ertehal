@@ -7,12 +7,31 @@ import { createStackNavigator } from "react-navigation-stack";
 import Home from "./src/screens/Home";
 import Login from "./src/screens/Login";
 import Signup from "./src/screens/Signup";
+import ProfileScreen from './src/screens/ProfileScreen';
+import SettingsScreen from './src/screens/SettingsScreen';
+import EditProfileScreen from './src/screens/EditProfileScreen';
+import SupportScreen from './src/screens/SupportScreen';
+import FavoritesScreen from './src/screens/FavoritesScreen';
+import MyComments from './src/screens/MyComments';
+import MyDestentions from './src/screens/MyDestentions';
+import ForgotPassword from './src/screens/ForgotPassword';
+
+
+
 
 const navigator = createStackNavigator(
   {
     Home: Home,
     Login: Login,
     Signup: Signup,
+    ProfileScreen:ProfileScreen,
+    SettingsScreen:SettingsScreen,
+    EditProfileScreen:EditProfileScreen,
+    SupportScreen:SupportScreen,
+    FavoritesScreen:FavoritesScreen,
+    MyComments:MyComments,
+    MyDestentions:MyDestentions,
+    ForgotPassword:ForgotPassword,
   },
   {
     initialRouteName: "Login",

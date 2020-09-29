@@ -44,7 +44,7 @@ export default function Login({ navigation }) {
               return;
             }
             const user = firestoreDocument.data();
-            navigation.navigate("Home", { user: user });
+            navigation.navigate("ProfileScreen", { user: user });
           })
 
           .catch((error) => {
@@ -130,7 +130,17 @@ export default function Login({ navigation }) {
                   <Text onPress={onFooterLinkPress} style={styles.footerLink}>
                     SIGN UP{" "}
                   </Text>
+                  
                 </Text>
+                
+
+                <TouchableOpacity
+                style={styles.footerLink}
+                onPress={() => navigation.navigate("ForgotPassword")}
+                 >
+                <Text style={styles.footerLink}>Forgot password?</Text>
+              </TouchableOpacity>
+
               </View>
             </View>
           </View>
@@ -176,6 +186,7 @@ const styles = StyleSheet.create({
   buttonTitle: {
     color: "white",
     fontSize: 18,
+    alignSelf:'center',
   },
   footerText: {
     fontSize: 16,
@@ -192,5 +203,7 @@ const styles = StyleSheet.create({
     color: "#788eec",
     fontWeight: "bold",
     fontSize: 18,
+    alignSelf:'center',
+    margin:20
   },
 });
