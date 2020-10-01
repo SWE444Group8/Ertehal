@@ -15,6 +15,8 @@ import FavoritesScreen from './src/screens/FavoritesScreen';
 import MyComments from './src/screens/MyComments';
 import MyDestentions from './src/screens/MyDestentions';
 import ForgotPassword from './src/screens/ForgotPassword';
+import AddDestenation from './src/screens/AddDestenation';
+
 
 
 
@@ -32,6 +34,7 @@ const navigator = createStackNavigator(
     MyComments:MyComments,
     MyDestentions:MyDestentions,
     ForgotPassword:ForgotPassword,
+    AddDestenation:AddDestenation,
   },
   {
     initialRouteName: "Login",

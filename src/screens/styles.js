@@ -17,7 +17,6 @@ export default StyleSheet.create({
     paddingRight: 30,
     justifyContent: "center",
     alignItems: "center",
-    fontFamily: "Verdana-BoldItalic",
   },
   input: {
     height: 48,
@@ -35,10 +34,8 @@ export default StyleSheet.create({
     width: 80,
     alignItems: "center",
     justifyContent: "center",
-    fontFamily: "Verdana-BoldItalic",
   },
   buttonText: {
-    fontFamily: "Verdana-BoldItalic",
     color: "white",
     fontSize: 16,
   },

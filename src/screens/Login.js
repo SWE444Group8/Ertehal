@@ -31,7 +31,7 @@ export default function Login({ navigation }) {
   const onLoginPress = () => {
     firebase
       .auth()
-      .signInWithEmailAndPassword(email, password)
+      .signInWithEmailAndPassword(email.trim(), password)
       .then((response) => {
         const uid = response.user.uid;
         const usersRef = firebase.firestore().collection("users");
@@ -44,7 +44,7 @@ export default function Login({ navigation }) {
               return;
             }
             const user = firestoreDocument.data();
-            navigation.navigate("ProfileScreen", { user: user });
+            navigation.navigate("Home", { user: user });
           })
 
           .catch((error) => {
