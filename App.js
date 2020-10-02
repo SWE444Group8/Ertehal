@@ -1,81 +1,21 @@
 import "react-native-gesture-handler";
-import React, { useEffect, useState } from "react";
-
-import { createAppContainer } from "react-navigation";
+import { StyleSheet, Platform, Image, Text, View } from "react-native";
 import { createStackNavigator } from "react-navigation-stack";
-
-import Home from "./src/screens/Home";
+import { createAppContainer } from "react-navigation";
 import Login from "./src/screens/Login";
 import Signup from "./src/screens/Signup";
-import ProfileScreen from './src/screens/ProfileScreen';
-import SettingsScreen from './src/screens/SettingsScreen';
-import EditProfileScreen from './src/screens/EditProfileScreen';
-import SupportScreen from './src/screens/SupportScreen';
-import FavoritesScreen from './src/screens/FavoritesScreen';
-import MyComments from './src/screens/MyComments';
-import MyDestentions from './src/screens/MyDestentions';
-import ForgotPassword from './src/screens/ForgotPassword';
-import AddDestenation from './src/screens/AddDestenation';
+import { SwitchNavigator } from "react-navigation";
+import Mais from "./src/screens/Mais";
+import Loading from "./src/screens/Loading";
 
+// create our app's navigation stack
+const AppNavigator = createStackNavigator({
+  Login: { screen: Login },
+  Signup: { screen: Signup },
 
+  Mais: { screen: Mais },
 
+  initialRouteName: "Login",
+});
 
-
-const navigator = createStackNavigator(
-  {
-    Home: Home,
-    Login: Login,
-    Signup: Signup,
-    ProfileScreen:ProfileScreen,
-    SettingsScreen:SettingsScreen,
-    EditProfileScreen:EditProfileScreen,
-    SupportScreen:SupportScreen,
-    FavoritesScreen:FavoritesScreen,
-    MyComments:MyComments,
-    MyDestentions:MyDestentions,
-    ForgotPassword:ForgotPassword,
-    AddDestenation:AddDestenation,
-  },
-  {
-    initialRouteName: "Login",
-    defaultNavigationOptions: {
-      title: "ERTEHAL",
-    },
-  }
-);
-
-export default createAppContainer(navigator);
-
-// import { Login, Home, Signup } from "./src/screens";
-// import { decode, encode } from "base-64";
-
-// if (!global.btoa) {
-//   global.btoa = encode;
-// }
-// if (!global.atob) {
-//   global.atob = decode;
-// }
-
-// const Stack = createStackNavigator();
-
-// export default function App() {
-//   const [loading, setLoading] = useState(true);
-//   const [user, setUser] = useState(null);
-
-//   return (
-//     <NavigationContainer>
-//       <Stack.Navigator>
-//         {user ? (
-//           <Stack.Screen name="Home">
-//             {(props) => <Home {...props} extraData={user} />}
-//           </Stack.Screen>
-//         ) : (
-//           <>
-//             <Stack.Screen name="Login" component={Login} />
-//             <Stack.Screen name="Signup" component={Signup} />
-//           </>
-//         )}
-//       </Stack.Navigator>
-//     </NavigationContainer>
-//   );
-// }
+export default createAppContainer(AppNavigator);

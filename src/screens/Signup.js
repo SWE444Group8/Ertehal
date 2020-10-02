@@ -19,175 +19,120 @@ import {
   Keyboard,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-
-export default function Signup({ navigation }) {
-  //const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-
-  const onFooterLinkPress = () => {
-    navigation.navigate("Login");
-  };
-  const strongRegex = new RegExp(
-    "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*-_])(?=.{8,})"
-  );
-
-  const onRegisterPress = () => {
-    if (
-      !strongRegex.test(password) &&
-      password.length != 0 &&
-      confirmPassword.length != 0 &&
-      email.length != 0 &&
-      password == confirmPassword
-    ) {
-      alert(
-        "Invalid password,Your password must be at least 8 characters long, contain at least one number , have a mixture of uppercase and lowercase letters and at least one special character."
-      );
-      return;
-    } else if (
-      password !== confirmPassword &&
-      confirmPassword.length != 0 &&
-      password.length != 0 &&
-      email.length != 0
-    ) {
-      alert("Passwords don't match.");
-      return;
-    }
-
+export default class SignUp extends React.Component {
+  state = { email: "", password: "", errorMessage: null };
+  handleSignUp = () => {
     firebase
       .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then((response) => {
-        const uid = response.user.uid;
-        const data = {
-          id: uid,
-        };
-        const usersRef = firebase.firestore().collection("users");
-        usersRef
-          .doc(uid)
-          .set(data)
-          .then(() => {
-            navigation.navigate("Home", { user: data });
-          })
-          .catch((error) => {
-            alert(error);
-          });
-      })
-      .catch((error) => {
-        if (
-          email.length == 0 ||
-          password.length == 0 ||
-          confirmPassword.length == 0
-        ) {
-          alert("Error:Please fill up your information");
-        } else if (email.length == 0) {
-          alert("Error:Please enter your email");
-        } else if (password.length == 0) {
-          alert("Error:Please enter your password");
-        } else if (confirmPassword.length == 0) {
-        } else {
-          alert(error);
-        }
-      });
+      .createUserWithEmailAndPassword(
+        this.state.email,
+        this.state.password,
+        this.state.confirmPassword
+      )
+      .then(() => this.props.navigation.navigate("Mais"))
+      .catch((error) => this.setState({ errorMessage: error.message }));
   };
-
-  return (
-    <KeyboardAwareScrollView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={{ flex: 1 }}
-    >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={{ backgroundColor: "#fff", flex: 1 }}>
-          <View style={{ backgroundColor: "white", flex: 3 }}>
-            <View>
-              <Image
-                source={require("../../assets/l.png")}
-                style={{ width: 250, height: 290, alignSelf: "center" }}
-              ></Image>
+  render() {
+    return (
+      <KeyboardAwareScrollView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={{ backgroundColor: "#fff", flex: 1 }}>
+            <View style={{ backgroundColor: "white", flex: 3 }}>
+              <View>
+                <Image
+                  source={require("../../assets/l.png")}
+                  style={{ width: 250, height: 290, alignSelf: "center" }}
+                ></Image>
+              </View>
             </View>
-          </View>
-          <View style={{ backgroundColor: "#8fbc8f", flex: 4 }}>
-            <Text></Text>
-            <Text
-              style={{
-                color: "white",
-                alignItems: "center",
-                fontFamily: "Verdana-BoldItalic",
-                fontSize: 17,
-              }}
-            >
-              {" "}
-              CREATE YOUR ACCOUNT
-            </Text>
-            <Text
-              style={{
-                color: "white",
-                alignItems: "center",
-                fontFamily: "Verdana-BoldItalic",
-                fontSize: 15,
-              }}
-            >
-              {" "}
-              TO JOIN OUR ERTEHAL FAMILY{" "}
-            </Text>
-
-            <View style={styles.inner}>
-              <TextInput
-                style={styles.input}
-                placeholderTextColor="#aaaaaa"
-                placeholder="E-mail"
-                onChangeText={(text) => setEmail(text)}
-                value={email}
-                underlineColorAndroid="transparent"
-                autoCapitalize="none"
-              />
-              <TextInput
-                style={styles.input}
-                placeholderTextColor="#aaaaaa"
-                secureTextEntry
-                placeholder="Password"
-                onChangeText={(text) => setPassword(text)}
-                value={password}
-                underlineColorAndroid="transparent"
-                autoCapitalize="none"
-              />
-              <TextInput
-                style={styles.input}
-                placeholderTextColor="#aaaaaa"
-                secureTextEntry
-                placeholder="Confirm Password"
-                onChangeText={(text) => setConfirmPassword(text)}
-                value={confirmPassword}
-                underlineColorAndroid="transparent"
-                autoCapitalize="none"
-              />
+            <View style={{ backgroundColor: "#8fbc8f", flex: 4 }}>
               <Text></Text>
-
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => onRegisterPress()}
+              <Text
+                style={{
+                  color: "white",
+                  alignItems: "center",
+                  fontFamily: "Verdana-BoldItalic",
+                  fontSize: 17,
+                }}
               >
-                <Text style={styles.buttonTitle}>SIGN UP</Text>
-              </TouchableOpacity>
-              <Text></Text>
+                {" "}
+                CREATE YOUR ACCOUNT
+              </Text>
+              <Text
+                style={{
+                  color: "white",
+                  alignItems: "center",
+                  fontFamily: "Verdana-BoldItalic",
+                  fontSize: 15,
+                }}
+              >
+                {" "}
+                TO JOIN OUR ERTEHAL FAMILY{" "}
+              </Text>
 
-              <View style={styles.footerView}>
-                <Text style={styles.footerText}>
-                  Already got an account?{" "}
-                  <Text onPress={onFooterLinkPress} style={styles.footerLink}>
-                    LOG IN
+              <View style={styles.inner}>
+                <TextInput
+                  style={styles.input}
+                  placeholderTextColor="#aaaaaa"
+                  placeholder="E-mail"
+                  onChangeText={(email) => this.setState({ email })}
+                  value={this.state.email}
+                  underlineColorAndroid="transparent"
+                  autoCapitalize="none"
+                />
+                <TextInput
+                  style={styles.input}
+                  placeholderTextColor="#aaaaaa"
+                  secureTextEntry
+                  placeholder="Password"
+                  onChangeText={(password) => this.setState({ password })}
+                  value={this.state.password}
+                  underlineColorAndroid="transparent"
+                  autoCapitalize="none"
+                />
+                <TextInput
+                  style={styles.input}
+                  placeholderTextColor="#aaaaaa"
+                  secureTextEntry
+                  placeholder="Confirm Password"
+                  onChangeText={(confirmPassword) =>
+                    this.setState({ confirmPassword })
+                  }
+                  value={this.state.confirmPassword}
+                  underlineColorAndroid="transparent"
+                  autoCapitalize="none"
+                />
+                <Text></Text>
+
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={this.handleSignUp}
+                >
+                  <Text style={styles.buttonTitle}>SIGN UP</Text>
+                </TouchableOpacity>
+                <Text></Text>
+
+                <View style={styles.footerView}>
+                  <Text style={styles.footerText}>
+                    Already got an account?{" "}
+                    <Text
+                      onPress={() => this.props.navigation.navigate("Login")}
+                    >
+                      LOG IN
+                    </Text>
                   </Text>
-                </Text>
+                </View>
               </View>
             </View>
           </View>
-        </View>
-      </TouchableWithoutFeedback>
-    </KeyboardAwareScrollView>
-  );
+        </TouchableWithoutFeedback>
+      </KeyboardAwareScrollView>
+    );
+  }
 }
-
 const styles = StyleSheet.create({
   container: {
     justifyContent: "center",

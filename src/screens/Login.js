@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import {
   StyleSheet,
@@ -20,134 +20,102 @@ import {
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-export default function Login({ navigation }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+export default class Login extends React.Component {
+  state = { email: "", password: "", errorMessage: null };
 
-  const onFooterLinkPress = () => {
-    navigation.navigate("Signup");
-  };
-
-  const onLoginPress = () => {
+  handleLogin = () => {
+    const { email, password } = this.state;
     firebase
       .auth()
-      .signInWithEmailAndPassword(email.trim(), password)
-      .then((response) => {
-        const uid = response.user.uid;
-        const usersRef = firebase.firestore().collection("users");
-        usersRef
-          .doc(uid)
-          .get()
-          .then((firestoreDocument) => {
-            if (!firestoreDocument.exists) {
-              alert("User does not exist anymore.");
-              return;
-            }
-            const user = firestoreDocument.data();
-            navigation.navigate("Home", { user: user });
-          })
-
-          .catch((error) => {
-            alert(error);
-          });
-      })
-
-      .catch((error) => {
-        if (email.length == 0 && password.length == 0) {
-          alert("Error:Please enter your email and password");
-        } else if (email.length == 0) {
-          alert("Error:Please enter your email");
-        } else if (password.length == 0) {
-          alert("Error:Please enter your password");
-        } else {
-          alert("Login Faild: Your email and/or password do not match ");
-        }
-      });
+      .signInWithEmailAndPassword(email, password)
+      .then(() => this.props.navigation.navigate("Mais"))
+      .catch((error) => this.setState({ errorMessage: error.message }));
   };
-
-  return (
-    <KeyboardAwareScrollView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={{ flex: 1 }}
-    >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={{ backgroundColor: "#8fbc8f", flex: 1 }}>
-          <View style={{ backgroundColor: "white", flex: 2 }}>
-            <View></View>
-            <Image
-              source={require("../../assets/l.png")}
-              style={{ width: 350, height: 350, alignSelf: "center" }}
-            ></Image>
-          </View>
-          <Text> </Text>
-          <Text> </Text>
-          <View style={{ backgroundColor: "#8fbc8f", flex: 4 }}>
-            <Text
-              style={{
-                color: "white",
-                alignItems: "center",
-                fontFamily: "Verdana-BoldItalic",
-                fontSize: 15,
-              }}
-            >
-              {" "}
-              WELCOME BACK TO ERTEHAL, CONTINUE TO LOGIN{" "}
-            </Text>
-            <View style={styles.inner}>
-              <TextInput
-                style={styles.input}
-                placeholder="E-Mail"
-                placeholderTextColor="#aaaaaa"
-                onChangeText={(text) => setEmail(text)}
-                value={email}
-                underlineColorAndroid="transparent"
-                autoCapitalize="none"
-              />
-              <TextInput
-                style={styles.input}
-                placeholderTextColor="#aaaaaa"
-                secureTextEntry
-                placeholder="Password"
-                onChangeText={(text) => setPassword(text)}
-                value={password}
-                underlineColorAndroid="transparent"
-                autoCapitalize="none"
-              />
-
-              <Text></Text>
-
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => onLoginPress()}
+  render() {
+    return (
+      <KeyboardAwareScrollView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={{ backgroundColor: "#8fbc8f", flex: 1 }}>
+            <View style={{ backgroundColor: "white", flex: 2 }}>
+              <View></View>
+              <Image
+                source={require("../../assets/l.png")}
+                style={{ width: 350, height: 350, alignSelf: "center" }}
+              ></Image>
+            </View>
+            <Text> </Text>
+            <Text> </Text>
+            <View style={{ backgroundColor: "#8fbc8f", flex: 4 }}>
+              <Text
+                style={{
+                  color: "white",
+                  alignItems: "center",
+                  fontFamily: "Verdana-BoldItalic",
+                  fontSize: 15,
+                }}
               >
-                <Text style={styles.buttonTitle}>LOG IN</Text>
-              </TouchableOpacity>
-              <Text></Text>
+                {" "}
+                WELCOME BACK TO ERTEHAL, CONTINUE TO LOGIN{" "}
+              </Text>
+              <View style={styles.inner}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="E-Mail"
+                  placeholderTextColor="#aaaaaa"
+                  onChangeText={(email) => this.setState({ email })}
+                  value={this.state.email}
+                  underlineColorAndroid="transparent"
+                  autoCapitalize="none"
+                />
+                <TextInput
+                  style={styles.input}
+                  placeholderTextColor="#aaaaaa"
+                  secureTextEntry
+                  placeholder="Password"
+                  onChangeText={(password) => this.setState({ password })}
+                  value={this.state.password}
+                  underlineColorAndroid="transparent"
+                  autoCapitalize="none"
+                />
 
-              <View style={styles.footerView}>
-                <Text style={styles.footerText}>
-                  Don't have an account?{" "}
-                  <Text onPress={onFooterLinkPress} style={styles.footerLink}>
-                    SIGN UP{" "}
-                  </Text>
-                  
-                </Text>
-                
+                <Text></Text>
 
                 <TouchableOpacity
-                style={styles.footerLink}
-                onPress={() => navigation.navigate("ForgotPassword")}
-                 >
-                <Text style={styles.footerLink}>Forgot password?</Text>
-              </TouchableOpacity>
+                  style={styles.button}
+                  onPress={this.handleLogin}
+                >
+                  <Text style={styles.buttonTitle}>LOG IN</Text>
+                </TouchableOpacity>
+                <Text></Text>
 
+                <View style={styles.footerView}>
+                  <Text style={styles.footerText}>
+                    Don't have an account?{" "}
+                    <Text
+                      onPress={() => this.props.navigation.navigate("Signup")}
+                      style={styles.footerLink}
+                    >
+                      SIGN UP{" "}
+                    </Text>
+                  </Text>
+
+                  <TouchableOpacity
+                    style={styles.footerLink}
+                    onPress={() => navigation.navigate("ForgotPassword")}
+                  >
+                    <Text style={styles.footerLink}>Forgot password?</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
           </View>
-        </View>
-      </TouchableWithoutFeedback>
-    </KeyboardAwareScrollView>
-  );
+        </TouchableWithoutFeedback>
+      </KeyboardAwareScrollView>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -186,7 +154,7 @@ const styles = StyleSheet.create({
   buttonTitle: {
     color: "white",
     fontSize: 18,
-    alignSelf:'center',
+    alignSelf: "center",
   },
   footerText: {
     fontSize: 16,
@@ -203,7 +171,7 @@ const styles = StyleSheet.create({
     color: "#788eec",
     fontWeight: "bold",
     fontSize: 18,
-    alignSelf:'center',
-    margin:20
+    alignSelf: "center",
+    margin: 20,
   },
 });

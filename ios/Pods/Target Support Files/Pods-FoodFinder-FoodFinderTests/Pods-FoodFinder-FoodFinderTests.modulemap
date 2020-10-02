@@ -1,0 +1,6 @@
+module Pods_FoodFinder_FoodFinderTests {
+  umbrella header "Pods-FoodFinder-FoodFinderTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
