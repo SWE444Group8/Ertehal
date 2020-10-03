@@ -9,6 +9,8 @@ import {
   ScrollView,
 } from "react-native";
 import { useTheme } from "@react-navigation/native";
+import Hr from "../components/Hr";
+
 //import Swiper from "react-native-swiper";
 //import StarRating from "../../ component/StarRating";
 
@@ -105,6 +107,7 @@ const Home = ({ navigation }) => {
           </View>
           <Text style={styles.categoryBtnTxt}>AlKhobar</Text>
         </TouchableOpacity>
+
         <TouchableOpacity style={styles.categoryBtn} onPress={() => {}}>
           <View style={styles.categoryIcon}>
             <Image
@@ -115,7 +118,14 @@ const Home = ({ navigation }) => {
           </View>
           <Text style={styles.categoryBtnTxt}>Abha</Text>
         </TouchableOpacity>
+
       </View>
+      <Hr />
+      <TouchableOpacity onPress={() => navigation.navigate("AddDestenation")}>
+          <View style={styles.btn}>
+            <Text style={styles.btnTxt}>Add New Destenations To ERTHAL </Text>
+          </View>
+        </TouchableOpacity>
     </ScrollView>
   );
 };
@@ -219,5 +229,16 @@ const styles = StyleSheet.create({
   cardDetails: {
     fontSize: 12,
     color: "#444",
+  },
+  btn: {
+    backgroundColor: "#8fbc8f",
+    padding: 10,
+    borderRadius: 60,
+    margin: 80,
+  },
+  btnTxt: {
+    fontSize: 20,
+    color: "white",
+    textAlign: "center",
   },
 });

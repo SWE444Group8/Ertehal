@@ -84,17 +84,18 @@ export function DrawerContent(props) {
           )}
           label="Sign Out"
           onPress={() => {
-            signOut = async () => {
-              try {
-                auth()
-                  .signOut()
-                  .then(() => alert("Your are signed out!"));
-                setloggedIn(false);
-                // setuserInfo([]);
-              } catch (error) {
-                console.error(error);
-              }
-            };
+            firebase.auth().signOut()
+            props.navigation.navigate('Login')
+            // signOut = async () => {
+            //   try {
+            //     firebase.auth()
+            //       .signOut()
+            //     setloggedIn(false);
+            //     // setuserInfo([]);
+            //   } catch (error) {
+            //     console.error(error);
+            //   }
+            // };
           }}
         />
       </Drawer.Section>
