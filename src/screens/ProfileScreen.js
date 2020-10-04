@@ -50,10 +50,6 @@ const ProfileScreen = ({ navigation }) => {
           <Icon name="email" color="#8fbc8f" size={20} />
           <Text style={{ color: "#777777", marginLeft: 20 }}>{user}</Text>
         </View>
-        <View style={styles.row}>
-          <Icon name="map-marker-radius" color="#8fbc8f" size={20} />
-          <Text style={{ color: "#777777", marginLeft: 20 }}>riydh, KSA</Text>
-        </View>
       </View>
 
       <View style={styles.infoBoxWrapper}>
@@ -67,7 +63,7 @@ const ProfileScreen = ({ navigation }) => {
           ]}
         >
           <TouchableRipple onPress={() => navigation.navigate("MyComments")}>
-            <Text style={styles.infoBox}>3</Text>
+            <Text style={styles.infoBox}>0</Text>
           </TouchableRipple>
           <TouchableRipple onPress={() => navigation.navigate("MyComments")}>
             <Text style={styles.infoBox}>Comments</Text>
@@ -75,7 +71,7 @@ const ProfileScreen = ({ navigation }) => {
         </View>
         <View style={styles.infoBox}>
           <TouchableRipple onPress={() => navigation.navigate("MyDestentions")}>
-            <Text style={styles.infoBox}>1</Text>
+            <Text style={styles.infoBox}>0</Text>
           </TouchableRipple>
           <TouchableRipple onPress={() => navigation.navigate("MyDestentions")}>
             <Text style={styles.infoBox}>Destentions</Text>
@@ -103,16 +99,12 @@ const ProfileScreen = ({ navigation }) => {
             <Text style={styles.menuItemText}>Settings</Text>
           </View>
         </TouchableRipple>
-        <TouchableRipple onPress={() => navigation.navigate("ProfileScreen")}>
-          <View style={styles.menuItem}>
-            <Feather name="edit" color="#8fbc8f" size={25} />
-            <Text style={styles.menuItemText}>edit</Text>
-          </View>
-        </TouchableRipple>
+        
       </View>
     </SafeAreaView>
   );
 };
+
 
 export default ProfileScreen;
 

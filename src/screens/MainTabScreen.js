@@ -16,10 +16,19 @@ import { View } from "react-native-animatable";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import CardListScreen from "./CardListScreen";
 import CardItemDetails from "./CardItemDetails";
+import AddDestenation from "./AddDestenation"
+import ShowPlaceScreen from "./ShowPlaceScreen"
+import ShowByCity from "./ShowByCity"
+
+
+
+
+
 const HomeStack = createStackNavigator();
 const NotificationStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
+//const AddDestenationStack = createStackNavigator();
 
 const MainTabScreen = () => (
   <Tab.Navigator
@@ -60,7 +69,18 @@ const MainTabScreen = () => (
         ),
       }}
     />
-  </Tab.Navigator>
+     {/* <Tab.Screen
+      name="AddDestenation"
+      component={AddDestenationStack}
+      options={{
+        tabBarLabel: "AddDestenation",
+        tabBarColor: "#1f65ff",
+        tabBarIcon: ({ color }) => (
+          <Icon name="ios-notifications" color={color} size={26} />
+        ),
+      }}
+    /> */}
+    </Tab.Navigator>
 );
 
 export default MainTabScreen;
@@ -115,6 +135,21 @@ const HomeStackScreen = ({ navigation }) => {
           headerTransparent: true,
           headerTintColor: "#fff",
         })}
+      />
+      <HomeStack.Screen
+        name="AddDestenation"
+        component={AddDestenation}
+        onPress={() => navigation.navigate("AddDestenation")}
+      />
+       <HomeStack.Screen
+        name="ShowPlaceScreen"
+        component={ShowPlaceScreen}
+        onPress={() => navigation.navigate("ShowPlaceScreen")}
+      />
+      <HomeStack.Screen
+        name="ShowByCity"
+        component={ShowByCity}
+        onPress={() => navigation.navigate('ShowByCity', { city: city.title.toLowerCase() })}
       />
     </HomeStack.Navigator>
   );
@@ -178,17 +213,7 @@ const ProfileStackScreen = ({ navigation }) => {
               />
             </View>
           ),
-          headerRight: () => (
-            <View style={{ marginRight: 10 }}>
-              <MaterialCommunityIcons.Button
-                name="account-edit"
-                size={25}
-                backgroundColor="#8fbc8f"
-                color={colors.text}
-                onPress={() => navigation.navigate("Login")}
-              />
-            </View>
-          ),
+
         }}
       />
       <ProfileStack.Screen

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import uid from "uid";
 import * as firebase from "firebase";
+import '@firebase/firestore'
+
 // import {firebase} from '../firebase/config'
 
 import {
@@ -55,10 +57,9 @@ const AddDestenation = ({ navigation }) => {
     }
     // save data to rdb
     const id = uid(15);
-    firebase
-      .database()
-      .ref("places/" + id)
-      .set({
+
+    firebase.firestore().collection('places').doc(id)
+    .set({
         id,
         name,
         city,
@@ -66,10 +67,25 @@ const AddDestenation = ({ navigation }) => {
         show: false,
         latitude: coords.latitude,
         longitude: coords.longitude,
-        thumb: imageName + ".jpg",
+        thumb: imageName + '.jpg',
         createdAt: new Date().toJSON().slice(0, 10),
-        userId: firebase.auth().currentUser.uid,
-      });
+        userId: firebase.auth().currentUser.uid
+    })
+    // firebase
+    //   .database()
+    //   .ref(city + id)
+    //   .set({
+    //     id,
+    //     name,
+    //     city,
+    //     description: des,
+    //     show: false,
+    //     latitude: coords.latitude,
+    //     longitude: coords.longitude,
+    //     thumb: imageName + ".jpg",
+    //     createdAt: new Date().toJSON().slice(0, 10),
+    //     userId: firebase.auth().currentUser.uid,
+    //   });
 
     navigation.pop();
   };
@@ -83,6 +99,7 @@ const AddDestenation = ({ navigation }) => {
           Add New Place To ERTHAL So Everyone Could Enjoy The Beauty Of Saudi
           Arabia
         </Text>
+        <Text style={styles.little}>The destination must be approved by the administration before it appears </Text>
         <Hr />
         {err ? <Text style={styles.err}>{err}</Text> : null}
         <Text style={{ color: "#085C06", marginVertical: 10 }}>
@@ -112,7 +129,6 @@ const AddDestenation = ({ navigation }) => {
             <Picker.Item label="Mecca" value="mecca" />
             <Picker.Item label="AlKobar" value="alkobar" />
             <Picker.Item label="Abha" value="abha" />
-
           </Picker>
         </View>
         <TextInput
@@ -178,7 +194,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   btn: {
-    backgroundColor: "#085C06",
+    backgroundColor: "#8fbc8f",
     padding: 10,
     borderRadius: 25,
     margin: 10,
@@ -192,6 +208,11 @@ const styles = StyleSheet.create({
     color: "red",
     fontWeight: "bold",
   },
+  little:{
+    fontSize: 8,
+    color:"red"
+
+  }
 });
 
 export default AddDestenation;

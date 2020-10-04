@@ -10,6 +10,7 @@ const ResultDetail = ({ result }) => {
 
     useEffect(() => {
         getImage()
+        console.log(result)
     }, [])
 
     const getImage = async () => {
@@ -41,8 +42,8 @@ const styles = StyleSheet.create({
         margin: 60
     },
     image: {
-        width: 200,
-        height: 120,
+        width: 180,
+        height: 130,
         borderRadius: 4,
         marginBottom: 5,
         resizeMode: 'cover'

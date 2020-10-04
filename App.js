@@ -14,6 +14,9 @@ import Loading from "./src/screens/Loading";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
+import { Provider } from './src/components/PlacesContext'
+
+
 
 // create our app's navigation stack
 // const AppNavigator = createStackNavigator({
@@ -30,7 +33,8 @@ const Stack = createStackNavigator()
 
 const App = () => {
 return ( 
-  <NavigationContainer>
+  <Provider>
+<NavigationContainer>
     <Stack.Navigator>
     <Stack.Screen
         name='Loading'
@@ -53,6 +57,7 @@ return (
       />
     </Stack.Navigator>
   </NavigationContainer>
+  </Provider>
 )
 }
 export default App

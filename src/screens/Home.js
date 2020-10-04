@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   View,
   Text,
@@ -16,6 +16,9 @@ import Hr from "../components/Hr";
 
 const Home = ({ navigation }) => {
   const theme = useTheme();
+  const [city, setCity] = useState("riyadh")
+
+
 
   return (
     <ScrollView style={styles.container}>
@@ -45,13 +48,15 @@ const Home = ({ navigation }) => {
       </View>
 
       <View style={styles.categoryContainer}>
+        
         <TouchableOpacity
           style={styles.categoryBtn}
+          onPress={() => navigation.navigate('ShowByCity', { city: 'alqassim' })}
           // onPress={() =>
           // navigation.navigate("CardListScreen", { title: "Restaurant" })
           //}
         >
-          <View style={styles.categoryIcon}>
+          <View style={styles.categoryIcon} >
             <Image
               source={require("../../assets/qassimicon.png")}
               fadeDuration={0}
@@ -62,9 +67,7 @@ const Home = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.categoryBtn}
-          onPress={() =>
-            navigation.navigate("CardListScreen", { title: "Fastfood Center" })
-          }
+          onPress={() => navigation.navigate('ShowByCity', { city: 'jeddah' })}
         >
           <View style={styles.categoryIcon}>
             <Image
@@ -75,7 +78,7 @@ const Home = ({ navigation }) => {
           </View>
           <Text style={styles.categoryBtnTxt}>Jeddah</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.categoryBtn} onPress={() => {}}>
+        <TouchableOpacity style={styles.categoryBtn}  onPress={() => navigation.navigate('ShowByCity', { city: 'riyadh' })}>
           <View style={styles.categoryIcon}>
             <Image
               source={require("../../assets/riyadhicon.png")}
@@ -87,7 +90,7 @@ const Home = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <View style={[styles.categoryContainer, { marginTop: 10 }]}>
-        <TouchableOpacity style={styles.categoryBtn} onPress={() => {}}>
+        <TouchableOpacity style={styles.categoryBtn} onPress={() => navigation.navigate('ShowByCity', { city: 'mecca' })}>
           <View style={styles.categoryIcon}>
             <Image
               source={require("../../assets/Mecca.png")}
@@ -97,7 +100,7 @@ const Home = ({ navigation }) => {
           </View>
           <Text style={styles.categoryBtnTxt}>Mecca</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.categoryBtn} onPress={() => {}}>
+        <TouchableOpacity style={styles.categoryBtn} onPress={() => navigation.navigate('ShowByCity', { city: 'alkhobar' })}>
           <View style={styles.categoryIcon}>
             <Image
               source={require("../../assets/khobaricon.png")}
@@ -108,7 +111,7 @@ const Home = ({ navigation }) => {
           <Text style={styles.categoryBtnTxt}>AlKhobar</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.categoryBtn} onPress={() => {}}>
+        <TouchableOpacity style={styles.categoryBtn} onPress={() => navigation.navigate('ShowByCity', { city: 'abha' })}>
           <View style={styles.categoryIcon}>
             <Image
               source={require("../../assets/abhaicon.png")}

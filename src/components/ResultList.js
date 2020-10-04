@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native
 
 import ResultDetail from './ResultDetail'
 
-const ResultList = ({ title, results }) => {
+const ResultList = ({ title, results, navigate }) => {
 
     if (!results.length) return null
 
@@ -20,7 +20,7 @@ const ResultList = ({ title, results }) => {
                 renderItem={({ item }) => {
                     return (
                         <TouchableOpacity
-                        // onPress={() => navigation.navigate('ResultShow', { id: item.id })} 
+                            onPress={() => navigate('ShowPlace', { id: item.id })}
                         >
                             <ResultDetail result={item} />
                         </TouchableOpacity>
