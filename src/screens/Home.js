@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -8,55 +8,60 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import { useTheme } from "@react-navigation/native";
-import Hr from "../components/Hr";
 
-//import Swiper from "react-native-swiper";
-//import StarRating from "../../ component/StarRating";
+import { useTheme } from "@react-navigation/native";
+
+import Swiper from "react-native-swiper";
 
 const Home = ({ navigation }) => {
   const theme = useTheme();
-  const [city, setCity] = useState("riyadh")
-
-
+  const [city, setCity] = useState("riyadh");
 
   return (
     <ScrollView style={styles.container}>
       <View style={styles.sliderContainer}>
-        <View style={styles.slide}>
-          <Image
-            source={require("../../assets/t1.jpg")}
-            resizeMode="cover"
-            style={styles.sliderImage}
-          />
-        </View>
-        <View style={styles.slide}>
-          <Image
-            source={require("../../assets/t2.jpg")}
-            resizeMode="cover"
-            style={styles.sliderImage}
-          />
-        </View>
+        <Swiper
+          autoplay
+          horizontal={false}
+          height={200}
+          activeDotColor="#FF6347"
+        >
+          <View style={styles.slide}>
+            <Image
+              source={require("../../assets/t1.jpg")}
+              resizeMode="cover"
+              style={styles.sliderImage}
+            />
+          </View>
+          <View style={styles.slide}>
+            <Image
+              source={require("../../assets/t2.jpg")}
+              resizeMode="cover"
+              style={styles.sliderImage}
+            />
+          </View>
 
-        <View style={styles.slide}>
-          <Image
-            source={require("../../assets/t3.jpg")}
-            resizeMode="cover"
-            style={styles.sliderImage}
-          />
-        </View>
+          <View style={styles.slide}>
+            <Image
+              source={require("../../assets/t3.jpg")}
+              resizeMode="cover"
+              style={styles.sliderImage}
+            />
+          </View>
+        </Swiper>
       </View>
 
       <View style={styles.categoryContainer}>
-        
         <TouchableOpacity
           style={styles.categoryBtn}
-          onPress={() => navigation.navigate('ShowByCity', { city: 'alqassim' })}
+          onPress={() =>
+            navigation.navigate("ShowByCity", { city: "alqassim" })
+          }
           // onPress={() =>
           // navigation.navigate("CardListScreen", { title: "Restaurant" })
           //}
         >
-          <View style={styles.categoryIcon} >
+          <View style={styles.categoryIcon}>
             <Image
               source={require("../../assets/qassimicon.png")}
               fadeDuration={0}
@@ -67,7 +72,7 @@ const Home = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.categoryBtn}
-          onPress={() => navigation.navigate('ShowByCity', { city: 'jeddah' })}
+          onPress={() => navigation.navigate("ShowByCity", { city: "jeddah" })}
         >
           <View style={styles.categoryIcon}>
             <Image
@@ -78,7 +83,10 @@ const Home = ({ navigation }) => {
           </View>
           <Text style={styles.categoryBtnTxt}>Jeddah</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.categoryBtn}  onPress={() => navigation.navigate('ShowByCity', { city: 'riyadh' })}>
+        <TouchableOpacity
+          style={styles.categoryBtn}
+          onPress={() => navigation.navigate("ShowByCity", { city: "riyadh" })}
+        >
           <View style={styles.categoryIcon}>
             <Image
               source={require("../../assets/riyadhicon.png")}
@@ -90,7 +98,10 @@ const Home = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <View style={[styles.categoryContainer, { marginTop: 10 }]}>
-        <TouchableOpacity style={styles.categoryBtn} onPress={() => navigation.navigate('ShowByCity', { city: 'mecca' })}>
+        <TouchableOpacity
+          style={styles.categoryBtn}
+          onPress={() => navigation.navigate("ShowByCity", { city: "mecca" })}
+        >
           <View style={styles.categoryIcon}>
             <Image
               source={require("../../assets/Mecca.png")}
@@ -100,7 +111,12 @@ const Home = ({ navigation }) => {
           </View>
           <Text style={styles.categoryBtnTxt}>Mecca</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.categoryBtn} onPress={() => navigation.navigate('ShowByCity', { city: 'alkhobar' })}>
+        <TouchableOpacity
+          style={styles.categoryBtn}
+          onPress={() =>
+            navigation.navigate("ShowByCity", { city: "alkhobar" })
+          }
+        >
           <View style={styles.categoryIcon}>
             <Image
               source={require("../../assets/khobaricon.png")}
@@ -111,7 +127,10 @@ const Home = ({ navigation }) => {
           <Text style={styles.categoryBtnTxt}>AlKhobar</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.categoryBtn} onPress={() => navigation.navigate('ShowByCity', { city: 'abha' })}>
+        <TouchableOpacity
+          style={styles.categoryBtn}
+          onPress={() => navigation.navigate("ShowByCity", { city: "abha" })}
+        >
           <View style={styles.categoryIcon}>
             <Image
               source={require("../../assets/abhaicon.png")}
@@ -121,14 +140,43 @@ const Home = ({ navigation }) => {
           </View>
           <Text style={styles.categoryBtnTxt}>Abha</Text>
         </TouchableOpacity>
-
       </View>
-      <Hr />
-      <TouchableOpacity onPress={() => navigation.navigate("AddDestenation")}>
-          <View style={styles.btn}>
-            <Text style={styles.btnTxt}>Add New Destenations To ERTHAL </Text>
-          </View>
+      <Text></Text>
+      <Text
+        style={{
+          alignSelf: "center",
+          fontSize: 18,
+          fontWeight: "bold",
+          color: "grey",
+        }}
+      >
+        Add a Destintion To Ertehal
+      </Text>
+      <View
+        style={{
+          backgroundColor: "#8fbc8f",
+          height: 100,
+          margin: 20,
+          borderRadius: 10,
+          alignItem: "center",
+          justifyContent: "center",
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => navigation.navigate("AddDestenation")}
+          style={{
+            padding: 7,
+            paddingVertical: 12,
+            backgroundColor: "#FFF",
+            paddingHorizontal: 70,
+            alignSelf: "center",
+            borderRadius: 40,
+            marginTop: 2,
+          }}
+        >
+          <Text style={{ color: "grey", fontWeight: "bold" }}>Add Now</Text>
         </TouchableOpacity>
+      </View>
     </ScrollView>
   );
 };
