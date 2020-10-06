@@ -10,6 +10,7 @@ import Signup from "./src/screens/Signup";
 // import { SwitchNavigator } from "react-navigation";
 import Mais from "./src/screens/Mais";
 import Loading from "./src/screens/Loading";
+import forgotPassword from './src/screens/ForgotPassword'
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -47,6 +48,10 @@ return (
       <Stack.Screen
         name='Signup'
         component={Signup}
+      />
+      <Stack.Screen
+        name='forgotPassword'
+        component={forgotPassword}
       />
       <Stack.Screen
         name='Mais'

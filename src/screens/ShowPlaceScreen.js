@@ -49,6 +49,7 @@ const ShowPlaceScreen = ({ route, navigation }) => {
             const res = await ref.getDownloadURL()
             setImgUrl(res)
             setIsLoading(false)
+            console.log(res)
         } catch (e) {
             console.log(e)
         }
@@ -90,6 +91,14 @@ const ShowPlaceScreen = ({ route, navigation }) => {
                     >
                         <View style={styles.icon}>
                             <Feather name="map-pin" size={40} color="white" />
+                        </View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate('ImageShow', { id })}
+                    >
+                        <View style={styles.icon}>
+                            <Feather name="heart" size={40} color="white" />
                         </View>
                     </TouchableOpacity>
                 </View>

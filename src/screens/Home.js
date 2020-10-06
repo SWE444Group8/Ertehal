@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
+import SearchBar from '../components/SearchBar'
+
 
 import { useTheme } from "@react-navigation/native";
 
@@ -16,6 +18,8 @@ import Swiper from "react-native-swiper";
 const Home = ({ navigation }) => {
   const theme = useTheme();
   const [city, setCity] = useState("riyadh");
+  const [term, setTerm] = useState('')
+
 
   return (
     <ScrollView style={styles.container}>
@@ -50,7 +54,7 @@ const Home = ({ navigation }) => {
           </View>
         </Swiper>
       </View>
-
+     
       <View style={styles.categoryContainer}>
         <TouchableOpacity
           style={styles.categoryBtn}

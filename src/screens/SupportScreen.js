@@ -1,10 +1,18 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, Button, StyleSheet,Image } from 'react-native';
 
 const SupportScreen = () => {
     return (
+      <View  style={{ backgroundColor: "white", flex: 1 }}>
       <View style={styles.container}>
-        <Text>Support Screen</Text>
+        <Image
+                source={require("../../assets/l.png")}
+                style={{ width: 350, height: 350, alignSelf: "center" }}
+              ></Image>
+        <Text style={styles.des}>Ertehal is an online Saudi app that helps you discover new destinations in our beautiful kingdom of Saudi Arabia with recommendations from a community that you trust.</Text>
+        <Text style={styles.des}>for more information contact us at: Ertehal@gmail.com</Text>
+
+  </View>
       </View>
     );
 };
@@ -17,4 +25,10 @@ const styles = StyleSheet.create({
     alignItems: 'center', 
     justifyContent: 'center'
   },
+  des: {
+    color: 'black',
+    textAlign: 'justify',
+    marginHorizontal: 10,
+    marginVertical:10
+},
 });

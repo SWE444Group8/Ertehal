@@ -19,6 +19,10 @@ import CardItemDetails from "./CardItemDetails";
 import AddDestenation from "./AddDestenation"
 import ShowPlaceScreen from "./ShowPlaceScreen"
 import ShowByCity from "./ShowByCity"
+import SettingsScreen from "./SettingsScreen"
+import SupportScreen from "./SupportScreen"
+
+
 
 
 
@@ -222,6 +226,22 @@ const ProfileStackScreen = ({ navigation }) => {
           title: "Edit Profile",
         }}
         component={ProfileScreen}
+      />
+       <ProfileStack.Screen
+        name="FavoritesScreen"
+        component={FavoritesScreen}
+        onPress={() => navigation.navigate('FavoritesScreen')}
+      />
+
+      <ProfileStack.Screen
+        name="SettingsScreen"
+        component={SettingsScreen}
+        onPress={() => navigation.navigate('SettingsScreen')}
+      />
+      <ProfileStack.Screen
+        name="SupportScreen"
+        component={SupportScreen}
+        onPress={() => navigation.navigate('SupportScreen')}
       />
     </ProfileStack.Navigator>
   );

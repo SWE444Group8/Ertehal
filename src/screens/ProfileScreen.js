@@ -12,6 +12,7 @@ import * as firebase from "firebase";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
+import Hr from '../components/Hr'
 
 //import Share from 'react-native-share';
 
@@ -51,33 +52,7 @@ const ProfileScreen = ({ navigation }) => {
           <Text style={{ color: "#777777", marginLeft: 20 }}>{user}</Text>
         </View>
       </View>
-
-      <View style={styles.infoBoxWrapper}>
-        <View
-          style={[
-            styles.infoBox,
-            {
-              borderRightColor: "#dddddd",
-              borderRightWidth: 1,
-            },
-          ]}
-        >
-          <TouchableRipple onPress={() => navigation.navigate("MyComments")}>
-            <Text style={styles.infoBox}>0</Text>
-          </TouchableRipple>
-          <TouchableRipple onPress={() => navigation.navigate("MyComments")}>
-            <Text style={styles.infoBox}>Comments</Text>
-          </TouchableRipple>
-        </View>
-        <View style={styles.infoBox}>
-          <TouchableRipple onPress={() => navigation.navigate("MyDestentions")}>
-            <Text style={styles.infoBox}>0</Text>
-          </TouchableRipple>
-          <TouchableRipple onPress={() => navigation.navigate("MyDestentions")}>
-            <Text style={styles.infoBox}>Destentions</Text>
-          </TouchableRipple>
-        </View>
-      </View>
+      <Hr />
 
       <View style={styles.menuWrapper}>
         <TouchableRipple onPress={() => navigation.navigate("FavoritesScreen")}>
@@ -90,6 +65,13 @@ const ProfileScreen = ({ navigation }) => {
           <View style={styles.menuItem}>
             <Icon name="account-check-outline" color="#8fbc8f" size={25} />
             <Text style={styles.menuItemText}>Support</Text>
+          </View>
+        </TouchableRipple>
+
+        <TouchableRipple onPress={() => navigation.navigate("")}>
+          <View style={styles.menuItem}>
+            <Icon name="comment" color="#8fbc8f" size={25} />
+            <Text style={styles.menuItemText}>Comments</Text>
           </View>
         </TouchableRipple>
 
