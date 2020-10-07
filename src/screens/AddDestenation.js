@@ -57,7 +57,7 @@ const AddDestenation = ({ navigation }) => {
     }
     // save data to rdb
     const id = uid(15);
-
+//try
     firebase.firestore().collection('places').doc(id)
     .set({
         id,
