@@ -7,26 +7,16 @@ import Home from "./Home";
 
 import NotificationScreen from "./NotificationScreen";
 import FavoritesScreen from "./FavoritesScreen";
-//import ExploreScreen from "./ExploreScreen";
 import ProfileScreen from "./ProfileScreen";
-//import MapTestScreen from "./MapTestScreen";
-//import EditProfileScreen from "./EditProfileScreen";
 import { useTheme, Avatar } from "react-native-paper";
 import { View } from "react-native-animatable";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import CardListScreen from "./CardListScreen";
 import CardItemDetails from "./CardItemDetails";
-import AddDestenation from "./AddDestenation"
-import ShowPlaceScreen from "./ShowPlaceScreen"
-import ShowByCity from "./ShowByCity"
-import SettingsScreen from "./SettingsScreen"
-import SupportScreen from "./SupportScreen"
-
-
-
-
-
-
+import AddDestenation from "./AddDestenation";
+import ShowPlaceScreen from "./ShowPlaceScreen";
+import ShowByCity from "./ShowByCity";
+import SettingsScreen from "./SettingsScreen";
 
 const HomeStack = createStackNavigator();
 const NotificationStack = createStackNavigator();
@@ -38,7 +28,7 @@ const MainTabScreen = () => (
   <Tab.Navigator
     initialRouteName="Home"
     activeColor="#fff"
-    barStyle={{ backgroundColor: "#8fbc8f" }}
+    barStyle={{ backgroundColor: "#8fbc8f", fontFamily: "Futura-Medium" }}
   >
     <Tab.Screen
       name="Home"
@@ -46,6 +36,7 @@ const MainTabScreen = () => (
       options={{
         tabBarLabel: "Home",
         tabBarColor: "#FF6347",
+        fontFamily: "Futura-Medium",
         tabBarIcon: ({ color }) => (
           <Icon name="ios-home" color={color} size={26} />
         ),
@@ -55,6 +46,8 @@ const MainTabScreen = () => (
       name="Notifications"
       component={NotificationStackScreen}
       options={{
+        fontFamily: "Futura-Medium",
+
         tabBarLabel: "Updates",
         tabBarColor: "#1f65ff",
         tabBarIcon: ({ color }) => (
@@ -68,12 +61,14 @@ const MainTabScreen = () => (
       options={{
         tabBarLabel: "Profile",
         tabBarColor: "#694fad",
+        fontFamily: "Futura-Medium",
+
         tabBarIcon: ({ color }) => (
           <Icon name="ios-person" color={color} size={26} />
         ),
       }}
     />
-     {/* <Tab.Screen
+    {/* <Tab.Screen
       name="AddDestenation"
       component={AddDestenationStack}
       options={{
@@ -84,7 +79,7 @@ const MainTabScreen = () => (
         ),
       }}
     /> */}
-    </Tab.Navigator>
+  </Tab.Navigator>
 );
 
 export default MainTabScreen;
@@ -145,7 +140,7 @@ const HomeStackScreen = ({ navigation }) => {
         component={AddDestenation}
         onPress={() => navigation.navigate("AddDestenation")}
       />
-       <HomeStack.Screen
+      <HomeStack.Screen
         name="ShowPlaceScreen"
         component={ShowPlaceScreen}
         onPress={() => navigation.navigate("ShowPlaceScreen")}
@@ -153,17 +148,9 @@ const HomeStackScreen = ({ navigation }) => {
       <HomeStack.Screen
         name="ShowByCity"
         component={ShowByCity}
-        onPress={() => navigation.navigate('ShowByCity', { city: city.title.toLowerCase() })}
-      />
-      <HomeStack.Screen
-        name="FavoritesScreen"
-        component={FavoritesScreen}
-        onPress={() => navigation.navigate('FavoritesScreen')}
-      />
-       <HomeStack.Screen
-        name="SupportScreen"
-        component={SupportScreen}
-        onPress={() => navigation.navigate('SupportScreen')}
+        onPress={() =>
+          navigation.navigate("ShowByCity", { city: city.title.toLowerCase() })
+        }
       />
     </HomeStack.Navigator>
   );
@@ -225,9 +212,18 @@ const ProfileStackScreen = ({ navigation }) => {
                 color={colors.text}
                 onPress={() => navigation.openDrawer()}
               />
+              <ProfileStack.Screen
+                name="FavoritesScreen"
+                component={FavoritesScreen}
+                onPress={() => navigation.navigate("FavoritesScreen")}
+              />
+              <ProfileStack.Screen
+                name="SettingsScreen"
+                component={SettingsScreen}
+                onPress={() => navigation.navigate("SettingsScreen")}
+              />
             </View>
           ),
-
         }}
       />
       <ProfileStack.Screen
@@ -236,22 +232,6 @@ const ProfileStackScreen = ({ navigation }) => {
           title: "Edit Profile",
         }}
         component={ProfileScreen}
-      />
-       <ProfileStack.Screen
-        name="FavoritesScreen"
-        component={FavoritesScreen}
-        onPress={() => navigation.navigate('FavoritesScreen')}
-      />
-
-      <ProfileStack.Screen
-        name="SettingsScreen"
-        component={SettingsScreen}
-        onPress={() => navigation.navigate('SettingsScreen')}
-      />
-      <ProfileStack.Screen
-        name="SupportScreen"
-        component={SupportScreen}
-        onPress={() => navigation.navigate('SupportScreen')}
       />
     </ProfileStack.Navigator>
   );

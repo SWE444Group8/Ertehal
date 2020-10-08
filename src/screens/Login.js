@@ -53,17 +53,17 @@ export default class Login extends React.Component {
                 style={{
                   color: "white",
                   alignItems: "center",
-                  fontFamily: "Verdana-BoldItalic",
-                  fontSize: 15,
+                  fontFamily: "Futura-Medium",
+                  fontSize: 17,
                 }}
               >
                 {" "}
-                WELCOME BACK TO ERTEHAL, CONTINUE TO LOGIN{" "}
+                WELCOME BACK TO ERTEHAL, LOGIN{" "}
               </Text>
               <View style={styles.inner}>
                 <TextInput
                   style={styles.input}
-                  placeholder="E-Mail"
+                  placeholder="E-mail"
                   placeholderTextColor="#aaaaaa"
                   onChangeText={(email) => this.setState({ email })}
                   value={this.state.email}
@@ -104,7 +104,9 @@ export default class Login extends React.Component {
 
                   <TouchableOpacity
                     style={styles.footerLink}
-                    onPress={() => this.props.navigation.navigate("ForgotPassword")}
+                    onPress={() =>
+                      this.props.navigation.navigate("ForgotPassword")
+                    }
                   >
                     <Text style={styles.footerLink}>Forgot password?</Text>
                   </TouchableOpacity>
@@ -130,6 +132,8 @@ const styles = StyleSheet.create({
   },
 
   input: {
+    fontFamily: "Futura-Medium",
+
     width: 350,
     height: 55,
     backgroundColor: "white",
@@ -152,11 +156,15 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   buttonTitle: {
+    fontFamily: "Futura-Medium",
+
     color: "white",
     fontSize: 18,
     alignSelf: "center",
   },
   footerText: {
+    fontFamily: "Futura-Medium",
+
     fontSize: 16,
     color: "#2e2e2d",
     alignSelf: "center",
@@ -168,6 +176,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   footerLink: {
+    fontFamily: "Futura-Medium",
+
     color: "#788eec",
     fontWeight: "bold",
     fontSize: 18,

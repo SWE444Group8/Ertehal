@@ -9,6 +9,7 @@ import {
   Linking,
   Alert,
   message,
+  Image,
 } from "react-native";
 //import { TestComponent, PhoneButton } from "./../components/AppComponents";
 
@@ -17,7 +18,6 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 const ForgotPassword = ({ navigation }) => {
   const [email, setEmail] = useState("");
-
 
   const onForgotPasswordPress = () => {
     if (email.length == 0) Alert.alert("Please enter your Email.");
@@ -42,26 +42,29 @@ const ForgotPassword = ({ navigation }) => {
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#8fbc8f",
+        backgroundColor: "white",
       }}
     >
-        {message ? <Text style={styles.msg}>
-            {message}
-        </Text>:null}
+      <Image
+        source={require("../../assets/l.png")}
+        style={{ width: 250, height: 290, alignSelf: "center" }}
+      ></Image>
+      {message ? <Text style={styles.msg}>{message}</Text> : null}
       <Text
         style={{
-          color: "white",
+          color: "#8fbc8f",
           alignItems: "center",
-          fontFamily: "Verdana-BoldItalic",
-          fontSize: 15,
+          alignSelf: "center",
+          fontFamily: "Futura-Medium",
+          fontSize: 20,
         }}
       >
-        Enter Your E-mail:
+        Please enter Your E-mail, to reset your password:
       </Text>
       <TextInput
         style={styles.input}
-        placeholder="E-Mail"
-        placeholderTextColor="#aaaaaa"
+        placeholder="E-mail"
+        placeholderTextColor="white"
         onChangeText={(text) => setEmail(text)}
         value={email}
         underlineColorAndroid="transparent"
@@ -96,7 +99,7 @@ const styles = StyleSheet.create({
   input: {
     width: 350,
     height: 55,
-    backgroundColor: "white",
+    backgroundColor: "#8fbc8f",
     margin: 10,
     padding: 8,
     color: "black",
@@ -104,6 +107,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "500",
     alignSelf: "center",
+    fontFamily: "Futura-Medium",
   },
 
   button: {
@@ -116,6 +120,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   buttonTitle: {
+    fontFamily: "Futura-Medium",
     color: "white",
     fontSize: 18,
     alignSelf: "center",

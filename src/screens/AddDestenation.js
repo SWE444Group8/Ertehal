@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import uid from "uid";
 import * as firebase from "firebase";
-import '@firebase/firestore'
+import "@firebase/firestore";
 
 // import {firebase} from '../firebase/config'
 
@@ -57,9 +57,12 @@ const AddDestenation = ({ navigation }) => {
     }
     // save data to rdb
     const id = uid(15);
-//try
-    firebase.firestore().collection('places').doc(id)
-    .set({
+    //try
+    firebase
+      .firestore()
+      .collection("places")
+      .doc(id)
+      .set({
         id,
         name,
         city,
@@ -67,10 +70,10 @@ const AddDestenation = ({ navigation }) => {
         show: false,
         latitude: coords.latitude,
         longitude: coords.longitude,
-        thumb: imageName + '.jpg',
+        thumb: imageName + ".jpg",
         createdAt: new Date().toJSON().slice(0, 10),
-        userId: firebase.auth().currentUser.uid
-    })
+        userId: firebase.auth().currentUser.uid,
+      });
     // firebase
     //   .database()
     //   .ref(city + id)
@@ -96,13 +99,22 @@ const AddDestenation = ({ navigation }) => {
     <ScrollView>
       <View style={styles.container}>
         <Text style={styles.title}>
-          Add New Place To ERTHAL So Everyone Could Enjoy The Beauty Of Saudi
+          Add New Place To ERTEHAL So Everyone Could Enjoy The Beauty Of Saudi
           Arabia
         </Text>
-        <Text style={styles.little}>The destination must be approved by the administration before it appears </Text>
+        <Text style={styles.little}>
+          * The destination must be approved by the administration before it
+          appears{" "}
+        </Text>
         <Hr />
         {err ? <Text style={styles.err}>{err}</Text> : null}
-        <Text style={{ color: "#085C06", marginVertical: 10 }}>
+        <Text
+          style={{
+            color: "#085C06",
+            marginVertical: 10,
+            fontFamily: "Futura-Medium",
+          }}
+        >
           Place Infomation:
         </Text>
         <TextInput
@@ -112,7 +124,9 @@ const AddDestenation = ({ navigation }) => {
           onChangeText={setName}
         />
         <View style={styles.pickerStyle}>
-          <Text style={{ color: "#085C06" }}>Which City:</Text>
+          <Text style={{ color: "#085C06", fontFamily: "Futura-Medium" }}>
+            Which City:
+          </Text>
           <Picker
             placeholder="Which City"
             selectedValue={city}
@@ -140,12 +154,24 @@ const AddDestenation = ({ navigation }) => {
           multiline={true}
         />
         <Hr />
-        <Text style={{ color: "#085C06", marginVertical: 10 }}>
+        <Text
+          style={{
+            color: "#085C06",
+            marginVertical: 10,
+            fontFamily: "Futura-Medium",
+          }}
+        >
           Place Image:
         </Text>
         <ImageUpload onSaveImage={setImageUri} />
         <Hr />
-        <Text style={{ color: "#085C06", marginVertical: 10 }}>
+        <Text
+          style={{
+            color: "#085C06",
+            marginVertical: 10,
+            fontFamily: "Futura-Medium",
+          }}
+        >
           Place Location:{" "}
         </Text>
         <Map onPressLocation={setCoords} />
@@ -162,28 +188,32 @@ const AddDestenation = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
+    fontFamily: "Futura-Medium",
+
     alignContent: "center",
     justifyContent: "flex-start",
     flex: 1,
     padding: 10,
   },
   title: {
+    fontFamily: "Futura-Medium",
     fontSize: 20,
-    color: "#085C06",
+    color: "#8fbc8f",
     fontWeight: "bold",
     marginLeft: 15,
     marginVertical: 10,
     textAlign: "center",
   },
   input: {
+    fontFamily: "Futura-Medium",
     width: "90%",
     borderRadius: 10,
     backgroundColor: "white",
     margin: 10,
-    fontSize: 20,
+    fontSize: 15,
     padding: 10,
     alignSelf: "center",
-    color: "#8fbc8f",
+    color: "black",
   },
   pickerStyle: {
     width: "90%",
@@ -200,19 +230,23 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   btnTxt: {
+    fontFamily: "Futura-Medium",
+
     fontSize: 20,
     color: "white",
     textAlign: "center",
   },
   err: {
+    fontFamily: "Futura-Medium",
     color: "red",
     fontWeight: "bold",
   },
-  little:{
-    fontSize: 8,
-    color:"red"
+  little: {
+    fontFamily: "Futura-Medium",
 
-  }
+    fontSize: 8,
+    color: "red",
+  },
 });
 
 export default AddDestenation;

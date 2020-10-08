@@ -8,8 +8,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import SearchBar from '../components/SearchBar'
-
+import SearchBar from "../components/SearchBar";
 
 import { useTheme } from "@react-navigation/native";
 
@@ -18,8 +17,7 @@ import Swiper from "react-native-swiper";
 const Home = ({ navigation }) => {
   const theme = useTheme();
   const [city, setCity] = useState("riyadh");
-  const [term, setTerm] = useState('')
-
+  const [term, setTerm] = useState("");
 
   return (
     <ScrollView style={styles.container}>
@@ -52,9 +50,23 @@ const Home = ({ navigation }) => {
               style={styles.sliderImage}
             />
           </View>
+          <View style={styles.slide}>
+            <Image
+              source={require("../../assets/t5.jpg")}
+              resizeMode="cover"
+              style={styles.sliderImage}
+            />
+          </View>
+          <View style={styles.slide}>
+            <Image
+              source={require("../../assets/t6.jpg")}
+              resizeMode="cover"
+              style={styles.sliderImage}
+            />
+          </View>
         </Swiper>
       </View>
-     
+
       <View style={styles.categoryContainer}>
         <TouchableOpacity
           style={styles.categoryBtn}
@@ -146,39 +158,42 @@ const Home = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <Text></Text>
+      <Text></Text>
+
       <Text
         style={{
           alignSelf: "center",
           fontSize: 18,
           fontWeight: "bold",
           color: "grey",
+          fontFamily: "Futura-Medium",
         }}
       >
         Add a Destintion To Ertehal
       </Text>
-      <View
-        style={{
-          backgroundColor: "#8fbc8f",
-          height: 100,
-          margin: 20,
-          borderRadius: 10,
-          alignItem: "center",
-          justifyContent: "center",
-        }}
-      >
+      <Text></Text>
+      <View>
         <TouchableOpacity
           onPress={() => navigation.navigate("AddDestenation")}
           style={{
             padding: 7,
             paddingVertical: 12,
-            backgroundColor: "#FFF",
+            backgroundColor: "#8fbc8f",
             paddingHorizontal: 70,
             alignSelf: "center",
             borderRadius: 40,
             marginTop: 2,
           }}
         >
-          <Text style={{ color: "grey", fontWeight: "bold" }}>Add Now</Text>
+          <Text
+            style={{
+              color: "white",
+              fontFamily: "Futura-Medium",
+              fontWeight: "bold",
+            }}
+          >
+            ADD NOW
+          </Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -241,6 +256,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: 5,
     color: "grey",
+    fontFamily: "Futura-Medium",
   },
   cardsWrapper: {
     marginTop: 20,
@@ -292,6 +308,7 @@ const styles = StyleSheet.create({
     margin: 80,
   },
   btnTxt: {
+    fontFamily: "Futura-Medium",
     fontSize: 20,
     color: "white",
     textAlign: "center",

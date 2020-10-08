@@ -47,7 +47,6 @@ export function DrawerContent(props) {
           </View>
 
           <Drawer.Section style={styles.drawerSection}>
-
             <DrawerItem
               icon={({ color, size }) => (
                 <Icon name="heart-outline" color={color} size={size} />
@@ -61,7 +60,7 @@ export function DrawerContent(props) {
               icon={({ color, size }) => (
                 <Icon name="account-check-outline" color={color} size={size} />
               )}
-              label="support"
+              label="Support"
               onPress={() => {
                 props.navigation.navigate("SupportScreen");
               }}
@@ -76,8 +75,8 @@ export function DrawerContent(props) {
           )}
           label="Sign Out"
           onPress={() => {
-            firebase.auth().signOut()
-            props.navigation.navigate('Login')
+            firebase.auth().signOut();
+            props.navigation.navigate("Login");
             // signOut = async () => {
             //   try {
             //     firebase.auth()
@@ -101,37 +100,45 @@ const styles = StyleSheet.create({
   },
   userInfoSection: {
     paddingLeft: 20,
+    fontFamily: "Futura-Medium",
   },
   title: {
     fontSize: 16,
     marginTop: 3,
     fontWeight: "bold",
+    fontFamily: "Futura-Medium",
   },
   caption: {
     fontSize: 14,
     lineHeight: 14,
+    fontFamily: "Futura-Medium",
   },
   row: {
     marginTop: 20,
     flexDirection: "row",
     alignItems: "center",
+    fontFamily: "Futura-Medium",
   },
   section: {
     flexDirection: "row",
     alignItems: "center",
     marginRight: 15,
+    fontFamily: "Futura-Medium",
   },
   paragraph: {
     fontWeight: "bold",
     marginRight: 3,
+    fontFamily: "Futura-Medium",
   },
   drawerSection: {
     marginTop: 15,
+    fontFamily: "Futura-Medium",
   },
   bottomDrawerSection: {
     marginBottom: 15,
     borderTopColor: "#f4f4f4",
     borderTopWidth: 1,
+    fontFamily: "Futura-Medium",
   },
   preference: {
     flexDirection: "row",

@@ -96,7 +96,7 @@ const SignupScreen = ({ navigation }) => {
               style={{
                 color: "white",
                 alignItems: "center",
-                fontFamily: "Verdana-BoldItalic",
+                fontFamily: "Futura-Medium",
                 fontSize: 17,
               }}
             >
@@ -107,12 +107,12 @@ const SignupScreen = ({ navigation }) => {
               style={{
                 color: "white",
                 alignItems: "center",
-                fontFamily: "Verdana-BoldItalic",
+                fontFamily: "Futura-Medium",
                 fontSize: 15,
+                alignSelf: "center",
               }}
             >
-              {" "}
-              TO JOIN OUR ERTEHAL FAMILY{" "}
+              TO JOIN OUR ERTEHAL FAMILY
             </Text>
 
             <View style={styles.inner}>
@@ -159,7 +159,10 @@ const SignupScreen = ({ navigation }) => {
               <View style={styles.footerView}>
                 <Text style={styles.footerText}>
                   Already got an account?{" "}
-                  <Text onPress={() => navigation.navigate("Login")}>
+                  <Text
+                    style={styles.footerLink}
+                    onPress={() => navigation.navigate("Login")}
+                  >
                     LOG IN
                   </Text>
                 </Text>
@@ -180,6 +183,7 @@ const styles = StyleSheet.create({
     backgroundColor: "green",
   },
   input: {
+    fontFamily: "Futura-Medium",
     width: 350,
     height: 40,
     backgroundColor: "white",
@@ -202,10 +206,13 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   buttonTitle: {
+    fontFamily: "Futura-Medium",
+
     color: "white",
     fontSize: 18,
   },
   footerText: {
+    fontFamily: "Futura-Medium",
     fontSize: 16,
     color: "#2e2e2d",
     alignSelf: "center",
@@ -217,8 +224,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   footerLink: {
+    fontFamily: "Futura-Medium",
     color: "#788eec",
     fontWeight: "bold",
-    fontSize: 18,
+    fontSize: 15,
   },
 });
