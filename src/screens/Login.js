@@ -104,7 +104,7 @@ export default class Login extends React.Component {
 
                   <TouchableOpacity
                     style={styles.footerLink}
-                    onPress={() => navigation.navigate("ForgotPassword")}
+                    onPress={() => this.props.navigation.navigate("ForgotPassword")}
                   >
                     <Text style={styles.footerLink}>Forgot password?</Text>
                   </TouchableOpacity>

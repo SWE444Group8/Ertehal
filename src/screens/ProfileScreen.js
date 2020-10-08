@@ -67,6 +67,7 @@ const ProfileScreen = ({ navigation }) => {
             <Text style={styles.menuItemText}>Support</Text>
           </View>
         </TouchableRipple>
+        
 
         <TouchableRipple onPress={() => navigation.navigate("")}>
           <View style={styles.menuItem}>

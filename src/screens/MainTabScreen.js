@@ -155,6 +155,16 @@ const HomeStackScreen = ({ navigation }) => {
         component={ShowByCity}
         onPress={() => navigation.navigate('ShowByCity', { city: city.title.toLowerCase() })}
       />
+      <HomeStack.Screen
+        name="FavoritesScreen"
+        component={FavoritesScreen}
+        onPress={() => navigation.navigate('FavoritesScreen')}
+      />
+       <HomeStack.Screen
+        name="SupportScreen"
+        component={SupportScreen}
+        onPress={() => navigation.navigate('SupportScreen')}
+      />
     </HomeStack.Navigator>
   );
 };

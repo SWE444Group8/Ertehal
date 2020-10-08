@@ -8,6 +8,7 @@ import {
   Button,
   Linking,
   Alert,
+  message,
 } from "react-native";
 //import { TestComponent, PhoneButton } from "./../components/AppComponents";
 
