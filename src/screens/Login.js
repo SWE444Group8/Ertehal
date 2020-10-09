@@ -43,7 +43,7 @@ export default class Login extends React.Component {
               <View></View>
               <Image
                 source={require("../../assets/l.png")}
-                style={{ width: 350, height: 350, alignSelf: "center" }}
+                style={{ width: 300, height: 300, alignSelf: "center" }}
               ></Image>
             </View>
             <Text> </Text>
@@ -159,13 +159,13 @@ const styles = StyleSheet.create({
     fontFamily: "Futura-Medium",
 
     color: "white",
-    fontSize: 18,
+    fontSize: 14,
     alignSelf: "center",
   },
   footerText: {
     fontFamily: "Futura-Medium",
 
-    fontSize: 16,
+    fontSize: 13,
     color: "#2e2e2d",
     alignSelf: "center",
     borderRadius: 14,
@@ -177,10 +177,9 @@ const styles = StyleSheet.create({
   },
   footerLink: {
     fontFamily: "Futura-Medium",
-
     color: "#788eec",
     fontWeight: "bold",
-    fontSize: 18,
+    fontSize: 13,
     alignSelf: "center",
     margin: 20,
   },
