@@ -141,7 +141,7 @@ const AddDestenation = ({ navigation }) => {
             <Picker.Item label="AlQassim" value="alqassim" />
             <Picker.Item label="Jeddah" value="jeddah" />
             <Picker.Item label="Mecca" value="mecca" />
-            <Picker.Item label="AlKobar" value="alkobar" />
+            <Picker.Item label="AlKhobar" value="alkobar" />
             <Picker.Item label="Abha" value="abha" />
           </Picker>
         </View>

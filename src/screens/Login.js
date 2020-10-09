@@ -38,8 +38,8 @@ export default class Login extends React.Component {
         style={{ flex: 1 }}
       >
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View style={{ backgroundColor: "#8fbc8f", flex: 1 }}>
-            <View style={{ backgroundColor: "white", flex: 2 }}>
+          <View style={{ backgroundColor: "#8fbc8f", flex: 1 ,borderRadius:20}}>
+            <View style={{ backgroundColor: "white", flex: 2,}}>
               <View></View>
               <Image
                 source={require("../../assets/l.png")}
@@ -48,7 +48,7 @@ export default class Login extends React.Component {
             </View>
             <Text> </Text>
             <Text> </Text>
-            <View style={{ backgroundColor: "#8fbc8f", flex: 4 }}>
+            <View style={{ backgroundColor: "#8fbc8f", flex:0 , borderRadius:20}}>
               <Text
                 style={{
                   color: "white",

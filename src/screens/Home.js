@@ -130,7 +130,7 @@ const Home = ({ navigation }) => {
         <TouchableOpacity
           style={styles.categoryBtn}
           onPress={() =>
-            navigation.navigate("ShowByCity", { city: "alkhobar" })
+            navigation.navigate("ShowByCity", { city: "alkobar" })
           }
         >
           <View style={styles.categoryIcon}>
@@ -183,6 +183,7 @@ const Home = ({ navigation }) => {
             alignSelf: "center",
             borderRadius: 40,
             marginTop: 2,
+          
           }}
         >
           <Text

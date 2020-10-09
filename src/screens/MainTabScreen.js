@@ -17,6 +17,7 @@ import AddDestenation from "./AddDestenation";
 import ShowPlaceScreen from "./ShowPlaceScreen";
 import ShowByCity from "./ShowByCity";
 import SettingsScreen from "./SettingsScreen";
+import SupportScreen from "./SupportScreen";
 
 const HomeStack = createStackNavigator();
 const NotificationStack = createStackNavigator();
@@ -152,6 +153,21 @@ const HomeStackScreen = ({ navigation }) => {
           navigation.navigate("ShowByCity", { city: city.title.toLowerCase() })
         }
       />
+       <HomeStack.Screen
+                name="FavoritesScreen"
+                component={FavoritesScreen}
+                onPress={() => navigation.navigate("FavoritesScreen")}
+              />
+      <HomeStack.Screen
+                name="SettingsScreen"
+                component={SettingsScreen}
+                onPress={() => navigation.navigate("SettingsScreen")}
+              />
+               <HomeStack.Screen
+                name="SupportScreen"
+                component={SupportScreen}
+                onPress={() => navigation.navigate("SupportScreen")}
+              />
     </HomeStack.Navigator>
   );
 };
@@ -221,6 +237,11 @@ const ProfileStackScreen = ({ navigation }) => {
                 name="SettingsScreen"
                 component={SettingsScreen}
                 onPress={() => navigation.navigate("SettingsScreen")}
+              />
+               <ProfileStack.Screen
+                name="SupportScreen"
+                component={SupportScreen}
+                onPress={() => navigation.navigate("SupportScreen")}
               />
             </View>
           ),
