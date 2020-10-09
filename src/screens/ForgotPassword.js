@@ -47,7 +47,7 @@ const ForgotPassword = ({ navigation }) => {
     >
       <Image
         source={require("../../assets/l.png")}
-        style={{ width: 250, height: 290, alignSelf: "center" }}
+        style={{ width: 350, height: 350, alignSelf: "center" }}
       ></Image>
       {message ? <Text style={styles.msg}>{message}</Text> : null}
       <Text
