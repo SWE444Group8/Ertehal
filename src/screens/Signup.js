@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
     padding: 8,
     color: "black",
     borderRadius: 14,
-    fontSize: 18,
+    fontSize: 24,
     fontWeight: "500",
     alignSelf: "center",
   },
@@ -209,14 +209,14 @@ const styles = StyleSheet.create({
     fontFamily: "Futura-Medium",
 
     color: "white",
-    fontSize: 18,
+    fontSize: 13,
   },
   footerText: {
     fontFamily: "Futura-Medium",
     fontSize: 16,
     color: "#2e2e2d",
     alignSelf: "center",
-    borderRadius: 14,
+    borderRadius: 12,
   },
   inner: {
     padding: 60,
@@ -227,6 +227,6 @@ const styles = StyleSheet.create({
     fontFamily: "Futura-Medium",
     color: "#788eec",
     fontWeight: "bold",
-    fontSize: 15,
+    fontSize: 12,
   },
 });

@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: "Futura-Medium",
     fontSize: 26,
-    color: "#8fbc8f",
+    color: "darkgreen",
     fontWeight: "bold",
     marginLeft: 15,
     marginVertical: 10,

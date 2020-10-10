@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
   },
   des: {
     fontFamily: "Futura-Medium",
-
     color: "grey",
     textAlign: "justify",
     marginHorizontal: 10,

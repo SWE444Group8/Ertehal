@@ -38,8 +38,10 @@ export default class Login extends React.Component {
         style={{ flex: 1 }}
       >
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View style={{ backgroundColor: "#8fbc8f", flex: 1 ,borderRadius:20}}>
-            <View style={{ backgroundColor: "white", flex: 2,}}>
+          <View
+            style={{ backgroundColor: "#8fbc8f", flex: 1, borderRadius: 20 }}
+          >
+            <View style={{ backgroundColor: "white", flex: 2 }}>
               <View></View>
               <Image
                 source={require("../../assets/l.png")}
@@ -48,7 +50,9 @@ export default class Login extends React.Component {
             </View>
             <Text> </Text>
             <Text> </Text>
-            <View style={{ backgroundColor: "#8fbc8f", flex:0 , borderRadius:20}}>
+            <View
+              style={{ backgroundColor: "#8fbc8f", flex: 0, borderRadius: 20 }}
+            >
               <Text
                 style={{
                   color: "white",
@@ -141,7 +145,7 @@ const styles = StyleSheet.create({
     padding: 8,
     color: "black",
     borderRadius: 14,
-    fontSize: 18,
+    fontSize: 13,
     fontWeight: "500",
     alignSelf: "center",
   },
@@ -159,13 +163,13 @@ const styles = StyleSheet.create({
     fontFamily: "Futura-Medium",
 
     color: "white",
-    fontSize: 14,
+    fontSize: 12,
     alignSelf: "center",
   },
   footerText: {
     fontFamily: "Futura-Medium",
 
-    fontSize: 13,
+    fontSize: 12,
     color: "#2e2e2d",
     alignSelf: "center",
     borderRadius: 14,
@@ -179,7 +183,7 @@ const styles = StyleSheet.create({
     fontFamily: "Futura-Medium",
     color: "#788eec",
     fontWeight: "bold",
-    fontSize: 13,
+    fontSize: 12,
     alignSelf: "center",
     margin: 20,
   },
