@@ -48,8 +48,7 @@ const AddDestenation = ({ navigation }) => {
     if (!city) return setErr("Please Choose a City");
     if (!des) return setErr("Please Enter a Description");
     if (!imageUri) return setErr("Please Add an Image");
-    if (!coords.latitude)
-      return setErr("Please Press on the Location on the Map ");
+    if (!coords.latitude) return setErr("Please Pin the Location on the Map ");
 
     //upload the image
     if (imageUri) {
