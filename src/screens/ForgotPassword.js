@@ -12,6 +12,7 @@ import {
   Image,
 } from "react-native";
 //import { TestComponent, PhoneButton } from "./../components/AppComponents";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import * as firebase from "firebase";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -45,6 +46,7 @@ const ForgotPassword = ({ navigation }) => {
         backgroundColor: "white",
       }}
     >
+       <KeyboardAwareScrollView>
       <Image
         source={require("../../assets/l.png")}
         style={{ width: 350, height: 350, alignSelf: "center" }}
@@ -77,6 +79,7 @@ const ForgotPassword = ({ navigation }) => {
       >
         <Text style={styles.buttonTitle}>Reset Password</Text>
       </TouchableOpacity>
+      </KeyboardAwareScrollView>
     </View>
   );
 };
