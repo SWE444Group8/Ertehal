@@ -19,6 +19,9 @@ import ShowByCity from "./ShowByCity";
 import SettingsScreen from "./SettingsScreen";
 import SupportScreen from "./SupportScreen";
 
+import MyComments from "./MyComments";
+
+
 const HomeStack = createStackNavigator();
 const NotificationStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
@@ -168,6 +171,12 @@ const HomeStackScreen = ({ navigation }) => {
                 component={SupportScreen}
                 onPress={() => navigation.navigate("SupportScreen")}
               />
+                            <HomeStack.Screen
+                name="MyComments"
+                component={MyComments}
+                onPress={() => navigation.navigate("MyComments")}
+              />
+
     </HomeStack.Navigator>
   );
 };
@@ -242,6 +251,11 @@ const ProfileStackScreen = ({ navigation }) => {
                 name="SupportScreen"
                 component={SupportScreen}
                 onPress={() => navigation.navigate("SupportScreen")}
+              />
+              <ProfileStack.Screen
+                name="MyComments"
+                component={MyComments}
+                onPress={() => navigation.navigate("MyComments")}
               />
             </View>
           ),
