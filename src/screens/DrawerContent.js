@@ -106,7 +106,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 3,
     fontWeight: "bold",
-    fontFamily: "Futura-Medium",
   },
   caption: {
     fontSize: 14,
