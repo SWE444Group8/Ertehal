@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
     padding: 8,
     color: "black",
     borderRadius: 14,
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: "500",
     alignSelf: "center",
   },

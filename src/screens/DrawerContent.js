@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     fontFamily: "Futura-Medium",
   },
   title: {
-    fontSize: 16,
+    fontSize: 14,
     marginTop: 3,
     fontWeight: "bold",
   },
