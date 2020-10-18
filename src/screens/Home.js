@@ -67,7 +67,13 @@ const Home = ({ navigation }) => {
         </Swiper>
       </View>
 
+      <SearchBar
+                    term={term}
+                    onTermChange={setTerm}
+                    onTermSubmit={() => console.log(term)}
+                />
       <View style={styles.categoryContainer}>
+      
         <TouchableOpacity
           style={styles.categoryBtn}
           onPress={() =>
