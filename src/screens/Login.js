@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     width: 350,
     height: 55,
     backgroundColor: "white",
-    margin: 10,
+    margin: 5,
     padding: 8,
     color: "black",
     borderRadius: 14,
@@ -184,6 +184,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 12,
     alignSelf: "center",
-    margin: 20,
+    margin: 10,
   },
 });
