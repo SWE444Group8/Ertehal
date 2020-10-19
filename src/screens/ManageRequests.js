@@ -11,28 +11,25 @@ import { Context } from "../components/PlacesContext";
 
 import ResultDetail from "../components/ResultDetail";
 
-const ShowByCity = ({ navigation, route }) => {
-  const { state, getPlacesByCity } = useContext(Context);
+const ManageRequests = ({ navigation }) => {
+  const { state, getAllPlaces } = useContext(Context);
 
-  const { placesToShow } = state;
-
+  const { places } = state;
   useEffect(() => {
-    getPlacesByCity(route.params.city);
+    getAllPlaces();
   }, []);
-
-  const createList = () => {};
 
   return (
     <View>
       <FlatList
         showsHorizontalScrollIndicator={false}
-        data={placesToShow}
+        data={places}
         keyExtractor={(res) => res.id}
         renderItem={({ item }) => {
           return (
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate("ShowPlaceScreen", { id: item.id })
+                navigation.navigate("ShowPlaceAdmin", { id: item.id })
               }
             >
               <ResultDetail result={item} />
@@ -44,6 +41,6 @@ const ShowByCity = ({ navigation, route }) => {
   );
 };
 
-export default ShowByCity;
+export default ManageRequests;
 
 const styles = StyleSheet.create({});

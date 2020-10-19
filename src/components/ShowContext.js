@@ -7,7 +7,7 @@ const placesReducer = (state, action) => {
   switch (action.type) {
     case "get_all_places":
       return { ...state, places: action.payload };
-    case "get_places_by_city":
+    case "get_places_by_show":
       return { ...state, placesToShow: action.payload };
     case "get_place":
       return {
@@ -24,11 +24,7 @@ const getAllPlaces = (dispatch) => async () => {
   // ref.on('value', data => {
   //     dispatch({ type: 'get_all_places', payload: Object.values(data.val()) || [] })
   // })
-  const res = await firebase
-    .firestore()
-    .collection("places")
-    .where("show", "==", false)
-    .get();
+  const res = await firebase.firestore().collection("places").get();
   const arr = [];
   res.forEach((doc) => {
     arr.push(doc.data());
@@ -40,11 +36,10 @@ const getPlace = (dispatch) => (id) => {
   dispatch({ type: "get_place", payload: id });
 };
 
-const getPlacesByCity = (dispatch) => async (cityName) => {
+const getPlacesByShow = (dispatch) => async () => {
   const res = await firebase
     .firestore()
     .collection("places")
-    .where("city", "==", cityName)
     .where("show", "==", true)
     .get();
   const arr = [];
@@ -60,7 +55,7 @@ export const { Provider, Context } = createDataContext(
   {
     getAllPlaces,
     getPlace,
-    getPlacesByCity,
+    getPlacesByShow,
   },
   {
     places: [],

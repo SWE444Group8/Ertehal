@@ -61,8 +61,7 @@ export default class Login extends React.Component {
                   fontSize: 17,
                 }}
               >
-                {" "}
-                WELCOME BACK TO ERTEHAL, LOGIN{" "}
+                {"    "}Welcome Back to Ertehal, Login
               </Text>
               <View style={styles.inner}>
                 <TextInput

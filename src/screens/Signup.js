@@ -36,7 +36,7 @@ const SignupScreen = ({ navigation }) => {
     // }
 
     if (rePassword !== password) {
-      setError("Passwords don't match. Please make reEnter your Password");
+      setError("Passwords don't match, Please re-enter your password");
       return;
     }
 
@@ -47,7 +47,7 @@ const SignupScreen = ({ navigation }) => {
     try {
       const res = await firebase
         .auth()
-        .createUserWithEmailAndPassword(email.trim(), password);
+        .createUserWithEmailAndPassword(email.trim(), password, RePassword);
       // const saveRes = await firebase.database().ref('users/' + res.user.uid).set({
       //     name: name.trim(),
       //     email: email.trim(),
@@ -101,7 +101,7 @@ const SignupScreen = ({ navigation }) => {
               }}
             >
               {" "}
-              CREATE YOUR ACCOUNT
+              Create Your Account
             </Text>
             <Text
               style={{
@@ -112,7 +112,7 @@ const SignupScreen = ({ navigation }) => {
                 alignSelf: "center",
               }}
             >
-              TO JOIN OUR ERTEHAL FAMILY
+              To Join Our Ertehal Family
             </Text>
 
             <View style={styles.inner}>

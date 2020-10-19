@@ -12,7 +12,7 @@ import * as firebase from "firebase";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
-import Hr from '../components/Hr'
+import Hr from "../components/Hr";
 
 //import Share from 'react-native-share';
 
@@ -33,61 +33,98 @@ const ProfileScreen = ({ navigation }) => {
     setUser(user);
   }, []);
 
-  return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.userInfoSection}>
-        <View style={{ marginTop: 15 }}>
-          <Avatar.Image
-            style={styles.row}
-            source={require("../../assets/ProfilePic1.png")}
-            size={100}
-          />
-          <View style={{ marginLeft: 20 }}></View>
+  if (firebase.auth().currentUser.email == "ertehaladmin@gmail.com") {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.userInfoSection}>
+          <View style={{ marginTop: 15 }}>
+            <Avatar.Image
+              style={styles.row}
+              source={require("../../assets/admin.png")}
+              size={100}
+            />
+            <View style={{ marginLeft: 20 }}></View>
+          </View>
         </View>
-      </View>
 
-      <View style={styles.userInfoSection}>
-        <View style={styles.row}>
-          <Icon name="email" color="#8fbc8f" size={20} />
-          <Text style={{ color: "#777777", marginLeft: 20 }}>{user}</Text>
+        <View style={styles.userInfoSection}>
+          <View style={styles.row}>
+            <Icon name="email" color="#8fbc8f" size={20} />
+            <Text style={{ color: "#777777", marginLeft: 20 }}>{user}</Text>
+          </View>
         </View>
-      </View>
-      <Hr />
+        <Hr />
 
-      <View style={styles.menuWrapper}>
-        <TouchableRipple onPress={() => navigation.navigate("FavoritesScreen")}>
-          <View style={styles.menuItem}>
-            <Icon name="heart-outline" color="#8fbc8f" size={25} />
-            <Text style={styles.menuItemText}> Favorites</Text>
+        <View style={styles.menuWrapper}>
+          <TouchableRipple
+            onPress={() => navigation.navigate("ManageRequests")}
+          >
+            <View style={styles.menuItem}>
+              <Icon name="settings-outline" color="#8fbc8f" size={25} />
+              <Text style={styles.menuItemText}>Manage Requests</Text>
+            </View>
+          </TouchableRipple>
+        </View>
+      </SafeAreaView>
+    );
+  } else {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.userInfoSection}>
+          <View style={{ marginTop: 15 }}>
+            <Avatar.Image
+              style={styles.row}
+              source={require("../../assets/ProfilePic1.png")}
+              size={100}
+            />
+            <View style={{ marginLeft: 20 }}></View>
           </View>
-        </TouchableRipple>
-        <TouchableRipple onPress={() => navigation.navigate("SupportScreen")}>
-          <View style={styles.menuItem}>
-            <Icon name="account-check-outline" color="#8fbc8f" size={25} />
-            <Text style={styles.menuItemText}>Support</Text>
-          </View>
-        </TouchableRipple>
-        
+        </View>
 
-        <TouchableRipple onPress={() => navigation.navigate("MyComments")}>
-          <View style={styles.menuItem}>
-            <Icon name="comment" color="#8fbc8f" size={25} />
-            <Text style={styles.menuItemText}>Comments</Text>
+        <View style={styles.userInfoSection}>
+          <View style={styles.row}>
+            <Icon name="email" color="#8fbc8f" size={20} />
+            <Text style={{ color: "#777777", marginLeft: 20 }}>{user}</Text>
           </View>
-        </TouchableRipple>
+        </View>
+        <Hr />
 
-        <TouchableRipple onPress={() => navigation.navigate("SettingsScreen")}>
-          <View style={styles.menuItem}>
-            <Icon name="settings-outline" color="#8fbc8f" size={25} />
-            <Text style={styles.menuItemText}>Settings</Text>
-          </View>
-        </TouchableRipple>
-        
-      </View>
-    </SafeAreaView>
-  );
+        <View style={styles.menuWrapper}>
+          <TouchableRipple
+            onPress={() => navigation.navigate("FavoritesScreen")}
+          >
+            <View style={styles.menuItem}>
+              <Icon name="heart-outline" color="#8fbc8f" size={25} />
+              <Text style={styles.menuItemText}> Favorites</Text>
+            </View>
+          </TouchableRipple>
+          <TouchableRipple onPress={() => navigation.navigate("SupportScreen")}>
+            <View style={styles.menuItem}>
+              <Icon name="account-check-outline" color="#8fbc8f" size={25} />
+              <Text style={styles.menuItemText}>Support</Text>
+            </View>
+          </TouchableRipple>
+
+          <TouchableRipple onPress={() => navigation.navigate("MyComments")}>
+            <View style={styles.menuItem}>
+              <Icon name="comment" color="#8fbc8f" size={25} />
+              <Text style={styles.menuItemText}>Comments</Text>
+            </View>
+          </TouchableRipple>
+
+          <TouchableRipple
+            onPress={() => navigation.navigate("SettingsScreen")}
+          >
+            <View style={styles.menuItem}>
+              <Icon name="settings-outline" color="#8fbc8f" size={25} />
+              <Text style={styles.menuItemText}>Settings</Text>
+            </View>
+          </TouchableRipple>
+        </View>
+      </SafeAreaView>
+    );
+  }
 };
-
 
 export default ProfileScreen;
 

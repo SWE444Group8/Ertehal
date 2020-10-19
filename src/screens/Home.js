@@ -9,6 +9,7 @@ import {
   ScrollView,
 } from "react-native";
 import SearchBar from "../components/SearchBar";
+import * as firebase from "firebase";
 
 import { useTheme } from "@react-navigation/native";
 
@@ -19,186 +20,375 @@ const Home = ({ navigation }) => {
   const [city, setCity] = useState("riyadh");
   const [term, setTerm] = useState("");
 
-  return (
-    <ScrollView style={styles.container}>
-      <View style={styles.sliderContainer}>
-        <Swiper
-          autoplay
-          horizontal={false}
-          height={200}
-          activeDotColor="#FF6347"
-        >
-          <View style={styles.slide}>
-            <Image
-              source={require("../../assets/t1.jpg")}
-              resizeMode="cover"
-              style={styles.sliderImage}
-            />
-          </View>
-          <View style={styles.slide}>
-            <Image
-              source={require("../../assets/t2.jpg")}
-              resizeMode="cover"
-              style={styles.sliderImage}
-            />
-          </View>
+  if (firebase.auth().currentUser.email == "ertehaladmin@gmail.com") {
+    return (
+      <ScrollView style={styles.container}>
+        <View style={styles.sliderContainer}>
+          <Swiper
+            autoplay
+            horizontal={false}
+            height={200}
+            activeDotColor="#FF6347"
+          >
+            <View style={styles.slide}>
+              <Image
+                source={require("../../assets/t1.jpg")}
+                resizeMode="cover"
+                style={styles.sliderImage}
+              />
+            </View>
+            <View style={styles.slide}>
+              <Image
+                source={require("../../assets/t2.jpg")}
+                resizeMode="cover"
+                style={styles.sliderImage}
+              />
+            </View>
 
-          <View style={styles.slide}>
-            <Image
-              source={require("../../assets/t3.jpg")}
-              resizeMode="cover"
-              style={styles.sliderImage}
-            />
-          </View>
-          <View style={styles.slide}>
-            <Image
-              source={require("../../assets/t5.jpg")}
-              resizeMode="cover"
-              style={styles.sliderImage}
-            />
-          </View>
-          <View style={styles.slide}>
-            <Image
-              source={require("../../assets/t6.jpg")}
-              resizeMode="cover"
-              style={styles.sliderImage}
-            />
-          </View>
-        </Swiper>
-      </View>
+            <View style={styles.slide}>
+              <Image
+                source={require("../../assets/t3.jpg")}
+                resizeMode="cover"
+                style={styles.sliderImage}
+              />
+            </View>
+            <View style={styles.slide}>
+              <Image
+                source={require("../../assets/t5.jpg")}
+                resizeMode="cover"
+                style={styles.sliderImage}
+              />
+            </View>
+            <View style={styles.slide}>
+              <Image
+                source={require("../../assets/t6.jpg")}
+                resizeMode="cover"
+                style={styles.sliderImage}
+              />
+            </View>
+          </Swiper>
+        </View>
 
-      <View style={styles.categoryContainer}>
-        <TouchableOpacity
-          style={styles.categoryBtn}
-          onPress={() =>
-            navigation.navigate("ShowByCity", { city: "alqassim" })
-          }
-          // onPress={() =>
-          // navigation.navigate("CardListScreen", { title: "Restaurant" })
-          //}
-        >
-          <View style={styles.categoryIcon}>
-            <Image
-              source={require("../../assets/qassimicon.png")}
-              fadeDuration={0}
-              style={{ width: 40, height: 40 }}
-            />
-          </View>
-          <Text style={styles.categoryBtnTxt}>AlQassim</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.categoryBtn}
-          onPress={() => navigation.navigate("ShowByCity", { city: "jeddah" })}
-        >
-          <View style={styles.categoryIcon}>
-            <Image
-              source={require("../../assets/jedicon.png")}
-              fadeDuration={0}
-              style={{ width: 40, height: 40 }}
-            />
-          </View>
-          <Text style={styles.categoryBtnTxt}>Jeddah</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.categoryBtn}
-          onPress={() => navigation.navigate("ShowByCity", { city: "riyadh" })}
-        >
-          <View style={styles.categoryIcon}>
-            <Image
-              source={require("../../assets/riyadhicon.png")}
-              fadeDuration={0}
-              style={{ width: 40, height: 40 }}
-            />
-          </View>
-          <Text style={styles.categoryBtnTxt}>Riyadh</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={[styles.categoryContainer, { marginTop: 10 }]}>
-        <TouchableOpacity
-          style={styles.categoryBtn}
-          onPress={() => navigation.navigate("ShowByCity", { city: "mecca" })}
-        >
-          <View style={styles.categoryIcon}>
-            <Image
-              source={require("../../assets/Mecca.png")}
-              fadeDuration={0}
-              style={{ width: 40, height: 40 }}
-            />
-          </View>
-          <Text style={styles.categoryBtnTxt}>Mecca</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.categoryBtn}
-          onPress={() =>
-            navigation.navigate("ShowByCity", { city: "alkobar" })
-          }
-        >
-          <View style={styles.categoryIcon}>
-            <Image
-              source={require("../../assets/khobaricon.png")}
-              fadeDuration={0}
-              style={{ width: 40, height: 40 }}
-            />
-          </View>
-          <Text style={styles.categoryBtnTxt}>AlKhobar</Text>
-        </TouchableOpacity>
+        <View style={styles.categoryContainer}>
+          <TouchableOpacity
+            style={styles.categoryBtn}
+            onPress={() =>
+              navigation.navigate("ShowByCity", { city: "alqassim" })
+            }
+            // onPress={() =>
+            // navigation.navigate("CardListScreen", { title: "Restaurant" })
+            //}
+          >
+            <View style={styles.categoryIcon}>
+              <Image
+                source={require("../../assets/qassimicon.png")}
+                fadeDuration={0}
+                style={{ width: 40, height: 40 }}
+              />
+            </View>
+            <Text style={styles.categoryBtnTxt}>AlQassim</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.categoryBtn}
+            onPress={() =>
+              navigation.navigate("ShowByCity", { city: "jeddah" })
+            }
+          >
+            <View style={styles.categoryIcon}>
+              <Image
+                source={require("../../assets/jedicon.png")}
+                fadeDuration={0}
+                style={{ width: 40, height: 40 }}
+              />
+            </View>
+            <Text style={styles.categoryBtnTxt}>Jeddah</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.categoryBtn}
+            onPress={() =>
+              navigation.navigate("ShowByCity", { city: "riyadh" })
+            }
+          >
+            <View style={styles.categoryIcon}>
+              <Image
+                source={require("../../assets/riyadhicon.png")}
+                fadeDuration={0}
+                style={{ width: 40, height: 40 }}
+              />
+            </View>
+            <Text style={styles.categoryBtnTxt}>Riyadh</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={[styles.categoryContainer, { marginTop: 10 }]}>
+          <TouchableOpacity
+            style={styles.categoryBtn}
+            onPress={() => navigation.navigate("ShowByCity", { city: "mecca" })}
+          >
+            <View style={styles.categoryIcon}>
+              <Image
+                source={require("../../assets/Mecca.png")}
+                fadeDuration={0}
+                style={{ width: 40, height: 40 }}
+              />
+            </View>
+            <Text style={styles.categoryBtnTxt}>Mecca</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.categoryBtn}
+            onPress={() =>
+              navigation.navigate("ShowByCity", { city: "alkobar" })
+            }
+          >
+            <View style={styles.categoryIcon}>
+              <Image
+                source={require("../../assets/khobaricon.png")}
+                fadeDuration={0}
+                style={{ width: 40, height: 40 }}
+              />
+            </View>
+            <Text style={styles.categoryBtnTxt}>AlKhobar</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.categoryBtn}
-          onPress={() => navigation.navigate("ShowByCity", { city: "abha" })}
-        >
-          <View style={styles.categoryIcon}>
-            <Image
-              source={require("../../assets/abhaicon.png")}
-              fadeDuration={0}
-              style={{ width: 40, height: 40 }}
-            />
-          </View>
-          <Text style={styles.categoryBtnTxt}>Abha</Text>
-        </TouchableOpacity>
-      </View>
-      <Text></Text>
-      <Text></Text>
+          <TouchableOpacity
+            style={styles.categoryBtn}
+            onPress={() => navigation.navigate("ShowByCity", { city: "abha" })}
+          >
+            <View style={styles.categoryIcon}>
+              <Image
+                source={require("../../assets/abhaicon.png")}
+                fadeDuration={0}
+                style={{ width: 40, height: 40 }}
+              />
+            </View>
+            <Text style={styles.categoryBtnTxt}>Abha</Text>
+          </TouchableOpacity>
+        </View>
+        <Text></Text>
+        <Text></Text>
 
-      <Text
-        style={{
-          alignSelf: "center",
-          fontSize: 18,
-          fontWeight: "bold",
-          color: "grey",
-          fontFamily: "Futura-Medium",
-        }}
-      >
-        Add a Destintion To Ertehal
-      </Text>
-      <Text></Text>
-      <View>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("AddDestenation")}
+        <Text
           style={{
-            padding: 7,
-            paddingVertical: 12,
-            backgroundColor: "#8fbc8f",
-            paddingHorizontal: 70,
             alignSelf: "center",
-            borderRadius: 40,
-            marginTop: 2,
-          
+            fontSize: 18,
+            fontWeight: "bold",
+            color: "grey",
+            fontFamily: "Futura-Medium",
           }}
         >
-          <Text
+          Manage The Destintions Requests
+        </Text>
+        <Text></Text>
+        <View>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("ManageRequests")}
             style={{
-              color: "white",
-              fontFamily: "Futura-Medium",
-              fontWeight: "bold",
+              padding: 7,
+              paddingVertical: 12,
+              backgroundColor: "#8fbc8f",
+              paddingHorizontal: 70,
+              alignSelf: "center",
+              borderRadius: 40,
+              marginTop: 2,
             }}
           >
-            ADD NOW
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
-  );
+            <Text
+              style={{
+                color: "white",
+                fontFamily: "Futura-Medium",
+                fontWeight: "bold",
+              }}
+            >
+              MANAGE REQUESTS
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    );
+  } else {
+    return (
+      <ScrollView style={styles.container}>
+        <View style={styles.sliderContainer}>
+          <Swiper
+            autoplay
+            horizontal={false}
+            height={200}
+            activeDotColor="#FF6347"
+          >
+            <View style={styles.slide}>
+              <Image
+                source={require("../../assets/t1.jpg")}
+                resizeMode="cover"
+                style={styles.sliderImage}
+              />
+            </View>
+            <View style={styles.slide}>
+              <Image
+                source={require("../../assets/t2.jpg")}
+                resizeMode="cover"
+                style={styles.sliderImage}
+              />
+            </View>
+
+            <View style={styles.slide}>
+              <Image
+                source={require("../../assets/t3.jpg")}
+                resizeMode="cover"
+                style={styles.sliderImage}
+              />
+            </View>
+            <View style={styles.slide}>
+              <Image
+                source={require("../../assets/t5.jpg")}
+                resizeMode="cover"
+                style={styles.sliderImage}
+              />
+            </View>
+            <View style={styles.slide}>
+              <Image
+                source={require("../../assets/t6.jpg")}
+                resizeMode="cover"
+                style={styles.sliderImage}
+              />
+            </View>
+          </Swiper>
+        </View>
+
+        <View style={styles.categoryContainer}>
+          <TouchableOpacity
+            style={styles.categoryBtn}
+            onPress={() =>
+              navigation.navigate("ShowByCity", { city: "alqassim" })
+            }
+            // onPress={() =>
+            // navigation.navigate("CardListScreen", { title: "Restaurant" })
+            //}
+          >
+            <View style={styles.categoryIcon}>
+              <Image
+                source={require("../../assets/qassimicon.png")}
+                fadeDuration={0}
+                style={{ width: 40, height: 40 }}
+              />
+            </View>
+            <Text style={styles.categoryBtnTxt}>AlQassim</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.categoryBtn}
+            onPress={() =>
+              navigation.navigate("ShowByCity", { city: "jeddah" })
+            }
+          >
+            <View style={styles.categoryIcon}>
+              <Image
+                source={require("../../assets/jedicon.png")}
+                fadeDuration={0}
+                style={{ width: 40, height: 40 }}
+              />
+            </View>
+            <Text style={styles.categoryBtnTxt}>Jeddah</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.categoryBtn}
+            onPress={() =>
+              navigation.navigate("ShowByCity", { city: "riyadh" })
+            }
+          >
+            <View style={styles.categoryIcon}>
+              <Image
+                source={require("../../assets/riyadhicon.png")}
+                fadeDuration={0}
+                style={{ width: 40, height: 40 }}
+              />
+            </View>
+            <Text style={styles.categoryBtnTxt}>Riyadh</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={[styles.categoryContainer, { marginTop: 10 }]}>
+          <TouchableOpacity
+            style={styles.categoryBtn}
+            onPress={() => navigation.navigate("ShowByCity", { city: "mecca" })}
+          >
+            <View style={styles.categoryIcon}>
+              <Image
+                source={require("../../assets/Mecca.png")}
+                fadeDuration={0}
+                style={{ width: 40, height: 40 }}
+              />
+            </View>
+            <Text style={styles.categoryBtnTxt}>Mecca</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.categoryBtn}
+            onPress={() =>
+              navigation.navigate("ShowByCity", { city: "alkobar" })
+            }
+          >
+            <View style={styles.categoryIcon}>
+              <Image
+                source={require("../../assets/khobaricon.png")}
+                fadeDuration={0}
+                style={{ width: 40, height: 40 }}
+              />
+            </View>
+            <Text style={styles.categoryBtnTxt}>AlKhobar</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.categoryBtn}
+            onPress={() => navigation.navigate("ShowByCity", { city: "abha" })}
+          >
+            <View style={styles.categoryIcon}>
+              <Image
+                source={require("../../assets/abhaicon.png")}
+                fadeDuration={0}
+                style={{ width: 40, height: 40 }}
+              />
+            </View>
+            <Text style={styles.categoryBtnTxt}>Abha</Text>
+          </TouchableOpacity>
+        </View>
+        <Text></Text>
+        <Text></Text>
+
+        <Text
+          style={{
+            alignSelf: "center",
+            fontSize: 18,
+            fontWeight: "bold",
+            color: "grey",
+            fontFamily: "Futura-Medium",
+          }}
+        >
+          Add a Destintion To Ertehal
+        </Text>
+        <Text></Text>
+        <View>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("AddDestenation")}
+            style={{
+              padding: 7,
+              paddingVertical: 12,
+              backgroundColor: "#8fbc8f",
+              paddingHorizontal: 70,
+              alignSelf: "center",
+              borderRadius: 40,
+              marginTop: 2,
+            }}
+          >
+            <Text
+              style={{
+                color: "white",
+                fontFamily: "Futura-Medium",
+                fontWeight: "bold",
+              }}
+            >
+              ADD NOW
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    );
+  }
 };
 
 export default Home;

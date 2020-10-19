@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1031423745963-ebuul11fc4m9ksh8kng1lqjuppg5jied.apps.googleusercontent.com</string>
+	<string>226246250518-0fe38k59k6iq0bktsit4oog30ht06pkn.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1031423745963-ebuul11fc4m9ksh8kng1lqjuppg5jied</string>
+	<string>com.googleusercontent.apps.226246250518-0fe38k59k6iq0bktsit4oog30ht06pkn</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDdCZKJvIWyPNGLvZ-65NhSi3Mzb0dGAFw</string>
+	<string>AIzaSyC1eRKK5mG3OxhIw3uoRG8lT0RqjeCBRZU</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1031423745963</string>
+	<string>226246250518</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>Ertehal</string>
 	<key>PROJECT_ID</key>
-	<string>ertehal-289e5</string>
+	<string>ertehal2-92ca1</string>
 	<key>STORAGE_BUCKET</key>
-	<string>ertehal-289e5.appspot.com</string>
+	<string>ertehal2-92ca1.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1031423745963:ios:fd6f360bd950591e70fcee</string>
+	<string>1:226246250518:ios:e7dfc1ee9343114420a537</string>
 	<key>DATABASE_URL</key>
-	<string>https://ertehal-289e5.firebaseio.com</string>
+	<string>https://ertehal2-92ca1.firebaseio.com</string>
 </dict>
 </plist>

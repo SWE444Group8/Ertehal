@@ -21,7 +21,6 @@ import Hr from "../components/Hr";
 
 const ShowPlaceScreen = ({ route, navigation }) => {
   const { id } = route.params;
-
   const [place, setPlace] = useState({});
   const [imgUrl, setImgUrl] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -33,6 +32,7 @@ const ShowPlaceScreen = ({ route, navigation }) => {
     //     setPlace(data.val())
     //     getImage(data.val().thumb)
     // })
+
     firebase
       .firestore()
       .collection("places")
@@ -44,6 +44,9 @@ const ShowPlaceScreen = ({ route, navigation }) => {
       });
   }, []);
 
+  const deleteDes = async () => {
+    firebase.firestore().collection("places").doc(place.id).delete();
+  };
   const getImage = async (name) => {
     try {
       var ref = firebase.storage().ref(name);
@@ -77,40 +80,80 @@ const ShowPlaceScreen = ({ route, navigation }) => {
         <ActivityIndicator size="large" />
       </View>
     );
+  if (firebase.auth().currentUser.email == "ertehaladmin@gmail.com") {
+    return (
+      <ScrollView>
+        <View style={styles.container}>
+          <View style={styles.iconsView}></View>
+          <Hr />
+          <Text style={styles.title}>{place.name}</Text>
+          <Image style={styles.image} source={{ uri: imgUrl }} />
+          <Hr />
+          <Text style={styles.des}>{place.description}</Text>
+          <Hr />
+          <TouchableOpacity onPress={deleteDes}>
+            <Text></Text>
 
-  return (
-    <ScrollView>
-      <View style={styles.container}>
-        <View style={styles.iconsView}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("ImageShow", { id })}
-          >
-            <View style={styles.icon}>
-              <Feather name="image" size={40} color="white" />
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={openMap}>
-            <View style={styles.icon}>
-              <Feather name="map-pin" size={40} color="white" />
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => navigation.navigate("ImageShow", { id })}
-          >
-            <View style={styles.icon}>
-              <Feather name="heart" size={40} color="white" />
+            <View
+              style={{
+                padding: 7,
+                paddingVertical: 12,
+                backgroundColor: "red",
+                paddingHorizontal: 70,
+                alignSelf: "center",
+                borderRadius: 40,
+                marginTop: 2,
+              }}
+            >
+              <Text
+                style={{
+                  color: "white",
+                  alignItems: "center",
+                  fontFamily: "Futura-Medium",
+                }}
+              >
+                DELETE
+              </Text>
             </View>
           </TouchableOpacity>
         </View>
-        <Hr />
-        <Text style={styles.title}>{place.name}</Text>
-        <Image style={styles.image} source={{ uri: imgUrl }} />
-        <Hr />
-        <Text style={styles.des}>{place.description}</Text>
-      </View>
-    </ScrollView>
-  );
+      </ScrollView>
+    );
+  } else {
+    return (
+      <ScrollView>
+        <View style={styles.container}>
+          <View style={styles.iconsView}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("ImageShow", { id })}
+            >
+              <View style={styles.icon}>
+                <Feather name="image" size={40} color="white" />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={openMap}>
+              <View style={styles.icon}>
+                <Feather name="map-pin" size={40} color="white" />
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => navigation.navigate("ImageShow", { id })}
+            >
+              <View style={styles.icon}>
+                <Feather name="heart" size={40} color="white" />
+              </View>
+            </TouchableOpacity>
+          </View>
+          <Hr />
+          <Text style={styles.title}>{place.name}</Text>
+          <Image style={styles.image} source={{ uri: imgUrl }} />
+          <Hr />
+          <Text style={styles.des}>{place.description}</Text>
+        </View>
+      </ScrollView>
+    );
+  }
 };
 
 const styles = StyleSheet.create({

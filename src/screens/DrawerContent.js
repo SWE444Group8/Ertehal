@@ -29,69 +29,132 @@ export function DrawerContent(props) {
     const user = firebase.auth().currentUser.email;
     setUser(user);
   }, []);
-
-  return (
-    <View style={{ flex: 1 }}>
-      <DrawerContentScrollView {...props}>
-        <View style={styles.drawerContent}>
-          <View style={styles.userInfoSection}>
-            <View style={{ flexDirection: "row", marginTop: 15 }}>
-              <Avatar.Image
-                source={require("../../assets/Man-Woman.png")}
-                size={50}
-              />
-              <View style={{ marginLeft: 15, flexDirection: "column" }}>
-                <Title style={styles.title}>{user}</Title>
+  if (firebase.auth().currentUser.email == "ertehaladmin@gmail.com") {
+    return (
+      <View style={{ flex: 1 }}>
+        <DrawerContentScrollView {...props}>
+          <View style={styles.drawerContent}>
+            <View style={styles.userInfoSection}>
+              <View style={{ flexDirection: "row", marginTop: 15 }}>
+                <Avatar.Image
+                  source={require("../../assets/admin.png")}
+                  size={50}
+                />
+                <View style={{ marginLeft: 15, flexDirection: "column" }}>
+                  <Title style={styles.title}>{user}</Title>
+                </View>
               </View>
             </View>
-          </View>
 
-          <Drawer.Section style={styles.drawerSection}>
-            <DrawerItem
-              icon={({ color, size }) => (
-                <Icon name="heart-outline" color={color} size={size} />
-              )}
-              label="Favorites"
-              onPress={() => {
-                props.navigation.navigate("FavoritesScreen");
-              }}
-            />
-            <DrawerItem
-              icon={({ color, size }) => (
-                <Icon name="account-check-outline" color={color} size={size} />
-              )}
-              label="Support"
-              onPress={() => {
-                props.navigation.navigate("SupportScreen");
-              }}
-            />
-          </Drawer.Section>
-        </View>
-      </DrawerContentScrollView>
-      <Drawer.Section style={styles.bottomDrawerSection}>
-        <DrawerItem
-          icon={({ color, size }) => (
-            <Icon name="exit-to-app" color={color} size={size} />
-          )}
-          label="Sign Out"
-          onPress={() => {
-            firebase.auth().signOut();
-            props.navigation.navigate("Login");
-            // signOut = async () => {
-            //   try {
-            //     firebase.auth()
-            //       .signOut()
-            //     setloggedIn(false);
-            //     // setuserInfo([]);
-            //   } catch (error) {
-            //     console.error(error);
-            //   }
-            // };
-          }}
-        />
-      </Drawer.Section>
-    </View>
-  );
+            <Drawer.Section style={styles.drawerSection}>
+              <DrawerItem
+                icon={({ color, size }) => (
+                  <Icon
+                    name="account-check-outline"
+                    color={color}
+                    size={size}
+                  />
+                )}
+                label="Support"
+                onPress={() => {
+                  props.navigation.navigate("SupportScreen");
+                }}
+              />
+            </Drawer.Section>
+          </View>
+        </DrawerContentScrollView>
+        <Drawer.Section style={styles.bottomDrawerSection}>
+          <DrawerItem
+            icon={({ color, size }) => (
+              <Icon name="exit-to-app" color={color} size={size} />
+            )}
+            label="Sign Out"
+            onPress={() => {
+              firebase.auth().signOut();
+              props.navigation.navigate("Login");
+              // signOut = async () => {
+              //   try {
+              //     firebase.auth()
+              //       .signOut()
+              //     setloggedIn(false);
+              //     // setuserInfo([]);
+              //   } catch (error) {
+              //     console.error(error);
+              //   }
+              // };
+            }}
+          />
+        </Drawer.Section>
+      </View>
+    );
+  } else {
+    return (
+      <View style={{ flex: 1 }}>
+        <DrawerContentScrollView {...props}>
+          <View style={styles.drawerContent}>
+            <View style={styles.userInfoSection}>
+              <View style={{ flexDirection: "row", marginTop: 15 }}>
+                <Avatar.Image
+                  source={require("../../assets/Man-Woman.png")}
+                  size={50}
+                />
+                <View style={{ marginLeft: 15, flexDirection: "column" }}>
+                  <Title style={styles.title}>{user}</Title>
+                </View>
+              </View>
+            </View>
+
+            <Drawer.Section style={styles.drawerSection}>
+              <DrawerItem
+                icon={({ color, size }) => (
+                  <Icon name="heart-outline" color={color} size={size} />
+                )}
+                label="Favorites"
+                onPress={() => {
+                  props.navigation.navigate("FavoritesScreen");
+                }}
+              />
+              <DrawerItem
+                icon={({ color, size }) => (
+                  <Icon
+                    name="account-check-outline"
+                    color={color}
+                    size={size}
+                  />
+                )}
+                label="Support"
+                onPress={() => {
+                  props.navigation.navigate("SupportScreen");
+                }}
+              />
+            </Drawer.Section>
+          </View>
+        </DrawerContentScrollView>
+        <Drawer.Section style={styles.bottomDrawerSection}>
+          <DrawerItem
+            icon={({ color, size }) => (
+              <Icon name="exit-to-app" color={color} size={size} />
+            )}
+            label="Sign Out"
+            onPress={() => {
+              firebase.auth().signOut();
+              props.navigation.navigate("Login");
+              // signOut = async () => {
+              //   try {
+              //     firebase.auth()
+              //       .signOut()
+              //     setloggedIn(false);
+              //     // setuserInfo([]);
+              //   } catch (error) {
+              //     console.error(error);
+              //   }
+              // };
+            }}
+          />
+        </Drawer.Section>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
