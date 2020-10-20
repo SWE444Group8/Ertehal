@@ -13,6 +13,7 @@ import ForgotPassword from "./src/screens/ForgotPassword";
 import ManageRequests from "./src/screens/ManageRequests";
 import ShowPlaceAdmin from "./src/screens/ShowPlaceAdmin";
 import ResultsScreen from "./src/screens/ResultsScreen";
+import MyDestentions from "./src/screens/MyDestentions";
 
 
 import { NavigationContainer } from "@react-navigation/native";
@@ -45,6 +46,7 @@ const App = () => {
           <Stack.Screen name="ManageRequests" component={ManageRequests} />
           <Stack.Screen name="ShowPlaceAdmin" component={ShowPlaceAdmin} />
           <Stack.Screen name="ResultsScreen" component={ResultsScreen} />
+          <Stack.Screen name="MyDestentions" component={MyDestentions} />
 
           <Stack.Screen
             name="Mais"

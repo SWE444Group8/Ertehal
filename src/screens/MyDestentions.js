@@ -1,20 +1,65 @@
-import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import React, { useContext, useState, useEffect } from 'react'
+import {
+    StyleSheet,
+    Text,
+    View,
+    FlatList,
+    TouchableOpacity
+} from 'react-native'
+import * as firebase from "firebase";
 
-const MyDestentions = () => {
+import { Context } from '../components/PlacesContext'
+
+import ResultDetail from '../components/ResultDetail'
+
+import SearchBar from "../components/SearchBar";
+
+const MyDestentions = ({ navigation }) => {
+
+    const { state, getPlacesByUser } = useContext(Context)
+
+    const { placesToShow } = state
+
+    
+    const userid = firebase.auth().currentUser.id;
+
+    //const [Name, setName] = useState("");
+//const searched = .toLowerCase();
+
+    
+
+    useEffect(() => {
+      getPlacesByUser(userid)
+  }, [])
+
+
+    const createList = () => {
+
+    }
+
+    
     return (
-      <View style={styles.container}>
-        <Text>MyDestentions Screen</Text>
-      </View>
-    );
-};
+        <View>
+            
+            <FlatList
+                showsHorizontalScrollIndicator={false}
+                data={placesToShow}
+                keyExtractor={res => res.id}
+                renderItem={({ item }) => {
+                    return (
+                        <TouchableOpacity
+                            onPress={() => navigation.navigate('ShowPlaceScreen', { id: item.id })}
+                        >
+                            <ResultDetail result={item} />
+                        </TouchableOpacity>
+                    )
+                }}
+            />
+        </View>
+    )
+}
 
-export default MyDestentions;
+export default MyDestentions
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1, 
-    alignItems: 'center', 
-    justifyContent: 'center'
-  },
-});
+const styles = StyleSheet.create({})
+
