@@ -9,6 +9,8 @@ const placesReducer = (state, action) => {
       return { ...state, places: action.payload };
     case "get_places_by_city":
       return { ...state, placesToShow: action.payload };
+      case 'get_places_by_name':
+        return { ...state, placesToShow: action.payload };
     case "get_place":
       return {
         ...state,
@@ -55,12 +57,28 @@ const getPlacesByCity = (dispatch) => async (cityName) => {
   dispatch({ type: "get_places_by_city", payload: arr });
 };
 
+
+
+const getPlacesByName = dispatch => async (name) => {
+
+  //var name1 = name.toLowerCase();
+   const res = await firebase.firestore().collection('places').where(('name'.toLowerCase()), '==', name)
+       .get()
+   const arr = []
+   res.forEach(doc => {
+       arr.push(doc.data())
+   })
+
+   dispatch({ type: 'get_places_by_name', payload: arr })
+}
+
 export const { Provider, Context } = createDataContext(
   placesReducer,
   {
     getAllPlaces,
     getPlace,
     getPlacesByCity,
+    getPlacesByName,
   },
   {
     places: [],

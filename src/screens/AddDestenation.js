@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import uid from "uid";
+import * as firebase from "firebase";
+import "@firebase/firestore";
 
-import { firebase } from "../firebase/config";
+// import {firebase} from '../firebase/config'
 
 import {
   StyleSheet,
@@ -11,9 +13,7 @@ import {
   TouchableOpacity,
   Picker,
   ScrollView,
-  Alert,
 } from "react-native";
-import { showMessage, hideMessage } from "react-native-flash-message";
 
 import ImageUpload from "../components/ImageUpload";
 import Map from "../components/Map";
@@ -43,8 +43,13 @@ const AddDestenation = ({ navigation }) => {
     }
   };
 
+  const lowercase =(name) =>{
+name = name.toLowerCase()
+
+  }
+
   const submitData = () => {
-    if (!name) return setErr("Please Enter a Destenation's Title");
+    if (!name) return setErr("Please Enter a Place Title");
     if (!city) return setErr("Please Choose a City");
     if (!des) return setErr("Please Enter a Description");
     if (!imageUri) return setErr("Please Add an Image");
@@ -88,7 +93,6 @@ const AddDestenation = ({ navigation }) => {
     //     createdAt: new Date().toJSON().slice(0, 10),
     //     userId: firebase.auth().currentUser.uid,
     //   });
-    Alert.alert("Please wait for admin's approval!");
 
     navigation.pop();
   };
@@ -98,7 +102,10 @@ const AddDestenation = ({ navigation }) => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Text style={styles.title}>Add a New Destenation To ERTEHAL</Text>
+        <Text style={styles.title}>
+          Add New Place To ERTEHAL So Everyone Could Enjoy The Beauty Of Saudi
+          Arabia
+        </Text>
         <Text style={styles.little}>
           * The destination must be approved by the administration before it
           appears{" "}
@@ -112,13 +119,17 @@ const AddDestenation = ({ navigation }) => {
             fontFamily: "Futura-Medium",
           }}
         >
-          Destination's Infomation:
+          Place Infomation:
         </Text>
         <TextInput
-          placeholder="Title Of The Destenation"
+        
+          placeholder="Title Of The Place"
           style={styles.input}
+  
           value={name}
-          onChangeText={setName}
+          //autoCapitalize="none"
+          onChangeText= {setName}
+          //onSubmitEditing = {name => setName(name.toLowerCase())}
         />
         <View style={styles.pickerStyle}>
           <Text style={{ color: "#085C06", fontFamily: "Futura-Medium" }}>
@@ -158,7 +169,7 @@ const AddDestenation = ({ navigation }) => {
             fontFamily: "Futura-Medium",
           }}
         >
-          Destination's Image:
+          Place Image:
         </Text>
         <ImageUpload onSaveImage={setImageUri} />
         <Hr />
@@ -169,7 +180,7 @@ const AddDestenation = ({ navigation }) => {
             fontFamily: "Futura-Medium",
           }}
         >
-          Destination's Location:{" "}
+          Place Location:{" "}
         </Text>
         <Map onPressLocation={setCoords} />
         <Hr />
@@ -247,3 +258,4 @@ const styles = StyleSheet.create({
 });
 
 export default AddDestenation;
+

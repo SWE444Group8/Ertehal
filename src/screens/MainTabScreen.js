@@ -18,6 +18,9 @@ import ShowPlaceScreen from "./ShowPlaceScreen";
 import ShowByCity from "./ShowByCity";
 import SettingsScreen from "./SettingsScreen";
 import SupportScreen from "./SupportScreen";
+import ResultsScreen from "./ResultsScreen";
+
+
 
 import MyComments from "./MyComments";
 
@@ -144,6 +147,14 @@ const HomeStackScreen = ({ navigation }) => {
         component={AddDestenation}
         onPress={() => navigation.navigate("AddDestenation")}
       />
+
+      <HomeStack.Screen
+        name="ResultsScreen"
+        component={ResultsScreen}
+        onPress={() => navigation.navigate("ResultsScreen")}
+      />
+
+
       <HomeStack.Screen
         name="ShowPlaceScreen"
         component={ShowPlaceScreen}

@@ -12,6 +12,8 @@ import Loading from "./src/screens/Loading";
 import ForgotPassword from "./src/screens/ForgotPassword";
 import ManageRequests from "./src/screens/ManageRequests";
 import ShowPlaceAdmin from "./src/screens/ShowPlaceAdmin";
+import ResultsScreen from "./src/screens/ResultsScreen";
+
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -42,6 +44,7 @@ const App = () => {
           <Stack.Screen name="Signup" component={Signup} />
           <Stack.Screen name="ManageRequests" component={ManageRequests} />
           <Stack.Screen name="ShowPlaceAdmin" component={ShowPlaceAdmin} />
+          <Stack.Screen name="ResultsScreen" component={ResultsScreen} />
 
           <Stack.Screen
             name="Mais"
