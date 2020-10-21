@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import * as firebase from "firebase";
 import "@firebase/firestore";
 
@@ -10,6 +11,7 @@ import {
   TextInput,
   Button,
   TouchableOpacity,
+  ActivityIndicator
 } from "react-native";
 import {
   KeyboardAvoidingView,
@@ -22,21 +24,17 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 
 const SignupScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
-  //const [name, setName] = useState('')
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
   const [error, setError] = useState("");
+  
 
   const [isLoading, setIsLoading] = useState(false);
 
   const onSignup = async () => {
-    // if (!name) {
-    //     setError('Please enter your Full name')
-    //     return
-    // }
-
+   
     if (rePassword !== password) {
-      setError("Passwords don't match, Please re-enter your password");
+      setError("Passwords don't match. Please make reEnter your Password");
       return;
     }
 
@@ -45,9 +43,20 @@ const SignupScreen = ({ navigation }) => {
     const date = new Date();
 
     try {
-      const res = await firebase
+      firebase
         .auth()
-        .createUserWithEmailAndPassword(email.trim(), password, RePassword);
+        .createUserWithEmailAndPassword(email, password )
+        .then(() => {
+           firebase.firestore().collection('users')
+                    .doc().set({
+                        email: email.trim(),
+                        createdAt: new Date().toJSON().slice(0, 10),
+                    })
+                setIsLoading(false)
+          
+          navigation.navigate("Mais")
+          
+        })
       // const saveRes = await firebase.database().ref('users/' + res.user.uid).set({
       //     name: name.trim(),
       //     email: email.trim(),
@@ -55,20 +64,8 @@ const SignupScreen = ({ navigation }) => {
       //     isActive: true,
       //     isBannd: false
       // });
-      const dbRes = await firebase
-        .firestore()
-        .collection("users")
-        .doc(res.user.uid)
-        .set({
-          //name: name.trim(),
-          email: email.trim(),
-          createdAt: new Date().toJSON().slice(0, 10),
-          isActive: true,
-          isBannd: false,
-        });
-      console.log("hello");
-      setIsLoading(false);
-      // navigation.navigate('Loading')
+
+            // navigation.navigate('Loading')
     } catch (e) {
       setIsLoading(false);
       setError(e.message);
@@ -101,7 +98,7 @@ const SignupScreen = ({ navigation }) => {
               }}
             >
               {" "}
-              Create Your Account
+              CREATE YOUR ACCOUNT
             </Text>
             <Text
               style={{
@@ -112,7 +109,7 @@ const SignupScreen = ({ navigation }) => {
                 alignSelf: "center",
               }}
             >
-              To Join Our Ertehal Family
+              TO JOIN OUR ERTEHAL FAMILY
             </Text>
 
             <View style={styles.inner}>
@@ -128,6 +125,7 @@ const SignupScreen = ({ navigation }) => {
                 underlineColorAndroid="transparent"
                 autoCapitalize="none"
               />
+
               <TextInput
                 editable={isLoading ? false : true}
                 style={styles.input}
@@ -139,22 +137,24 @@ const SignupScreen = ({ navigation }) => {
                 underlineColorAndroid="transparent"
                 autoCapitalize="none"
               />
-              <TextInput
+
+                <TextInput
                 editable={isLoading ? false : true}
                 style={styles.input}
                 placeholderTextColor="#aaaaaa"
                 secureTextEntry
-                placeholder="Confirm Password"
-                secureTextEntry={true}
-                value={password}
-                onChangeText={setPassword}
+                placeholder="conform Password"
+                value={rePassword}
+                onChangeText={setRePassword}
+                underlineColorAndroid="transparent"
+                autoCapitalize="none"
               />
               <Text></Text>
 
               <TouchableOpacity style={styles.button} onPress={onSignup}>
                 <Text style={styles.buttonTitle}>SIGN UP</Text>
               </TouchableOpacity>
-              <Text></Text>
+             
 
               <View style={styles.footerView}>
                 <Text style={styles.footerText}>
@@ -166,6 +166,10 @@ const SignupScreen = ({ navigation }) => {
                     LOG IN
                   </Text>
                 </Text>
+                <Text></Text>
+              <Text></Text>
+              <Text></Text>
+              <Text></Text>
               </View>
             </View>
           </View>
@@ -191,7 +195,7 @@ const styles = StyleSheet.create({
     padding: 8,
     color: "black",
     borderRadius: 14,
-    fontSize: 18,
+    fontSize: 24,
     fontWeight: "500",
     alignSelf: "center",
   },
@@ -230,3 +234,4 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
 });
+

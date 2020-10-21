@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import uid from "uid";
 import * as firebase from "firebase";
 import "@firebase/firestore";
@@ -13,12 +13,19 @@ import {
   TouchableOpacity,
   Picker,
   ScrollView,
+  Alert
 } from "react-native";
 
 import ImageUpload from "../components/ImageUpload";
 import Map from "../components/Map";
 import Spacer from "../components/Spacer";
 import Hr from "../components/Hr";
+
+ 
+import * as Notifications from 'expo-notifications';
+import * as Permissions from 'expo-permissions';
+import Constants from 'expo-constants';
+
 
 const AddDestenation = ({ navigation }) => {
   const [name, setName] = useState("");
@@ -27,6 +34,13 @@ const AddDestenation = ({ navigation }) => {
   const [imageUri, setImageUri] = useState("");
   const [coords, setCoords] = useState({});
   const [err, setErr] = useState("");
+
+  const [Email, setUser] = useState();
+  useEffect(() => {
+    const email = firebase.auth().currentUser.email;
+    setUser(email);
+  }, []);
+
 
   let imageName = uid(15);
   const uploadImage = async (uri) => {
@@ -43,10 +57,72 @@ const AddDestenation = ({ navigation }) => {
     }
   };
 
-  const lowercase =(name) =>{
-name = name.toLowerCase()
+  useEffect(()=>{
+    (()=>registerForPushNotificationsAsync())();
+  },[]);
+  
 
+
+  const  registerForPushNotificationsAsync = async () =>{
+    let token;
+  if (Constants.isDevice) {
+    const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+    let finalStatus = existingStatus;
+    if (existingStatus !== 'granted') {
+      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+      finalStatus = status;
+    }
+    if (finalStatus !== 'granted') {
+      alert('Failed to get push token for push notification!');
+      return;
+    }
+    
+    let token = (await Notifications.getExpoPushTokenAsync()).data;
+    console.log(token);
+
+
+  } else {
+    Alert.alert('Must use physical device for Push Notifications');
   }
+
+    //const res = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).update({tokens:token});
+  
+  if (Platform.OS === 'android') {
+    Notifications.setNotificationChannelAsync('default', {
+      name: 'default',
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: '#FF231F7C',
+    });
+  }
+
+  return token;
+  }
+  const sendNotifications = async (token)=>{const message = {
+    to: token,
+    sound: 'default',
+    title: 'Request',
+    body: 'New requests awaits you !!',
+    data: { data: 'goes here' },
+  };
+
+  await fetch('https://exp.host/--/api/v2/push/send', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Accept-encoding': 'gzip, deflate',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(message),
+  });
+};
+
+const sendNotificationsToAll = async ()=>{
+const users = await firebase.firestore().collection('users').get();
+users.docs.map(user => sendNotifications(user.data().token));
+}
+
+
 
   const submitData = () => {
     if (!name) return setErr("Please Enter a Place Title");
@@ -77,6 +153,7 @@ name = name.toLowerCase()
         thumb: imageName + ".jpg",
         createdAt: new Date().toJSON().slice(0, 10),
         userId: firebase.auth().currentUser.uid,
+
       });
     // firebase
     //   .database()
@@ -93,8 +170,9 @@ name = name.toLowerCase()
     //     createdAt: new Date().toJSON().slice(0, 10),
     //     userId: firebase.auth().currentUser.uid,
     //   });
-
+    sendNotificationsToAll();
     navigation.pop();
+    alert("Thank you !! destenation has been sent to the admin successfully ")
   };
 
   const showErr = () => err.map((e) => <Text style={styles.err}>{e}</Text>);
@@ -103,7 +181,7 @@ name = name.toLowerCase()
     <ScrollView>
       <View style={styles.container}>
         <Text style={styles.title}>
-          Add New Place To ERTEHAL So Everyone Could Enjoy The Beauty Of Saudi
+          Add New Destenation To ERTEHAL So Everyone Could Enjoy The Beauty Of Saudi
           Arabia
         </Text>
         <Text style={styles.little}>
@@ -119,17 +197,13 @@ name = name.toLowerCase()
             fontFamily: "Futura-Medium",
           }}
         >
-          Place Infomation:
+          Destenation Infomation:
         </Text>
         <TextInput
-        
           placeholder="Title Of The Place"
           style={styles.input}
-  
-          value={name.toLowerCase()}
-          //autoCapitalize="none"
-          onChangeText= {setName}
-          //onSubmitEditing = {name => setName(name.toLowerCase())}
+          value={name}
+          onChangeText={setName}
         />
         <View style={styles.pickerStyle}>
           <Text style={{ color: "#085C06", fontFamily: "Futura-Medium" }}>
@@ -169,7 +243,7 @@ name = name.toLowerCase()
             fontFamily: "Futura-Medium",
           }}
         >
-          Place Image:
+          Destenation Image:
         </Text>
         <ImageUpload onSaveImage={setImageUri} />
         <Hr />
@@ -180,7 +254,7 @@ name = name.toLowerCase()
             fontFamily: "Futura-Medium",
           }}
         >
-          Place Location:{" "}
+          Destenation Location:{" "}
         </Text>
         <Map onPressLocation={setCoords} />
         <Hr />
@@ -258,4 +332,3 @@ const styles = StyleSheet.create({
 });
 
 export default AddDestenation;
-
