@@ -70,15 +70,16 @@ const Home = ({ navigation }) => {
             </View>
           </Swiper>
           
-          <SearchBar term={term}
-        onTermChange={setTerm}
-       onTermSubmit={() => navigation.navigate("ResultsScreen", { name: term }) } />
+        
         </View>
 
 
       <View style={styles.categoryContainer}>
    
-      
+      <SearchBar term={term}
+        onTermChange={setTerm}
+       onTermSubmit={() => navigation.navigate("ResultsScreen", { name: term }) } />
+
         <TouchableOpacity
           style={styles.categoryBtn}
           onPress={() =>
@@ -259,6 +260,11 @@ const Home = ({ navigation }) => {
         </View>
 
         <View style={styles.categoryContainer}>
+        <SearchBar term={term}
+        onTermChange={setTerm}
+       onTermSubmit={() => navigation.navigate("ResultsScreen", { name: term }) } />
+
+       
           <TouchableOpacity
             style={styles.categoryBtn}
             onPress={() =>
