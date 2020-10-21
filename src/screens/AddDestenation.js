@@ -126,7 +126,7 @@ name = name.toLowerCase()
           placeholder="Title Of The Place"
           style={styles.input}
   
-          value={name}
+          value={name.toLowerCase()}
           //autoCapitalize="none"
           onChangeText= {setName}
           //onSubmitEditing = {name => setName(name.toLowerCase())}
