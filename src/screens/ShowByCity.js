@@ -34,10 +34,6 @@ const ShowByCity = ({ navigation, route }) => {
      
 return( <View>
 
-    <SearchBar term={term}
-onTermChange={setTerm}
-onTermSubmit={() => navigation.navigate("ResultsScreen", { name: term }) } />
-
    <FlatList
        showsHorizontalScrollIndicator={false}
        data={placesToShow}

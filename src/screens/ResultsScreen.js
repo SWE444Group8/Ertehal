@@ -32,12 +32,20 @@ const ResultsScreen = ({ navigation, route }) => {
     }
 
     
+if (placesToShow == null){
+
+    alert("there's no matching results");
+}
+
+
     return (
+       
         <View>
             
             <FlatList
                 showsHorizontalScrollIndicator={false}
                 data={placesToShow}
+               
                 keyExtractor={res => res.id}
                 renderItem={({ item }) => {
                     return (

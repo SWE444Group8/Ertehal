@@ -36,6 +36,7 @@ const Home = ({ navigation }) => {
                 resizeMode="cover"
                 style={styles.sliderImage}
               />
+              
             </View>
             <View style={styles.slide}>
               <Image
@@ -51,6 +52,7 @@ const Home = ({ navigation }) => {
                 resizeMode="cover"
                 style={styles.sliderImage}
               />
+              
             </View>
             <View style={styles.slide}>
               <Image
@@ -67,14 +69,15 @@ const Home = ({ navigation }) => {
               />
             </View>
           </Swiper>
+          
+          <SearchBar term={term}
+        onTermChange={setTerm}
+       onTermSubmit={() => navigation.navigate("ResultsScreen", { name: term }) } />
         </View>
 
-      <SearchBar
-                    term={term}
-                    onTermChange={setTerm}
-                    onTermSubmit={() => console.log(term)}
-                />
+
       <View style={styles.categoryContainer}>
+   
       
         <TouchableOpacity
           style={styles.categoryBtn}
