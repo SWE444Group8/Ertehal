@@ -17,9 +17,9 @@ import {
 } from "react-native";
 import FlashMessage from "react-native-flash-message";
 
-import * as Notifications from 'expo-notifications';
-import * as Permissions from 'expo-permissions';
-import Constants from 'expo-constants';
+import * as Notifications from "expo-notifications";
+import * as Permissions from "expo-permissions";
+import Constants from "expo-constants";
 //import { Context } from '../context/PlacesContext'
 
 import Hr from "../components/Hr";
@@ -34,14 +34,15 @@ const ShowPlaceScreen = ({ route, navigation }) => {
     firebase.firestore().collection("places").doc(place.id).update({
       show: true,
     });
+    navigation.navigate("Home");
+
     Alert.alert("Destintion Approved!");
-    navigation.pop();
   };
   const Dissaprove = async () => {
     firebase.firestore().collection("places").doc(place.id).delete();
-    Alert.alert("Destintion Dissapproved!");
+    navigation.navigate("Home");
 
-    navigation.pop();
+    Alert.alert("Destintion Dissapproved!");
   };
 
   useEffect(() => {
@@ -56,72 +57,71 @@ const ShowPlaceScreen = ({ route, navigation }) => {
       });
   }, []);
 
+  useEffect(() => {
+    (() => registerForPushNotificationsAsync())();
+  }, []);
 
-  useEffect(()=>{
-    (()=>registerForPushNotificationsAsync())();
-  },[]);
-  
-
-  const  registerForPushNotificationsAsync = async () =>{
+  const registerForPushNotificationsAsync = async () => {
     let token;
-  if (Constants.isDevice) {
-    const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
-    let finalStatus = existingStatus;
-    if (existingStatus !== 'granted') {
-      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-      finalStatus = status;
-    }
-    if (finalStatus !== 'granted') {
-      alert('Failed to get push token for push notification!');
-      return;
-    }
-    
-    let token = (await Notifications.getExpoPushTokenAsync()).data;
-    console.log(token);
+    if (Constants.isDevice) {
+      const { status: existingStatus } = await Permissions.getAsync(
+        Permissions.NOTIFICATIONS
+      );
+      let finalStatus = existingStatus;
+      if (existingStatus !== "granted") {
+        const { status } = await Permissions.askAsync(
+          Permissions.NOTIFICATIONS
+        );
+        finalStatus = status;
+      }
+      if (finalStatus !== "granted") {
+        alert("Failed to get push token for push notification!");
+        return;
+      }
 
-
-  } else {
-    Alert.alert('Must use physical device for Push Notifications');
-  }
+      let token = (await Notifications.getExpoPushTokenAsync()).data;
+      console.log(token);
+    } else {
+      Alert.alert("Must use physical device for Push Notifications");
+    }
 
     //const res = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).update({tokens:token});
-  
-  if (Platform.OS === 'android') {
-    Notifications.setNotificationChannelAsync('default', {
-      name: 'default',
-      importance: Notifications.AndroidImportance.MAX,
-      vibrationPattern: [0, 250, 250, 250],
-      lightColor: '#FF231F7C',
-    });
-  }
 
-  return token;
-  }
-  const sendNotifications = async (token)=>{const message = {
-    to: token,
-    sound: 'default',
-    title: 'New Destenation',
-    body: 'New Destenation awaits you !!',
-    data: { data: 'goes here' },
+    if (Platform.OS === "android") {
+      Notifications.setNotificationChannelAsync("default", {
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: "#FF231F7C",
+      });
+    }
+
+    return token;
+  };
+  const sendNotifications = async (token) => {
+    const message = {
+      to: token,
+      sound: "default",
+      title: "New Destenation",
+      body: "New Destenation awaits you !!",
+      data: { data: "goes here" },
+    };
+
+    await fetch("https://exp.host/--/api/v2/push/send", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Accept-encoding": "gzip, deflate",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(message),
+    });
   };
 
-  await fetch('https://exp.host/--/api/v2/push/send', {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Accept-encoding': 'gzip, deflate',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(message),
-  });
-};
-
-const sendNotificationsToAll = async ()=>{
-const users = await firebase.firestore().collection('users').get();
-users.docs.map(user => sendNotifications(user.data().token));
-}
-
-
+  const sendNotificationsToAll = async () => {
+    const users = await firebase.firestore().collection("users").get();
+    users.docs.map((user) => sendNotifications(user.data().token));
+  };
 
   const getImage = async (name) => {
     try {

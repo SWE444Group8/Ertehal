@@ -13,6 +13,7 @@ import {
   ScrollView,
   Platform,
   Linking,
+  Alert,
 } from "react-native";
 
 //import { Context } from '../context/PlacesContext'
@@ -46,6 +47,8 @@ const ShowPlaceScreen = ({ route, navigation }) => {
 
   const deleteDes = async () => {
     firebase.firestore().collection("places").doc(place.id).delete();
+    Alert.alert("Destintion Deleted!");
+    navigation.navigate("Home");
   };
   const getImage = async (name) => {
     try {

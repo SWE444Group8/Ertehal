@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import uid from "uid";
 import * as firebase from "firebase";
 import "@firebase/firestore";
@@ -13,7 +13,7 @@ import {
   TouchableOpacity,
   Picker,
   ScrollView,
-  Alert
+  Alert,
 } from "react-native";
 
 import ImageUpload from "../components/ImageUpload";
@@ -21,11 +21,9 @@ import Map from "../components/Map";
 import Spacer from "../components/Spacer";
 import Hr from "../components/Hr";
 
- 
-import * as Notifications from 'expo-notifications';
-import * as Permissions from 'expo-permissions';
-import Constants from 'expo-constants';
-
+import * as Notifications from "expo-notifications";
+import * as Permissions from "expo-permissions";
+import Constants from "expo-constants";
 
 const AddDestenation = ({ navigation }) => {
   const [name, setName] = useState("");
@@ -40,7 +38,6 @@ const AddDestenation = ({ navigation }) => {
     const email = firebase.auth().currentUser.email;
     setUser(email);
   }, []);
-
 
   let imageName = uid(15);
   const uploadImage = async (uri) => {
@@ -57,72 +54,71 @@ const AddDestenation = ({ navigation }) => {
     }
   };
 
-  useEffect(()=>{
-    (()=>registerForPushNotificationsAsync())();
-  },[]);
-  
+  useEffect(() => {
+    (() => registerForPushNotificationsAsync())();
+  }, []);
 
-
-  const  registerForPushNotificationsAsync = async () =>{
+  const registerForPushNotificationsAsync = async () => {
     let token;
-  if (Constants.isDevice) {
-    const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
-    let finalStatus = existingStatus;
-    if (existingStatus !== 'granted') {
-      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-      finalStatus = status;
-    }
-    if (finalStatus !== 'granted') {
-      alert('Failed to get push token for push notification!');
-      return;
-    }
-    
-    let token = (await Notifications.getExpoPushTokenAsync()).data;
-    console.log(token);
+    if (Constants.isDevice) {
+      const { status: existingStatus } = await Permissions.getAsync(
+        Permissions.NOTIFICATIONS
+      );
+      let finalStatus = existingStatus;
+      if (existingStatus !== "granted") {
+        const { status } = await Permissions.askAsync(
+          Permissions.NOTIFICATIONS
+        );
+        finalStatus = status;
+      }
+      if (finalStatus !== "granted") {
+        alert("Failed to get push token for push notification!");
+        return;
+      }
 
-
-  } else {
-    Alert.alert('Must use physical device for Push Notifications');
-  }
+      let token = (await Notifications.getExpoPushTokenAsync()).data;
+      console.log(token);
+    } else {
+      Alert.alert("Must use physical device for Push Notifications");
+    }
 
     //const res = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).update({tokens:token});
-  
-  if (Platform.OS === 'android') {
-    Notifications.setNotificationChannelAsync('default', {
-      name: 'default',
-      importance: Notifications.AndroidImportance.MAX,
-      vibrationPattern: [0, 250, 250, 250],
-      lightColor: '#FF231F7C',
-    });
-  }
 
-  return token;
-  }
-  const sendNotifications = async (token)=>{const message = {
-    to: token,
-    sound: 'default',
-    title: 'Request',
-    body: 'New requests awaits you !!',
-    data: { data: 'goes here' },
+    if (Platform.OS === "android") {
+      Notifications.setNotificationChannelAsync("default", {
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: "#FF231F7C",
+      });
+    }
+
+    return token;
+  };
+  const sendNotifications = async (token) => {
+    const message = {
+      to: token,
+      sound: "default",
+      title: "Request",
+      body: "New requests awaits you !!",
+      data: { data: "goes here" },
+    };
+
+    await fetch("https://exp.host/--/api/v2/push/send", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Accept-encoding": "gzip, deflate",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(message),
+    });
   };
 
-  await fetch('https://exp.host/--/api/v2/push/send', {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Accept-encoding': 'gzip, deflate',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(message),
-  });
-};
-
-const sendNotificationsToAll = async ()=>{
-const users = await firebase.firestore().collection('users').get();
-users.docs.map(user => sendNotifications(user.data().token));
-}
-
-
+  const sendNotificationsToAll = async () => {
+    const users = await firebase.firestore().collection("users").get();
+    users.docs.map((user) => sendNotifications(user.data().token));
+  };
 
   const submitData = () => {
     if (!name) return setErr("Please Enter a Place Title");
@@ -153,7 +149,6 @@ users.docs.map(user => sendNotifications(user.data().token));
         thumb: imageName + ".jpg",
         createdAt: new Date().toJSON().slice(0, 10),
         userId: firebase.auth().currentUser.uid,
-
       });
     // firebase
     //   .database()
@@ -172,7 +167,7 @@ users.docs.map(user => sendNotifications(user.data().token));
     //   });
     sendNotificationsToAll();
     navigation.pop();
-    alert("Thank you !! destenation has been sent to the admin successfully ")
+    Alert.alert("Please wait for admin's approval! ");
   };
 
   const showErr = () => err.map((e) => <Text style={styles.err}>{e}</Text>);
@@ -180,10 +175,7 @@ users.docs.map(user => sendNotifications(user.data().token));
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Text style={styles.title}>
-          Add New Destenation To ERTEHAL So Everyone Could Enjoy The Beauty Of Saudi
-          Arabia
-        </Text>
+        <Text style={styles.title}>Add New Destenation To Ertehal</Text>
         <Text style={styles.little}>
           * The destination must be approved by the administration before it
           appears{" "}

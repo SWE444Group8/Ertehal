@@ -7,14 +7,13 @@ import { StyleSheet, Platform, Image, Text, View } from "react-native";
 import Login from "./src/screens/Login";
 import Signup from "./src/screens/Signup";
 // import { SwitchNavigator } from "react-navigation";
-import Mais from "./src/screens/Mais";
+import Main from "./src/screens/Main";
 import Loading from "./src/screens/Loading";
 import ForgotPassword from "./src/screens/ForgotPassword";
 import ManageRequests from "./src/screens/ManageRequests";
 import ShowPlaceAdmin from "./src/screens/ShowPlaceAdmin";
 import ResultsScreen from "./src/screens/ResultsScreen";
 import MyDestentions from "./src/screens/MyDestentions";
-
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -49,8 +48,8 @@ const App = () => {
           <Stack.Screen name="MyDestentions" component={MyDestentions} />
 
           <Stack.Screen
-            name="Mais"
-            component={Mais}
+            name="Main"
+            component={Main}
             options={{
               headerShown: false,
             }}
