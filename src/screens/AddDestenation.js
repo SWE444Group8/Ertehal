@@ -202,7 +202,7 @@ users.docs.map(user => sendNotifications(user.data().token));
         <TextInput
           placeholder="Title Of The Place"
           style={styles.input}
-          value={name}
+          value={name.toLowerCase()}
           onChangeText={setName}
         />
         <View style={styles.pickerStyle}>

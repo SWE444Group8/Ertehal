@@ -4,7 +4,8 @@ import {
     Text,
     View,
     FlatList,
-    TouchableOpacity
+    TouchableOpacity,
+    Alert
 } from 'react-native'
 
 import { Context } from '../components/PlacesContext'
@@ -18,30 +19,33 @@ const ResultsScreen = ({ navigation, route }) => {
     const { state, getPlacesByName } = useContext(Context)
 
     const { placesToShow } = state
-    //const [Name, setName] = useState("");
-//const searched = .toLowerCase();
-
-    useEffect(() => {
+    
+    
+    useEffect(  () => {
         getPlacesByName(route.params.name)
     }, [])
 
     //const [Name, setName] = useState("");
 
-    const createList = () => {
+    const createList = (
+
+    ) => { 
 
     }
 
-    
-if (placesToShow == null){
 
-    alert("there's no matching results");
-}
+ 
+
+    //if (placesToShow.length==0){
+       // Alert.alert("no mathcing results");
+     //}
+
 
 
     return (
        
         <View>
-            
+    
             <FlatList
                 showsHorizontalScrollIndicator={false}
                 data={placesToShow}
@@ -54,12 +58,21 @@ if (placesToShow == null){
                         >
                             <ResultDetail result={item} />
                         </TouchableOpacity>
+
+                        
                     )
                 }}
             />
         </View>
+
+        
     )
+
+    
+     
 }
+
+
 
 export default ResultsScreen
 
