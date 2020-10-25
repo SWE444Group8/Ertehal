@@ -38,7 +38,7 @@ const ShowPlaceScreen = ({ route, navigation }) => {
 
     Alert.alert("Destintion Approved!");
   };
-  const Dissaprove = async () => {
+  const Dissaprove = async ({ navigation }) => {
     firebase.firestore().collection("places").doc(place.id).delete();
     navigation.navigate("Home");
 
