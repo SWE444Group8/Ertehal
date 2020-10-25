@@ -30,7 +30,7 @@ const ShowPlaceScreen = ({ route, navigation }) => {
   const [imgUrl, setImgUrl] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
-  const Approve = async ({ navigation }) => {
+  const Approve = async () => {
     firebase.firestore().collection("places").doc(place.id).update({
       show: true,
     });
@@ -38,7 +38,7 @@ const ShowPlaceScreen = ({ route, navigation }) => {
 
     Alert.alert("Destintion Approved!");
   };
-  const Dissaprove = async ({ navigation }) => {
+  const Dissaprove = async () => {
     firebase.firestore().collection("places").doc(place.id).delete();
     navigation.navigate("Home");
 
