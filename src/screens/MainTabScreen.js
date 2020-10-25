@@ -20,13 +20,9 @@ import SettingsScreen from "./SettingsScreen";
 import SupportScreen from "./SupportScreen";
 import ResultsScreen from "./ResultsScreen";
 
-
-
 import MyComments from "./MyComments";
 
-
 const HomeStack = createStackNavigator();
-const NotificationStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 //const AddDestenationStack = createStackNavigator();
@@ -49,19 +45,7 @@ const MainTabScreen = () => (
         ),
       }}
     />
-    <Tab.Screen
-      name="Notifications"
-      component={NotificationStackScreen}
-      options={{
-        fontFamily: "Futura-Medium",
 
-        tabBarLabel: "Updates",
-        tabBarColor: "#1f65ff",
-        tabBarIcon: ({ color }) => (
-          <Icon name="ios-notifications" color={color} size={26} />
-        ),
-      }}
-    />
     <Tab.Screen
       name="Profile"
       component={ProfileStackScreen}
@@ -154,7 +138,6 @@ const HomeStackScreen = ({ navigation }) => {
         onPress={() => navigation.navigate("ResultsScreen")}
       />
 
-
       <HomeStack.Screen
         name="ShowPlaceScreen"
         component={ShowPlaceScreen}
@@ -167,59 +150,30 @@ const HomeStackScreen = ({ navigation }) => {
           navigation.navigate("ShowByCity", { city: city.title.toLowerCase() })
         }
       />
-       <HomeStack.Screen
-                name="FavoritesScreen"
-                component={FavoritesScreen}
-                onPress={() => navigation.navigate("FavoritesScreen")}
-              />
       <HomeStack.Screen
-                name="SettingsScreen"
-                component={SettingsScreen}
-                onPress={() => navigation.navigate("SettingsScreen")}
-              />
-               <HomeStack.Screen
-                name="SupportScreen"
-                component={SupportScreen}
-                onPress={() => navigation.navigate("SupportScreen")}
-              />
-                            <HomeStack.Screen
-                name="MyComments"
-                component={MyComments}
-                onPress={() => navigation.navigate("MyComments")}
-              />
-
+        name="FavoritesScreen"
+        component={FavoritesScreen}
+        onPress={() => navigation.navigate("FavoritesScreen")}
+      />
+      <HomeStack.Screen
+        name="SettingsScreen"
+        component={SettingsScreen}
+        onPress={() => navigation.navigate("SettingsScreen")}
+      />
+      <HomeStack.Screen
+        name="SupportScreen"
+        component={SupportScreen}
+        onPress={() => navigation.navigate("SupportScreen")}
+      />
+      <HomeStack.Screen
+        name="MyComments"
+        component={MyComments}
+        onPress={() => navigation.navigate("MyComments")}
+      />
     </HomeStack.Navigator>
   );
 };
 
-const NotificationStackScreen = ({ navigation }) => (
-  <NotificationStack.Navigator
-    screenOptions={{
-      headerStyle: {
-        backgroundColor: "#8fbc8f",
-      },
-      headerTintColor: "#fff",
-      headerTitleStyle: {
-        fontWeight: "bold",
-      },
-    }}
-  >
-    <NotificationStack.Screen
-      name="Notifications"
-      component={NotificationScreen}
-      options={{
-        headerLeft: () => (
-          <Icon.Button
-            name="ios-menu"
-            size={25}
-            backgroundColor="#8fbc8f"
-            onPress={() => navigation.openDrawer()}
-          />
-        ),
-      }}
-    />
-  </NotificationStack.Navigator>
-);
 const ProfileStackScreen = ({ navigation }) => {
   const { colors } = useTheme();
 
@@ -258,7 +212,7 @@ const ProfileStackScreen = ({ navigation }) => {
                 component={SettingsScreen}
                 onPress={() => navigation.navigate("SettingsScreen")}
               />
-               <ProfileStack.Screen
+              <ProfileStack.Screen
                 name="SupportScreen"
                 component={SupportScreen}
                 onPress={() => navigation.navigate("SupportScreen")}
