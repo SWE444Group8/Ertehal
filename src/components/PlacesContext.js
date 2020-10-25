@@ -1,6 +1,8 @@
 import * as firebase from "firebase";
 import "@firebase/firestore";
 
+import _ from 'lodash'
+
 import createDataContext from "./createDataContext";
 
 const placesReducer = (state, action) => {
@@ -64,14 +66,21 @@ const getPlacesByCity = (dispatch) => async (cityName) => {
 const getPlacesByName = dispatch => async (name) => {
 
   //var name1 = name.toLowerCase();
-   const res = await firebase.firestore().collection('places').where(('name'.toLowerCase()), '==', name)
-       .get()
+  //  const res = await firebase.firestore().collection('places').where(('name'.toLowerCase()), '==', name)
+  //      .get()
+  const res = await firebase.firestore().collection('places').get()
    const arr = []
    res.forEach(doc => {
        arr.push(doc.data())
    })
 
-   dispatch({ type: 'get_places_by_name', payload: arr })
+   
+   const arr2 = arr.filter(i => _.startsWith(i.name, name))
+   console.log(arr2)
+
+  //  const arr = []
+
+   dispatch({ type: 'get_places_by_name', payload: arr2 })
 }
 
 

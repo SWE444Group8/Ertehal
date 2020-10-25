@@ -76,7 +76,10 @@ const Home = ({ navigation }) => {
 
           <SearchBar term={term}
         onTermChange={setTerm}
-       onTermSubmit={() => navigation.navigate("ResultsScreen", { name: term }) } /></View>
+        onTermSubmit={() => navigation.navigate("ResultsScreen", { name: term }) } />
+        
+        
+        </View>
 
       <View style={styles.categoryContainer}>
    

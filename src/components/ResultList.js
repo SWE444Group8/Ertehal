@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
 // import { withNavigation } from 'react-navigation'
 import Hr from "../components/Hr";
+import SearchBar from "../components/SearchBar";
 
 import ResultDetail from './ResultDetail'
 
@@ -11,9 +12,12 @@ const ResultList = ({ title, results, navigate }) => {
 
 
     return (
+        <View>
         <View style={styles.container}>
             <Text style={styles.title}>{title}</Text>
+            
             <FlatList
+            
                 horizontal
                // numColumns={2}
                 showsHorizontalScrollIndicator={false}
@@ -21,6 +25,7 @@ const ResultList = ({ title, results, navigate }) => {
                 keyExtractor={result => result.id}
                 renderItem={({ item }) => {
                     return (
+                        
                         <TouchableOpacity
                             onPress={() => navigate('ShowPlace', { id: item.id })}
                         >
@@ -30,7 +35,10 @@ const ResultList = ({ title, results, navigate }) => {
                 }}
             />
             <Hr />
+           
         </View>
+        </View>
+
     )
 }
 
