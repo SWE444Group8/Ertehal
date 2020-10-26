@@ -186,6 +186,12 @@ const ShowPlaceScreen = ({ route, navigation }) => {
         <Image style={styles.image} source={{ uri: imgUrl }} />
         <Hr />
         <Text style={styles.des}>{place.description}</Text>
+        <Hr />
+
+        <Text style={styles.city}>Destenation info:</Text>
+          <Text style={styles.city}>City: {place.city}</Text>
+          <Text style={styles.city}>Created By: {place.userEmail}</Text>
+          <Text style={styles.city}>Created At: {place.createdAt}</Text>
       </View>
     </ScrollView>
   );
@@ -197,6 +203,13 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     flex: 1,
     padding: 10,
+  },
+  city: {
+    fontFamily: "Futura-Medium",
+    fontSize: 15,
+    color: "grey",
+    marginLeft: 15,
+    marginVertical: 10,
   },
   title: {
     fontFamily: "Futura-Medium",

@@ -82,6 +82,7 @@ const AddDestenation = ({ navigation }) => {
     } else {
       Alert.alert("Must use physical device for Push Notifications");
     }
+
     if (email=='adminertehal.gmail.com'){
     const res = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).update({tokens:token});
     }
@@ -97,6 +98,7 @@ const AddDestenation = ({ navigation }) => {
 
     return token;
   };
+
   const sendNotifications = async (token) => {
     const message = {
       to: token,
@@ -151,6 +153,7 @@ const AddDestenation = ({ navigation }) => {
         thumb: imageName + ".jpg",
         createdAt: new Date().toJSON().slice(0, 10),
         userId: firebase.auth().currentUser.uid,
+        userEmail: Email,
       });
     // firebase
     //   .database()
