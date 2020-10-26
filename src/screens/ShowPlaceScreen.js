@@ -94,6 +94,11 @@ const ShowPlaceScreen = ({ route, navigation }) => {
           <Hr />
           <Text style={styles.des}>{place.description}</Text>
           <Hr />
+          <Text style={styles.city}>Destenation info:</Text>
+          <Text style={styles.city}>City: {place.city}</Text>
+          <Text style={styles.city}>Created At: {place.createdAt}</Text>
+
+
           <TouchableOpacity onPress={deleteDes}>
             <Text></Text>
 
@@ -199,6 +204,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     paddingHorizontal: 40,
+  },
+  city: {
+    fontFamily: "Futura-Medium",
+    fontSize: 15,
+    color: "grey",
+    marginLeft: 15,
+    marginVertical: 10,
   },
 });
 

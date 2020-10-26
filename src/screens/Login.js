@@ -113,6 +113,16 @@ export default class Login extends React.Component {
                   >
                     <Text style={styles.footerLink}>Forgot password?</Text>
                   </TouchableOpacity>
+                  <Text></Text>
+                  <Text></Text>
+                  <Text></Text>
+                  <Text></Text>
+                  <Text></Text>
+                  <Text></Text>
+                  <Text></Text>
+                  <Text></Text>
+                  <Text></Text>
+
                 </View>
               </View>
             </View>

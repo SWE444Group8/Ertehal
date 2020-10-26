@@ -130,18 +130,33 @@ const HomeStackScreen = ({ navigation }) => {
         name="AddDestenation"
         component={AddDestenation}
         onPress={() => navigation.navigate("AddDestenation")}
+        options={{
+          headerStyle: {
+          },
+          title: '',
+      }}
       />
 
       <HomeStack.Screen
         name="ResultsScreen"
         component={ResultsScreen}
         onPress={() => navigation.navigate("ResultsScreen")}
+        options={{
+          headerStyle: {
+          },
+          title: '',
+      }}
       />
 
       <HomeStack.Screen
         name="ShowPlaceScreen"
         component={ShowPlaceScreen}
         onPress={() => navigation.navigate("ShowPlaceScreen")}
+        options={{
+          headerStyle: {
+          },
+          title: '',
+      }}
       />
       <HomeStack.Screen
         name="ShowByCity"
@@ -149,6 +164,11 @@ const HomeStackScreen = ({ navigation }) => {
         onPress={() =>
           navigation.navigate("ShowByCity", { city: city.title.toLowerCase() })
         }
+        options={{
+          headerStyle: {
+          },
+          title: '',
+      }}
       />
       <HomeStack.Screen
         name="FavoritesScreen"
@@ -164,6 +184,11 @@ const HomeStackScreen = ({ navigation }) => {
         name="SupportScreen"
         component={SupportScreen}
         onPress={() => navigation.navigate("SupportScreen")}
+        options={{
+          headerStyle: {
+          },
+          title: '',
+      }}
       />
       <HomeStack.Screen
         name="MyComments"
@@ -221,6 +246,7 @@ const ProfileStackScreen = ({ navigation }) => {
                 name="MyComments"
                 component={MyComments}
                 onPress={() => navigation.navigate("MyComments")}
+                
               />
             </View>
           ),

@@ -54,7 +54,7 @@ const SignupScreen = ({ navigation }) => {
                     })
                 setIsLoading(false)
           
-          navigation.navigate("Mais")
+          navigation.navigate("Main")
           
         })
       // const saveRes = await firebase.database().ref('users/' + res.user.uid).set({

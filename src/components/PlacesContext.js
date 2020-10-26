@@ -68,7 +68,9 @@ const getPlacesByName = dispatch => async (name) => {
   //var name1 = name.toLowerCase();
   //  const res = await firebase.firestore().collection('places').where(('name'.toLowerCase()), '==', name)
   //      .get()
-  const res = await firebase.firestore().collection('places').get()
+  const res = await firebase.firestore().collection('places').where("show", "==", true)
+  .get()
+
    const arr = []
    res.forEach(doc => {
        arr.push(doc.data())
@@ -88,8 +90,7 @@ const getPlacesByName = dispatch => async (name) => {
 const getPlacesByUser = dispatch => async (userid) => {
 
 
-  const res = await firebase.firestore().collection('places').where('userId', '==', userid )
-       .get()
+  const res = await firebase.firestore().collection('places').where('userId','==',userid ).where("show", "==", true).get()
    const arr = []
    res.forEach(doc => {
        arr.push(doc.data())
