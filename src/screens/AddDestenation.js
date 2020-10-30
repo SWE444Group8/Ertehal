@@ -33,6 +33,7 @@ const AddDestenation = ({ navigation }) => {
   const [coords, setCoords] = useState({});
   const [err, setErr] = useState("");
 
+ 
   const [Email, setUser] = useState();
   useEffect(() => {
     const email = firebase.auth().currentUser.email;
@@ -77,12 +78,14 @@ const AddDestenation = ({ navigation }) => {
       }
 
       let token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log(token);
+      //console.log(token);
     } else {
       Alert.alert("Must use physical device for Push Notifications");
     }
 
-    //const res = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).update({tokens:token});
+    if (email=='adminertehal.gmail.com'){
+    const res = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).update({tokens:token});
+    }
 
     if (Platform.OS === "android") {
       Notifications.setNotificationChannelAsync("default", {
@@ -95,6 +98,7 @@ const AddDestenation = ({ navigation }) => {
 
     return token;
   };
+
   const sendNotifications = async (token) => {
     const message = {
       to: token,
@@ -149,6 +153,7 @@ const AddDestenation = ({ navigation }) => {
         thumb: imageName + ".jpg",
         createdAt: new Date().toJSON().slice(0, 10),
         userId: firebase.auth().currentUser.uid,
+        userEmail: Email,
       });
     // firebase
     //   .database()

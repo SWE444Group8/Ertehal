@@ -27,7 +27,23 @@ const ShowPlaceScreen = ({ route, navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   // const { state, getPlace } = useContext(Context)
-
+  const createTwoButtonAlert = () =>
+  Alert.alert(
+    'Are you sure?',
+    'do you want to delete this destenation',
+    [
+      {
+        text: 'Yes',
+        onPress: deleteDes
+      },
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel'
+      },
+    ],
+    { cancelable: false }
+  );
   useEffect(() => {
     // firebase.database().ref('places/' + id).on('value', data => {
     //     setPlace(data.val())
@@ -94,7 +110,13 @@ const ShowPlaceScreen = ({ route, navigation }) => {
           <Hr />
           <Text style={styles.des}>{place.description}</Text>
           <Hr />
-          <TouchableOpacity onPress={deleteDes}>
+          <Text style={styles.city}>Destenation info:</Text>
+          <Text style={styles.city}>City: {place.city}</Text>
+          <Text style={styles.city}>Created By: {place.userEmail}</Text>
+          <Text style={styles.city}>Created At: {place.createdAt}</Text>
+
+
+          <TouchableOpacity onPress={createTwoButtonAlert}>
             <Text></Text>
 
             <View
@@ -199,6 +221,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     paddingHorizontal: 40,
+  },
+  city: {
+    fontFamily: "Futura-Medium",
+    fontSize: 15,
+    color: "grey",
+    marginLeft: 15,
+    marginVertical: 10,
   },
 });
 
