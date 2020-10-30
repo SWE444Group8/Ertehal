@@ -36,16 +36,21 @@ const ResultsScreen = ({ navigation, route }) => {
 
  
 
-    //if (placesToShow.length==0){
-       // Alert.alert("no mathcing results");
-     //}
+     
 
 
 
     return (
+        
        
         <View>
-    
+    <Text style={{
+                  color: "green",
+                  alignItems: "center",
+                  fontFamily: "Futura-Medium",
+                  fontSize: 17,
+                }}
+                > Mathcing results:{placesToShow.length}</Text>
             <FlatList
                 showsHorizontalScrollIndicator={false}
                 data={placesToShow}
