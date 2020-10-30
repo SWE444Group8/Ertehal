@@ -11,7 +11,7 @@ import {
   TextInput,
   Button,
   TouchableOpacity,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 import {
   KeyboardAvoidingView,
@@ -27,48 +27,96 @@ const SignupScreen = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
   const [error, setError] = useState("");
-  
 
   const [isLoading, setIsLoading] = useState(false);
+  const strongRegex = new RegExp(
+    "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*-_])(?=.{8,})"
+  );
+
+  const pattern = new RegExp(
+    /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
+  );
 
   const onSignup = async () => {
-   
-    if (rePassword !== password) {
-      setError("Passwords don't match. Please make reEnter your Password");
+    if (
+      !strongRegex.test(password) &&
+      password.length != 0 &&
+      rePassword.length != 0 &&
+      email.length != 0 &&
+      password == rePassword
+    ) {
+      alert(
+        "Invalid password,Your password must be at least 8 characters long, contain at least one number , have a mixture of uppercase and lowercase letters and at least one special character."
+      );
       return;
-    }
+    } else if (
+      !pattern.test(email) &&
+      password.length != 0 &&
+      rePassword.length != 0 &&
+      email.length != 0 &&
+      password == rePassword
+    ) {
+      alert("Email is badly formatted.");
+      return;
+    } else if (
+      password !== rePassword &&
+      rePassword.length != 0 &&
+      password.length != 0 &&
+      email.length != 0
+    ) {
+      alert("Passwords don't match.");
+      return;
+    } else if (
+      email.length == 0 &&
+      password.length == 0 &&
+      rePassword.length == 0
+    ) {
+      alert("Error:Please fill up your information");
+    } else if (email.length == 0) {
+      alert("Error:Please enter your email");
+    } else if (password.length == 0) {
+      alert("Error:Please enter your password");
+    } else if (rePassword.length == 0) {
+      alert("Error:Please re-enter your password");
+    } else {
+      alert("Your account has been created successfully");
 
-    setIsLoading(true);
+      setIsLoading(true);
 
-    const date = new Date();
+      const date = new Date();
 
-    try {
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(email, password )
-        .then(() => {
-           firebase.firestore().collection('users')
-                    .doc().set({
-                        email: email.trim(),
-                        createdAt: new Date().toJSON().slice(0, 10),
-                    })
-                setIsLoading(false)
-          
-          navigation.navigate("Main")
-          
-        })
-      // const saveRes = await firebase.database().ref('users/' + res.user.uid).set({
-      //     name: name.trim(),
-      //     email: email.trim(),
-      //     createdAt: new Date().toJSON().slice(0, 10),
-      //     isActive: true,
-      //     isBannd: false
-      // });
+      try {
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(email, password)
+          .then(() => {
+            firebase
+              .firestore()
+              .collection("users")
+              .doc()
+              .set({
+                email: email.trim(),
+                createdAt: new Date().toJSON().slice(0, 10),
+              });
 
-            // navigation.navigate('Loading')
-    } catch (e) {
-      setIsLoading(false);
-      setError(e.message);
+            setIsLoading(false);
+
+            navigation.navigate("Main");
+          });
+
+        // const saveRes = await firebase.database().ref('users/' + res.user.uid).set({
+        //     name: name.trim(),
+        //     email: email.trim(),
+        //     createdAt: new Date().toJSON().slice(0, 10),
+        //     isActive: true,
+        //     isBannd: false
+        // });
+
+        // navigation.navigate('Loading')
+      } catch (e) {
+        setIsLoading(false);
+        setError(e.message);
+      }
     }
   };
   return (
@@ -138,7 +186,7 @@ const SignupScreen = ({ navigation }) => {
                 autoCapitalize="none"
               />
 
-                <TextInput
+              <TextInput
                 editable={isLoading ? false : true}
                 style={styles.input}
                 placeholderTextColor="#aaaaaa"
@@ -154,7 +202,6 @@ const SignupScreen = ({ navigation }) => {
               <TouchableOpacity style={styles.button} onPress={onSignup}>
                 <Text style={styles.buttonTitle}>SIGN UP</Text>
               </TouchableOpacity>
-             
 
               <View style={styles.footerView}>
                 <Text style={styles.footerText}>
@@ -167,9 +214,9 @@ const SignupScreen = ({ navigation }) => {
                   </Text>
                 </Text>
                 <Text></Text>
-              <Text></Text>
-              <Text></Text>
-              <Text></Text>
+                <Text></Text>
+                <Text></Text>
+                <Text></Text>
               </View>
             </View>
           </View>
@@ -195,7 +242,7 @@ const styles = StyleSheet.create({
     padding: 8,
     color: "black",
     borderRadius: 14,
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: "500",
     alignSelf: "center",
   },
@@ -221,6 +268,7 @@ const styles = StyleSheet.create({
     color: "#2e2e2d",
     alignSelf: "center",
     borderRadius: 12,
+    margin: 5,
   },
   inner: {
     padding: 60,
@@ -234,4 +282,3 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
 });
-

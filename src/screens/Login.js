@@ -20,16 +20,36 @@ import {
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
+const pattern = new RegExp(
+  /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
+);
 export default class Login extends React.Component {
   state = { email: "", password: "", errorMessage: null };
 
   handleLogin = () => {
     const { email, password } = this.state;
+
+    if (email.length == 0 && password.length == 0) {
+      alert("Error:Please enter your email and password");
+    } else if (email.length == 0) {
+      alert("Error:Please enter your email");
+    } else if (password.length == 0) {
+      alert("Error:Please enter your password");
+    } else if (
+      !pattern.test(email) &&
+      password.length != 0 &&
+      email.length != 0
+    ) {
+      alert("Email is badly formatted.");
+    }
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => this.props.navigation.navigate("Main"))
-      .catch((error) => this.setState({ errorMessage: error.message }));
+      .catch((error) => {
+        this.setState({ errorMessage: error.message });
+        alert("Login Faild: Your email and/or password do not match ");
+      });
   };
   render() {
     return (
@@ -122,7 +142,6 @@ export default class Login extends React.Component {
                   <Text></Text>
                   <Text></Text>
                   <Text></Text>
-
                 </View>
               </View>
             </View>
@@ -150,7 +169,7 @@ const styles = StyleSheet.create({
     width: 350,
     height: 55,
     backgroundColor: "white",
-    margin: 5,
+    margin: 10,
     padding: 8,
     color: "black",
     borderRadius: 14,
@@ -194,6 +213,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 12,
     alignSelf: "center",
-    margin: 10,
+    margin: 5,
   },
 });
