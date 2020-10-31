@@ -16,21 +16,33 @@ import SearchBar from "../components/SearchBar";
 
 const MyDestentions = ({ navigation }) => {
 
-    const { state, getPlacesByUser } = useContext(Context)
+//     const { state, getPlacesByUser } = useContext(Context)
 
-    const { placesToShow } = state
+//     const { placesToShow } = state
 
-    
-    const userid = firebase.auth().currentUser.id;
-
-    //const [Name, setName] = useState("");
-//const searched = .toLowerCase();
+//     //const [Name, setName] = useState("");
+// //const searched = .toLowerCase();
 
     
 
-    useEffect(() => {
-      getPlacesByUser(userid)
-  }, [])
+//     useEffect(() => {
+//       getPlacesByUser(userid)
+//       const userid = firebase.auth().currentUser.uid;
+//   }, [])
+
+const { state, getPlacesByUser } = useContext(Context)
+  const [term, setTerm] = useState('');
+
+  const { placesToShow } = state
+  const [Name, setName] = useState("");
+
+  const [user, setUser] = useState();
+  useEffect(() => {
+      
+    const user = firebase.auth().currentUser.uid;
+    setUser(user);
+    getPlacesByUser(user)
+  }, []);
 
 
     const createList = () => {

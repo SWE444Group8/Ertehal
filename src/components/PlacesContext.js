@@ -17,6 +17,8 @@ const placesReducer = (state, action) => {
         return { ...state, placesToShow: action.payload };
         case 'get_places_by_user':
           return { ...state, placesToShow: action.payload };
+          case 'get_comment':
+            return { ...state, comments: action.payload };
     case "get_place":
       return {
         ...state,
@@ -87,9 +89,6 @@ const getPlacesByName = dispatch => async (name) => {
   //  const res = await firebase.firestore().collection('places').where(('name'.toLowerCase()), '==', name)
   //      .get()
   const res = await firebase.firestore().collection('places').where("show", "==", true).get()
-
-
-
    const arr = []
    res.forEach(doc => {
        arr.push(doc.data())
@@ -103,10 +102,9 @@ const getPlacesByName = dispatch => async (name) => {
 }
 
 
-const getPlacesByUser = dispatch => async (userid) => {
+const getPlacesByUser = dispatch => async (userId) => {
 
-
-  const res = await firebase.firestore().collection('places').where('userId','==',userid ).where("show", "==", true).get()
+  const res = await firebase.firestore().collection('places').where('userId','==',userId).where("show", "==", true).get()
    const arr = []
    res.forEach(doc => {
        arr.push(doc.data())
@@ -116,6 +114,16 @@ const getPlacesByUser = dispatch => async (userid) => {
 }
 
 
+const getComment = dispatch => async (DesID) => {
+
+  const res = await firebase.firestore().collection('comments').where("desID","==",DesID).get()
+   const arr = []
+   res.forEach(doc => {
+       arr.push(doc.data())
+   })
+
+   dispatch({ type: 'get_comment', payload: arr })
+}
 
 export const { Provider, Context } = createDataContext(
   placesReducer,
@@ -126,9 +134,11 @@ export const { Provider, Context } = createDataContext(
     getPlacesByName,
     getPlacesByUser,
     getAllFav,
+    getComment,
   },
   {
     places: [],
     placesToShow: [],
+    comments:[],
   }
 );

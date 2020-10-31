@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import * as firebase from "firebase";
-import { Feather ,AntDesign} from "@expo/vector-icons";
+import { Feather ,AntDesign,FontAwesome} from "@expo/vector-icons";
 import "@firebase/firestore";
 
 import {
@@ -267,15 +267,16 @@ const fav = () => {
       </ScrollView>
     );
   } else {
+
     return (
       <ScrollView>
         <View style={styles.container}>
           <View style={styles.iconsView}>
-            <TouchableOpacity
-              onPress={() => navigation.navigate("ImageShow", { id })}
+            <TouchableOpacity   onPress={() => navigation.navigate("MyComments", { id })}
+
             >
               <View style={styles.icon}>
-                <Feather name="image" size={40} color="white" />
+                <FontAwesome name="comment" size={40} color="white" />
               </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={openMap}>
