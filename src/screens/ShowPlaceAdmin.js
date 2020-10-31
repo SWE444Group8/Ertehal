@@ -30,6 +30,7 @@ const ShowPlaceScreen = ({ route, navigation }) => {
   const [imgUrl, setImgUrl] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
+  
   const Approve = async () => {
     firebase.firestore().collection("places").doc(place.id).update({
       show: true,
@@ -59,6 +60,8 @@ const ShowPlaceScreen = ({ route, navigation }) => {
 
   useEffect(() => {
     (() => registerForPushNotificationsAsync())();
+  
+  
   }, []);
 
   const registerForPushNotificationsAsync = async () => {
@@ -98,6 +101,7 @@ const ShowPlaceScreen = ({ route, navigation }) => {
 
     return token;
   };
+
   const sendNotifications = async (token) => {
     const message = {
       to: token,

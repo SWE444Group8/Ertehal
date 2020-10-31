@@ -91,7 +91,7 @@ const ProfileScreen = ({ navigation }) => {
 
         <View style={styles.menuWrapper}>
           <TouchableRipple
-            onPress={() => navigation.navigate("MyDestentions")}
+            onPress={() => navigation.navigate("FavoritesScreen")}
           >
             <View style={styles.menuItem}>
               <Icon name="heart-outline" color="#8fbc8f" size={25} />

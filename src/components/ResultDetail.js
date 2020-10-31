@@ -13,6 +13,9 @@ import {
 import * as firebase from "firebase";
 import Hr from "../components/Hr";
 import ScalableText from "react-native-text";
+
+import _ from 'lodash'
+
 const ResultDetail = ({ result }) => {
   const [imgUrl, setImgUrl] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -43,7 +46,6 @@ const ResultDetail = ({ result }) => {
         <SafeAreaView style={styles.container}>
           <ScalableText style={styles.name} numberOfLines={8}>
             {result.name} {"\n"}
-
             <ScalableText style={styles.description} numberOfLines={2}>
               {result.description}
             </ScalableText>

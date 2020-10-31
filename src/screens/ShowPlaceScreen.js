@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import * as firebase from "firebase";
-import { Feather } from "@expo/vector-icons";
+import { Feather ,AntDesign} from "@expo/vector-icons";
 import "@firebase/firestore";
 
 import {
@@ -17,6 +17,7 @@ import {
 } from "react-native";
 
 //import { Context } from '../context/PlacesContext'
+import _ from 'lodash'
 
 import Hr from "../components/Hr";
 
@@ -25,7 +26,24 @@ const ShowPlaceScreen = ({ route, navigation }) => {
   const [place, setPlace] = useState({});
   const [imgUrl, setImgUrl] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [Email, setUser] = useState();
 
+  const [isFavState, setIsFavState] = useState(false)
+
+  useEffect(() => {
+    const email = firebase.auth().currentUser.email;
+    setUser(email);
+
+    firebase
+      .firestore()
+      .collection("places")
+      .doc(id)
+      .get()
+      .then((data) => {
+        setPlace(data.data());
+        getImage(data.data().thumb);
+      });
+  }, []);
   // const { state, getPlace } = useContext(Context)
   const createTwoButtonAlert = () =>
   Alert.alert(
@@ -44,27 +62,87 @@ const ShowPlaceScreen = ({ route, navigation }) => {
     ],
     { cancelable: false }
   );
-  useEffect(() => {
-    // firebase.database().ref('places/' + id).on('value', data => {
-    //     setPlace(data.val())
-    //     getImage(data.val().thumb)
-    // })
 
+  const createTwoButtonAlert2 = () =>
+  Alert.alert(
+    'Are you sure?',
+    'do you want to remove this destenation',
+    [
+      {
+        text: 'Yes',
+        onPress: removeFav
+      },
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel'
+      },
+    ],
+    { cancelable: false }
+  );
+
+
+  const isFav = async () => 
+  {
+
+    const user=firebase.auth().currentUser.uid
+
+    const res= await firebase
+      .firestore()
+      .collection("fav")
+      .get();
+      //.find(data => data.name === name);
+      //console.log(object)
+      
+      const arr = [];
+    res.forEach((doc) => {
+      arr.push(doc.data());
+      });
+     
+      //res.forEach(doc => {
+       //arr.push(doc.data())
+   //})
+   const arr2= arr.filter(i=> i.id===id)
+      console.log("object")
+   console.log("hello" ,arr2.length)
+   
+   if (arr2.length < 1){
+   setIsFavState(false) 
+  }else{
+    setIsFavState(true)
+  }
+
+  }
+
+const fav = () => {
     firebase
       .firestore()
-      .collection("places")
+      .collection("fav")
       .doc(id)
-      .get()
-      .then((data) => {
-        setPlace(data.data());
-        getImage(data.data().thumb);
+      .set({
+        id,
+        userId: firebase.auth().currentUser.uid,
+        userEmail: Email,
+        name: place.name,
+        description: place.description,
+        thumb: place.thumb,
       });
-  }, []);
+
+      Alert.alert("added to fav");
+      navigation.pop();
+    }
 
   const deleteDes = async () => {
     firebase.firestore().collection("places").doc(place.id).delete();
+    firebase.firestore().collection("fav").doc(place.id).delete();
     Alert.alert("Destintion Deleted!");
     navigation.navigate("Home");
+  };
+  
+  const removeFav = async () => {
+    firebase.firestore().collection("fav").doc(place.id).delete();
+    Alert.alert("destenation removed from fav!");
+    navigation.pop();
   };
   const getImage = async (name) => {
     try {
@@ -93,12 +171,15 @@ const ShowPlaceScreen = ({ route, navigation }) => {
     Linking.openURL(url);
   };
 
+  isFav()
+
   if (!place.hasOwnProperty("thumb") || isLoading)
     return (
       <View style={styles.container}>
         <ActivityIndicator size="large" />
       </View>
     );
+
   if (firebase.auth().currentUser.email == "ertehaladmin@gmail.com") {
     return (
       <ScrollView>
@@ -144,6 +225,47 @@ const ShowPlaceScreen = ({ route, navigation }) => {
         </View>
       </ScrollView>
     );
+  } else 
+
+  if (isFavState) {
+    return (
+      <ScrollView>
+        <View style={styles.container}>
+          <View style={styles.iconsView}>
+
+          <TouchableOpacity
+              onPress={() => navigation.navigate("ImageShow", { id })}
+            >
+              <View style={styles.icon}>
+                <Feather name="image" size={40} color="white" />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={openMap}>
+              <View style={styles.icon}>
+                <Feather name="map-pin" size={40} color="white" />
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => navigation.navigate("ImageShow", { id })}
+            >
+              <View style={styles.icon}>
+                <AntDesign name="heart" size={40} color="white" onPress={createTwoButtonAlert2}/>
+              </View>
+            </TouchableOpacity>
+
+          </View>
+         
+          <Hr />
+          <Text style={styles.title}>{place.name}</Text>
+          <Image style={styles.image} source={{ uri: imgUrl }} />
+          <Hr />
+          <Text style={styles.des}>{place.description}</Text>
+          <Hr />
+          
+        </View>
+      </ScrollView>
+    );
   } else {
     return (
       <ScrollView>
@@ -166,7 +288,7 @@ const ShowPlaceScreen = ({ route, navigation }) => {
               onPress={() => navigation.navigate("ImageShow", { id })}
             >
               <View style={styles.icon}>
-                <Feather name="heart" size={40} color="white" />
+                <Feather name="heart" size={40} color="white" onPress={fav}/>
               </View>
             </TouchableOpacity>
           </View>
@@ -175,6 +297,8 @@ const ShowPlaceScreen = ({ route, navigation }) => {
           <Image style={styles.image} source={{ uri: imgUrl }} />
           <Hr />
           <Text style={styles.des}>{place.description}</Text>
+          <Hr />
+
         </View>
       </ScrollView>
     );
@@ -214,7 +338,7 @@ const styles = StyleSheet.create({
   icon: {
     backgroundColor: "#8fbc8f",
     padding: 10,
-    borderRadius: 25,
+    borderRadius: 20,
     margin: 10,
   },
   iconsView: {

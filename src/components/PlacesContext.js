@@ -13,6 +13,8 @@ const placesReducer = (state, action) => {
       return { ...state, placesToShow: action.payload };
       case 'get_places_by_name':
         return { ...state, placesToShow: action.payload };
+        case 'get_all_fav':
+        return { ...state, placesToShow: action.payload };
         case 'get_places_by_user':
           return { ...state, placesToShow: action.payload };
     case "get_place":
@@ -42,6 +44,22 @@ const getAllPlaces = (dispatch) => async () => {
   dispatch({ type: "get_all_places", payload: arr });
 };
 
+const getAllFav = (dispatch) => async (userId) => {
+  const res = await firebase
+    .firestore()
+    .collection('fav')
+    .where('userId','==', userId)
+    .get();
+  const arr = [];
+  res.forEach((doc) => {
+    arr.push(doc.data());
+  });
+  // const arr2 = arr.filter(i => _.startsWith(i.userEmail, userEmail))
+  // console.log(arr2)
+
+  dispatch({ type: "get_all_fav", payload: arr });
+};
+
 const getPlace = (dispatch) => (id) => {
   dispatch({ type: "get_place", payload: id });
 };
@@ -68,15 +86,14 @@ const getPlacesByName = dispatch => async (name) => {
   //var name1 = name.toLowerCase();
   //  const res = await firebase.firestore().collection('places').where(('name'.toLowerCase()), '==', name)
   //      .get()
-  const res = await firebase.firestore().collection('places').where("show", "==", true)
-  .get()
+  const res = await firebase.firestore().collection('places').where("show", "==", true).get()
+
+
 
    const arr = []
    res.forEach(doc => {
        arr.push(doc.data())
    })
-
-   
    const arr2 = arr.filter(i => _.startsWith(i.name, name))
    console.log(arr2)
 
@@ -84,7 +101,6 @@ const getPlacesByName = dispatch => async (name) => {
 
    dispatch({ type: 'get_places_by_name', payload: arr2 })
 }
-
 
 
 const getPlacesByUser = dispatch => async (userid) => {
@@ -109,6 +125,7 @@ export const { Provider, Context } = createDataContext(
     getPlacesByCity,
     getPlacesByName,
     getPlacesByUser,
+    getAllFav,
   },
   {
     places: [],
