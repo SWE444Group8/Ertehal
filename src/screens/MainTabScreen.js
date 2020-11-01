@@ -19,6 +19,8 @@ import ShowByCity from "./ShowByCity";
 import SettingsScreen from "./SettingsScreen";
 import SupportScreen from "./SupportScreen";
 import ResultsScreen from "./ResultsScreen";
+addComment
+import addComment from "./addComment";
 
 import MyComments from "./MyComments";
 
@@ -184,6 +186,16 @@ const HomeStackScreen = ({ navigation }) => {
         name="SupportScreen"
         component={SupportScreen}
         onPress={() => navigation.navigate("SupportScreen")}
+        options={{
+          headerStyle: {
+          },
+          title: '',
+      }}
+      />
+       <HomeStack.Screen
+        name="addComment"
+        component={addComment}
+        onPress={() => navigation.navigate("addComment")}
         options={{
           headerStyle: {
           },

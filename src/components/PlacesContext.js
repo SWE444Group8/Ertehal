@@ -131,8 +131,10 @@ const getPlacesByUser = (dispatch) => async (userId) => {
   dispatch({ type: "get_places_by_user", payload: arr });
 };
 
-const getComment = (dispatch) => async (DesID) => {
-  const res = await firebase.firestore().collection("comments").get();
+const getComment = (dispatch) => async (id) => {
+  const res = await firebase.firestore().collection("comments").where("desID","==",id).get();
+  //console.log("shahd")
+  console.log(id)
   const arr = [];
   res.forEach((doc) => {
     arr.push(doc.data());
