@@ -1,78 +1,55 @@
-
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect, Component } from "react";
 import {
-    StyleSheet,
-    Text,
-    View,
-    FlatList,
-    TouchableOpacity
-} from 'react-native'
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
 import * as firebase from "firebase";
 
-import { Context } from '../components/PlacesContext'
+import { Context } from "../components/PlacesContext";
 
-import ResultComment from '../components/ResultComment'
+import ResultComment from "../components/ResultComment";
 
 import SearchBar from "../components/SearchBar";
 
-const MyComments = ({ navigation}) => {
+const MyComments = ({ navigation }) => {
+  const { state, getComment } = useContext(Context);
+  const { comments } = state;
+  const desid = "";
+  const [place, setPlace] = useState({});
 
-//     const { state, getPlacesByUser } = useContext(Context)
-
-//     const { placesToShow } = state
-
-//     //const [Name, setName] = useState("");
-// //const searched = .toLowerCase();
-
-    
-
-//     useEffect(() => {
-//       getPlacesByUser(userid)
-//       const userid = firebase.auth().currentUser.uid;
-//   }, [])
-
-const { state, getComment } = useContext(Context)
-  const [term, setTerm] = useState('');
-
-  const { comments } = state
-  const [Name, setName] = useState("");
-
-  const [user, setUser] = useState();
   useEffect(() => {
+    const userid = firebase.auth().currentUser.uid;
 
-    getComment("nvu0ja1q3fgay1n")
-
-
-    
+    getPlacesByUser(userid);
   }, []);
-  
-    const createList = () => {
 
-    }
+  const createList = () => {};
 
-    
-    return (
-        <View>
-            
-            <FlatList
-                showsHorizontalScrollIndicator={false}
-                data={comments}
-                keyExtractor={res => res.id}
-                renderItem={({ item }) => {
-                    return (
-                        <TouchableOpacity
-                            onPress={() => navigation.navigate('ShowPlaceScreen', { id: item.id })}
-                        >
-                            <ResultComment result={item} />
-                        </TouchableOpacity>
-                    )
-                }}
-            />
-        </View>
-    )
-}
+  return (
+    <View>
+      <FlatList
+        showsHorizontalScrollIndicator={false}
+        data={comments}
+        keyExtractor={(res) => res.id}
+        renderItem={({ item }) => {
+          return (
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("ShowPlaceScreen", { id: item.id })
+              }
+            >
+              <ResultComment result={item} />
+            </TouchableOpacity>
+          );
+        }}
+      />
+    </View>
+  );
+};
 
-export default MyComments
+export default MyComments;
 
-const styles = StyleSheet.create({})
-
+const styles = StyleSheet.create({});
