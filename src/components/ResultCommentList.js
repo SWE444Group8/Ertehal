@@ -1,60 +1,103 @@
-import React, { useState } from 'react'
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
-// import { withNavigation } from 'react-navigation'
-import Hr from "./Hr";
-import SearchBar from "./SearchBar";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  ActivityIndicator,
+  Dimensions,
+  Platform,
+  PixelRatio,
+  SafeAreaView,
+} from "react-native";
+import * as firebase from "firebase";
+import Hr from "../components/Hr";
+import ScalableText from "react-native-text";
 
-import ResultDetail from './ResultDetail'
-import ResultComment from './ResultComment';
+import _ from 'lodash'
+import { TouchableOpacity } from "react-native-gesture-handler";
 
-const ResultCommentList = ({ title, results, navigate }) => {
+const ResultCommentList = ({ result }) => {
 
-    if (!results.length) return null
+  const email = result.userEmail.substring(0,result.userEmail.indexOf('@'));
+  const title = result.title;
 
-
-    return (
-        <View>
-        <View style={styles.container}>
-            <Text style={styles.title}>{title}</Text>
-            
-            <FlatList
-            
-                horizontal
-               // numColumns={2}
-                showsHorizontalScrollIndicator={false}
-                data={results}
-                keyExtractor={result => result.id}
-                renderItem={({ item }) => {
-                    return (
-                        
-                        <TouchableOpacity
-                            onPress={() => navigate('ShowPlaceScreen', { id: item.id })}
-                        >
-                            <ResultComment result={item} />
-                        </TouchableOpacity>
-                    )
-                }}
+  return (
+    <View>
+      <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
+        <Image style={styles.image}
+              source={require("../../assets/ProfilePic1.png")}
+              
             />
-            <Hr />
+            
+         
+          <ScalableText style={styles.name} numberOfLines={8} >
+          <Text style={styles.title} >Destination: </Text>{title}{"\n"}
+            <Text style={styles.comment}> {result.comment} </Text>
+        
            
-        </View>
-        </View>
+          </ScalableText>
+        </SafeAreaView>
+      </View>
 
-    )
-}
+      <Hr />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-    title: {
-        fontSize: 100,
-        fontWeight: 'bold',
-        color: "#085C06",
-        marginLeft: 15,
-        marginVertical: 10,
-    },
-    container: {
-        marginBottom: 10
-    }
-})
+  container: {
+    marginLeft: 10,
+    flexDirection: "row",
+    flex: 1,
+  },
+  loading: {
+    margin: 60,
+  },
+  image: {
+    width: 55,
+    height: 55,
+    borderRadius: 4,
+    //marginBottom: 10,
+    marginTop: 10,
+    resizeMode: "cover",
+  },
+  name: {
+    fontSize: 15,
+    color: "#8fbc8f",
+    marginLeft: 10,
+    marginTop: 10,
+    fontFamily: "Futura-Medium",
+  },
+  title: {
+    fontFamily: "Futura-Medium",
+    fontSize: 15,
+    color: "darkgreen",
+    fontWeight: "bold",
+    
+    
+  },
 
 
-export default ResultCommentList
+  
+
+
+
+  comment: {
+    fontSize: 15,
+    color: "grey",
+    marginLeft: 10,
+    marginTop: 20,
+    fontFamily: "Futura-Medium",
+    
+  },
+  description: {
+    fontSize: 12,
+    color: "grey",
+    textAlign: "left",
+    fontFamily: "Futura-Medium",
+  },
+});
+
+export default ResultCommentList;

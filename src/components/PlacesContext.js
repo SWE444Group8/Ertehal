@@ -19,6 +19,8 @@ const placesReducer = (state, action) => {
       return { ...state, placesToShow: action.payload };
     case "get_places_by_user":
       return { ...state, placesToShow: action.payload };
+      case "get_comment_by_user":
+        return { ...state, comments: action.payload };
     case "get_comment":
       return { ...state, comments: action.payload };
     case "get_place":
@@ -143,6 +145,19 @@ const getComment = (dispatch) => async (id) => {
   dispatch({ type: "get_comment", payload: arr });
 };
 
+
+const getCommentByUser = (dispatch) => async (id) => {
+  const res = await firebase.firestore().collection("comments").where("userId","==",id).get();
+  //console.log("shahd")
+  console.log(id)
+  const arr = [];
+  res.forEach((doc) => {
+    arr.push(doc.data());
+  });
+
+  dispatch({ type: "get_comment_by_user", payload: arr });
+};
+
 export const { Provider, Context } = createDataContext(
   placesReducer,
   {
@@ -154,6 +169,7 @@ export const { Provider, Context } = createDataContext(
     getAllFav,
     getComment,
     getAllUsers,
+    getCommentByUser,
   },
   {
     places: [],

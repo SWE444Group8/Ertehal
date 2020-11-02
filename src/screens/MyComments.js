@@ -10,12 +10,12 @@ import * as firebase from "firebase";
 
 import { Context } from "../components/PlacesContext";
 
-import ResultComment from "../components/ResultComment";
+import ResultCommentList from "../components/ResultCommentList";
 
 import SearchBar from "../components/SearchBar";
 
 const MyComments = ({ navigation }) => {
-  const { state, getComment } = useContext(Context);
+  const { state, getCommentByUser } = useContext(Context);
   const { comments } = state;
   const desid = "";
   const [place, setPlace] = useState({});
@@ -23,7 +23,7 @@ const MyComments = ({ navigation }) => {
   useEffect(() => {
     const userid = firebase.auth().currentUser.uid;
 
-    getPlacesByUser(userid);
+    getCommentByUser(userid);
   }, []);
 
   const createList = () => {};
@@ -38,10 +38,10 @@ const MyComments = ({ navigation }) => {
           return (
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate("ShowPlaceScreen", { id: item.id })
+                navigation.navigate("ShowPlaceScreen", { id: item.desID})
               }
             >
-              <ResultComment result={item} />
+              <ResultCommentList result={item} />
             </TouchableOpacity>
           );
         }}

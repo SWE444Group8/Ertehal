@@ -115,19 +115,22 @@ const ProfileScreen = ({ navigation }) => {
           </TouchableRipple>
 
 
-   
-        </View>
-      </SafeAreaView>
 
-
-      /*      <TouchableRipple onPress={() => navigation.navigate("MyComments")}>
+           <TouchableRipple onPress={() => navigation.navigate("MyComments")}>
             <View style={styles.menuItem}>
               <Icon name="comment" color="#8fbc8f" size={25} />
               <Text style={styles.menuItemText}>My Comments</Text>
             </View>
           </TouchableRipple>
           
-          */ 
+          
+
+   
+        </View>
+      </SafeAreaView>
+
+
+    
     );
   }
 };
