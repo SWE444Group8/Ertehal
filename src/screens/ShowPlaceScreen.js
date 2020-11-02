@@ -396,6 +396,7 @@ import React, { useEffect, useState, useContext } from "react";
 import * as firebase from "firebase";
 import { Feather ,AntDesign,FontAwesome} from "@expo/vector-icons";
 import "@firebase/firestore";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import {
   StyleSheet,
@@ -490,8 +491,9 @@ const ShowPlaceScreen = ({ route, navigation }) => {
         comment: comment,
         city: place.city,
         createdAt: new Date().toJSON().slice(0, 10),
-        userId: firebase.auth().currentUser.uid,
         userEmail: Email,
+        title : place.name,
+        userId: firebase.auth().currentUser.uid,
       });
   };
 
@@ -700,16 +702,11 @@ const fav = () => {
   } else {
 
     return (
-      //<ScrollView>
-        <View style={styles.container}>
+      <ScrollView>
+          <View>
+                <View style={styles.container}>
           <View style={styles.iconsView}>
-            <TouchableOpacity   onPress={() => navigation.navigate("MyComments", { id })}
-
-            >
-              <View style={styles.icon}>
-                <FontAwesome name="comment" size={40} color="white" />
-              </View>
-            </TouchableOpacity>
+          
             <TouchableOpacity onPress={openMap}>
               <View style={styles.icon}>
                 <Feather name="map-pin" size={40} color="white" />
@@ -728,18 +725,22 @@ const fav = () => {
           <Text style={styles.title}>{place.name}</Text>
           <Image style={styles.image} source={{ uri: imgUrl }} />
           <Hr />
+          <Text style={styles.description}>about the destination: </Text>
           <Text style={styles.des}>{place.description}</Text>
           <Hr />
           
 
           <View style={styles.iconsView}>
 
-          <Text style={styles.title}>Comments</Text>
-              <TouchableOpacity o onPress={() => navigation.navigate("addComment",{place})} style={styles.icon}>
+          <Text style={styles.commentTitle}>Comments</Text>
+              <TouchableOpacity o onPress={() => navigation.navigate("addComment",{place})} style={styles.commicon}>
+              
               <View style={styles.btn}>
                 <Text style={styles.btnTxt}>+</Text>
               </View>
+
             </TouchableOpacity>
+</View>
          
             {/* <View>
             <TextInput
@@ -765,7 +766,7 @@ const fav = () => {
               }}
             />
         </View>
-     // </ScrollView>
+       </ScrollView>
     );
   }
 };
@@ -786,8 +787,23 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     textAlign: "center",
   },
+  commentTitle: {
+    fontFamily: "Futura-Medium",
+    fontSize: 27,
+    color: "darkgreen",
+    fontWeight: "bold",
+    marginLeft: 1,
+    marginVertical: 10,
+    textAlign: "center",
+  },
   des: {
     color: "grey",
+    textAlign: "justify",
+    marginHorizontal: 10,
+    fontFamily: "Futura-Medium",
+  },
+  description: {
+    color: "darkgreen",
     textAlign: "justify",
     marginHorizontal: 10,
     fontFamily: "Futura-Medium",
@@ -806,10 +822,16 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     margin: 10,
   },
+  commicon: {
+    backgroundColor: "#8fbc8f",
+    padding: 5,
+    borderRadius: 25,
+    margin: 10,
+  },
   iconsView: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingHorizontal: 40,
+    paddingHorizontal: 100,
   },
   city: {
     fontFamily: "Futura-Medium",

@@ -18,13 +18,23 @@ import _ from 'lodash'
 
 const ResultComment = ({ result }) => {
 
+  const email = result.userEmail.substring(0,result.userEmail.indexOf('@'));
   return (
     <View>
       <View style={styles.container}>
         <SafeAreaView style={styles.container}>
-          <ScalableText style={styles.name} numberOfLines={8}>
-            {result.comment} {"\n"}
+        <Image style={styles.image}
+              source={require("../../assets/ProfilePic1.png")}
+              
+            />
+            
+          <ScalableText style={styles.name} numberOfLines={8} >
+            {email}: {"\n"}
+            <Text style={styles.comment}> {result.comment} </Text>
+        
+           
           </ScalableText>
+          
         </SafeAreaView>
       </View>
 
@@ -35,7 +45,7 @@ const ResultComment = ({ result }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginLeft: 15,
+    marginLeft: 10,
     flexDirection: "row",
     flex: 1,
   },
@@ -43,19 +53,28 @@ const styles = StyleSheet.create({
     margin: 60,
   },
   image: {
-    width: 200,
-    height: 150,
+    width: 55,
+    height: 55,
     borderRadius: 4,
-    marginBottom: 10,
+    //marginBottom: 10,
     marginTop: 10,
     resizeMode: "cover",
   },
   name: {
-    fontSize: 20,
+    fontSize: 15,
     color: "#8fbc8f",
+    marginLeft: 10,
+    marginTop: 10,
+    fontFamily: "Futura-Medium",
+  },
+  comment: {
+    fontSize: 15,
+    color: "grey",
     marginLeft: 10,
     marginTop: 20,
     fontFamily: "Futura-Medium",
+    
+
   },
   description: {
     fontSize: 12,

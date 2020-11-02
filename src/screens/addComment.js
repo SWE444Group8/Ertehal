@@ -90,6 +90,14 @@ const addComment =  ({route, navigation}) => {
   //   navigation.pop();
   //   Alert.alert("Please wait for admin's approval! ");
   // };
+
+
+  useEffect(() => {
+    const email = firebase.auth().currentUser.email;
+    setUser(email);
+
+  }, []);
+
   const submitData = () => {
     if (!comment) return setErr("Please Enter Your Comment!");
 
@@ -105,9 +113,10 @@ const addComment =  ({route, navigation}) => {
         desID: place.id,
         comment: comment,
         city: place.city,
+        userEmail: Email,
+        title: place.name,
         createdAt: new Date().toJSON().slice(0, 10),
         userId: firebase.auth().currentUser.uid,
-       // userEmail: Email,
       });
       navigation.pop();
       Alert.alert("thank you for your comment! ");
@@ -117,7 +126,7 @@ const addComment =  ({route, navigation}) => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Text style={styles.title}>Add New Comment</Text>
+        <Text style={styles.title}>Share Your Opinion</Text>
         <Hr />
         {err ? <Text style={styles.err}>{err}</Text> : null}
         <Text
