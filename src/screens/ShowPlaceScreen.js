@@ -666,13 +666,7 @@ const fav = () => {
       <ScrollView>
         <View style={styles.container}>
           <View style={styles.iconsView}>
-          <TouchableOpacity
-              onPress={() => navigation.navigate("ImageShow", { id })}
-            >
-              <View style={styles.icon}>
-                <Feather name="image" size={40} color="white" />
-              </View>
-            </TouchableOpacity>
+         
             <TouchableOpacity onPress={openMap}>
               <View style={styles.icon}>
                 <Feather name="map-pin" size={40} color="white" />
@@ -696,6 +690,29 @@ const fav = () => {
           <Text style={styles.des}>{place.description}</Text>
           <Hr />
           
+          
+
+          <View style={styles.iconsView}>
+
+          <Text style={styles.commentTitle}>Comments</Text>
+              <TouchableOpacity o onPress={() => navigation.navigate("addComment",{place})} style={styles.commicon}>
+              
+              <View style={styles.btn}>
+                <Text style={styles.btnTxt}>+</Text>
+              </View>
+
+            </TouchableOpacity>
+</View>
+            <FlatList
+              showsHorizontalScrollIndicator={false}
+              data={comments}
+              keyExtractor={(res) => res.id}
+              renderItem={({ item }) => {
+                return (
+                    <ResultComment result={item} />
+                );
+              }}
+            />
         </View>
       </ScrollView>
     );
@@ -740,7 +757,9 @@ const fav = () => {
               </View>
 
             </TouchableOpacity>
+            
 </View>
+
          
             {/* <View>
             <TextInput
