@@ -34,7 +34,7 @@ const ResultCommentList = ({ result }) => {
          
           <ScalableText style={styles.name} numberOfLines={8} >
           <Text style={styles.title} >Destination: </Text>{title}{"\n"}
-            <Text style={styles.comment}> {result.comment} </Text>
+            <ScalableText style={styles.comment}> {result.comment} </ScalableText>
         
            
           </ScalableText>

@@ -8,8 +8,7 @@ import {
   Dimensions,
   Platform,
   PixelRatio,
-  SafeAreaView,
-} from "react-native";
+  SafeAreaView,} from "react-native";
 import * as firebase from "firebase";
 import Hr from "../components/Hr";
 import ScalableText from "react-native-text";
@@ -28,10 +27,11 @@ const ResultComment = ({ result }) => {
               
             />
             
-          <ScalableText style={styles.name} numberOfLines={8} >
+          <ScalableText style={styles.name} numberOfLines={20} >
             {email}: {"\n"}
-            <Text style={styles.comment}> {result.comment} </Text>
-        
+            <ScalableText style={styles.comment} numberOfLines={2}>
+              {result.comment}
+            </ScalableText>
            
           </ScalableText>
           
@@ -66,14 +66,16 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginTop: 10,
     fontFamily: "Futura-Medium",
+    flex:1,
+    borderEndWidth:20
   },
   comment: {
-    fontSize: 15,
+    fontSize: 13,
     color: "grey",
     marginLeft: 10,
     marginTop: 20,
     fontFamily: "Futura-Medium",
-    
+    textAlign: "left",
   },
   description: {
     fontSize: 12,

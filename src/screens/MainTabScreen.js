@@ -176,6 +176,11 @@ const HomeStackScreen = ({ navigation }) => {
         name="FavoritesScreen"
         component={FavoritesScreen}
         onPress={() => navigation.navigate("FavoritesScreen")}
+        options={{
+          headerStyle: {
+          },
+          title: '',
+      }}
       />
       <HomeStack.Screen
         name="SettingsScreen"
@@ -206,6 +211,11 @@ const HomeStackScreen = ({ navigation }) => {
         name="MyComments"
         component={MyComments}
         onPress={() => navigation.navigate("MyComments")}
+        options={{
+          headerStyle: {
+          },
+          title: '',
+      }}
       />
     </HomeStack.Navigator>
   );
@@ -243,6 +253,11 @@ const ProfileStackScreen = ({ navigation }) => {
                 name="FavoritesScreen"
                 component={FavoritesScreen}
                 onPress={() => navigation.navigate("FavoritesScreen")}
+                options={{
+                  headerStyle: {
+                  },
+                  title: '',
+              }}
               />
               <ProfileStack.Screen
                 name="SettingsScreen"
@@ -253,11 +268,17 @@ const ProfileStackScreen = ({ navigation }) => {
                 name="SupportScreen"
                 component={SupportScreen}
                 onPress={() => navigation.navigate("SupportScreen")}
+                options={{
+                  headerStyle: {
+                  },
+                  title: '',
+              }}
               />
               <ProfileStack.Screen
                 name="MyComments"
                 component={MyComments}
                 onPress={() => navigation.navigate("MyComments")}
+                
                 
               />
             </View>
