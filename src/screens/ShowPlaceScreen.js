@@ -57,7 +57,6 @@
 
 //       getComment(id);
 
-      
 //   }, []);
 
 //   const submitData = () => {
@@ -99,7 +98,7 @@
 //       ],
 //       { cancelable: false }
 //     );
-//   
+//
 
 //   //   firebase
 //   //     .firestore()
@@ -394,7 +393,7 @@
 
 import React, { useEffect, useState, useContext } from "react";
 import * as firebase from "firebase";
-import { Feather ,AntDesign,FontAwesome} from "@expo/vector-icons";
+import { Feather, AntDesign, FontAwesome } from "@expo/vector-icons";
 import "@firebase/firestore";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -410,14 +409,14 @@ import {
   Linking,
   Alert,
   FlatList,
-  TextInput
+  TextInput,
 } from "react-native";
 
-import { Context } from '../components/PlacesContext'
+import { Context } from "../components/PlacesContext";
 
 //import { Context } from '../context/PlacesContext'
-import _ from 'lodash'
-import ResultComment from '../components/ResultComment'
+import _ from "lodash";
+import ResultComment from "../components/ResultComment";
 
 import Hr from "../components/Hr";
 
@@ -430,15 +429,15 @@ const ShowPlaceScreen = ({ route, navigation }) => {
   const [comment, setComment] = useState("");
 
   const [err, setErr] = useState("");
-  const [isFavState, setIsFavState] = useState(false)
+  const [isFavState, setIsFavState] = useState(false);
 
-  const { state, getComment } = useContext(Context)
-    const [term, setTerm] = useState('');
+  const { state, getComment } = useContext(Context);
+  const [term, setTerm] = useState("");
 
-    const { comments } = state
-    const [Name, setName] = useState("");
+  const { comments } = state;
+  const [Name, setName] = useState("");
 
-    //console.log(place)
+  //console.log(place)
   useEffect(() => {
     const email = firebase.auth().currentUser.email;
     setUser(email);
@@ -452,28 +451,27 @@ const ShowPlaceScreen = ({ route, navigation }) => {
         setPlace(data.data());
         getImage(data.data().thumb);
       });
-      
-      getComment(id)
+
+    getComment(id);
   }, []);
   // const { state, getPlace } = useContext(Context)
   const createTwoButtonAlert = () =>
-  Alert.alert(
-    'Are you sure?',
-    'do you want to delete this destenation',
-    [
-      {
-        text: 'Yes',
-        onPress: deleteDes
-      },
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel'
-      },
-    ],
-    { cancelable: false }
-  );
-
+    Alert.alert(
+      "Are you sure?",
+      "do you want to delete this destenation",
+      [
+        {
+          text: "Yes",
+          onPress: deleteDes,
+        },
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+      ],
+      { cancelable: false }
+    );
 
   const submitData = () => {
     if (!comment) return setErr("Please Enter Your Comment!");
@@ -492,79 +490,68 @@ const ShowPlaceScreen = ({ route, navigation }) => {
         city: place.city,
         createdAt: new Date().toJSON().slice(0, 10),
         userEmail: Email,
-        title : place.name,
+        title: place.name,
         userId: firebase.auth().currentUser.uid,
       });
   };
 
   const createTwoButtonAlert2 = () =>
-  Alert.alert(
-    'Are you sure?',
-    'do you want to remove this destenation',
-    [
-      {
-        text: 'Yes',
-        onPress: removeFav
-      },
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel'
-      },
-    ],
-    { cancelable: false }
-  );
+    Alert.alert(
+      "Are you sure?",
+      "do you want to remove this destenation",
+      [
+        {
+          text: "Yes",
+          onPress: removeFav,
+        },
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+      ],
+      { cancelable: false }
+    );
 
+  const isFav = async () => {
+    const user = firebase.auth().currentUser.uid;
 
-  const isFav = async () => 
-  {
+    const res = await firebase.firestore().collection("fav").get();
+    //.find(data => data.name === name);
+    //console.log(object)
 
-    const user=firebase.auth().currentUser.uid
-
-    const res= await firebase
-      .firestore()
-      .collection("fav")
-      .get();
-      //.find(data => data.name === name);
-      //console.log(object)
-      
-      const arr = [];
+    const arr = [];
     res.forEach((doc) => {
       arr.push(doc.data());
-      });
-     
-      //res.forEach(doc => {
-       //arr.push(doc.data())
-   //})
-   const arr2= arr.filter(i=> i.id===id)
-     // console.log("object")
-   //console.log("hello" ,arr2.length)
-   
-   if (arr2.length < 1){
-   setIsFavState(false) 
-  }else{
-    setIsFavState(true)
-  }
+    });
 
-  }
+    //res.forEach(doc => {
+    //arr.push(doc.data())
+    //})
+    const arr2 = arr.filter((i) => i.id === id);
+    // console.log("object")
+    //console.log("hello" ,arr2.length)
 
-const fav = () => {
-    firebase
-      .firestore()
-      .collection("fav")
-      .doc(id)
-      .set({
-        id,
-        userId: firebase.auth().currentUser.uid,
-        userEmail: Email,
-        name: place.name,
-        description: place.description,
-        thumb: place.thumb,
-      });
-
-      Alert.alert("added to fav");
-      navigation.pop();
+    if (arr2.length < 1) {
+      setIsFavState(false);
+    } else {
+      setIsFavState(true);
     }
+  };
+
+  const fav = () => {
+    firebase.firestore().collection("fav").doc(id).set({
+      id,
+      userId: firebase.auth().currentUser.uid,
+      userEmail: Email,
+      name: place.name,
+      description: place.description,
+      thumb: place.thumb,
+    });
+
+    Alert.alert("Destantion Added In Your Favorites");
+    navigation.pop();
+  };
 
   const deleteDes = async () => {
     firebase.firestore().collection("places").doc(place.id).delete();
@@ -572,10 +559,10 @@ const fav = () => {
     Alert.alert("Destintion Deleted!");
     navigation.navigate("Home");
   };
-  
+
   const removeFav = async () => {
     firebase.firestore().collection("fav").doc(place.id).delete();
-    Alert.alert("destenation removed from fav!");
+    Alert.alert("Destenation Removed From Favorites");
     navigation.pop();
   };
   const getImage = async (name) => {
@@ -605,7 +592,7 @@ const fav = () => {
     Linking.openURL(url);
   };
 
-  isFav()
+  isFav();
 
   if (!place.hasOwnProperty("thumb") || isLoading)
     return (
@@ -629,7 +616,6 @@ const fav = () => {
           <Text style={styles.city}>City: {place.city}</Text>
           <Text style={styles.city}>Created By: {place.userEmail}</Text>
           <Text style={styles.city}>Created At: {place.createdAt}</Text>
-
 
           <TouchableOpacity onPress={createTwoButtonAlert}>
             <Text></Text>
@@ -659,14 +645,11 @@ const fav = () => {
         </View>
       </ScrollView>
     );
-  } else 
-
-  if (isFavState) {
+  } else if (isFavState) {
     return (
       <ScrollView>
         <View style={styles.container}>
           <View style={styles.iconsView}>
-         
             <TouchableOpacity onPress={openMap}>
               <View style={styles.icon}>
                 <Feather name="map-pin" size={40} color="white" />
@@ -677,90 +660,90 @@ const fav = () => {
               onPress={() => navigation.navigate("ImageShow", { id })}
             >
               <View style={styles.icon}>
-                <AntDesign name="heart" size={40} color="white" onPress={createTwoButtonAlert2}/>
+                <AntDesign
+                  name="heart"
+                  size={40}
+                  color="white"
+                  onPress={createTwoButtonAlert2}
+                />
               </View>
             </TouchableOpacity>
-
           </View>
-         
+
           <Hr />
           <Text style={styles.title}>{place.name}</Text>
           <Image style={styles.image} source={{ uri: imgUrl }} />
           <Hr />
           <Text style={styles.des}>{place.description}</Text>
           <Hr />
-          
-          
 
           <View style={styles.iconsView}>
-
-          <Text style={styles.commentTitle}>Comments</Text>
-              <TouchableOpacity o onPress={() => navigation.navigate("addComment",{place})} style={styles.commicon}>
-              
+            <Text style={styles.commentTitle}>Comments</Text>
+            <TouchableOpacity
+              o
+              onPress={() => navigation.navigate("addComment", { place })}
+              style={styles.commicon}
+            >
               <View style={styles.btn}>
-                <Text style={styles.btnTxt}>+</Text>
+                <Text style={styles.btnTxt}>Add Comment</Text>
               </View>
-
             </TouchableOpacity>
-</View>
-            <FlatList
-              showsHorizontalScrollIndicator={false}
-              data={comments}
-              keyExtractor={(res) => res.id}
-              renderItem={({ item }) => {
-                return (
-                    <ResultComment result={item} />
-                );
-              }}
-            />
+          </View>
+          <FlatList
+            showsHorizontalScrollIndicator={false}
+            data={comments}
+            keyExtractor={(res) => res.id}
+            renderItem={({ item }) => {
+              return <ResultComment result={item} />;
+            }}
+          />
         </View>
       </ScrollView>
     );
   } else {
-
     return (
       <ScrollView>
-          <View>
-                <View style={styles.container}>
-          <View style={styles.iconsView}>
-          
-            <TouchableOpacity onPress={openMap}>
-              <View style={styles.icon}>
-                <Feather name="map-pin" size={40} color="white" />
-              </View>
-            </TouchableOpacity>
+        <View>
+          <View style={styles.container}>
+            <View style={styles.iconsView}>
+              <TouchableOpacity onPress={openMap}>
+                <View style={styles.icon}>
+                  <Feather name="map-pin" size={40} color="white" />
+                </View>
+              </TouchableOpacity>
 
-            <TouchableOpacity
-              onPress={() => navigation.navigate("ImageShow", { id })}
-            >
-              <View style={styles.icon}>
-                <Feather name="heart" size={40} color="white" onPress={fav}/>
-              </View>
-            </TouchableOpacity>
-          </View>
-          <Hr />
-          <Text style={styles.title}>{place.name}</Text>
-          <Image style={styles.image} source={{ uri: imgUrl }} />
-          <Hr />
-          <Text style={styles.description}>about the destination: </Text>
-          <Text style={styles.des}>{place.description}</Text>
-          <Hr />
-          
+              <TouchableOpacity
+                onPress={() => navigation.navigate("ImageShow", { id })}
+              >
+                <View style={styles.icon}>
+                  <Feather name="heart" size={40} color="white" onPress={fav} />
+                </View>
+              </TouchableOpacity>
+            </View>
+            <Hr />
+            <Text style={styles.title}>{place.name}</Text>
+            <Image style={styles.image} source={{ uri: imgUrl }} />
+            <Hr />
+            <Text style={styles.description}>About the destination: </Text>
+            <Text style={styles.des}>{place.description}</Text>
+            <Hr />
 
-          <View style={styles.iconsView}>
+            <View style={styles.iconsView}>
+              <Text style={styles.commentTitle}>
+                Comments <Text>{""}</Text>
+                <Text>{""}</Text>
+              </Text>
 
-          <Text style={styles.commentTitle}>Comments</Text>
-              <TouchableOpacity o onPress={() => navigation.navigate("addComment",{place})} style={styles.commicon}>
-              
-              <View style={styles.btn}>
-                <Text style={styles.btnTxt}>+</Text>
-              </View>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("addComment", { place })}
+                style={styles.commicon}
+              >
+                <View style={styles.btn}>
+                  <Text style={styles.btnTxt}>ADD COMMENT</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
 
-            </TouchableOpacity>
-            
-</View>
-
-         
             {/* <View>
             <TextInput
               placeholder="Comment"
@@ -772,20 +755,17 @@ const fav = () => {
             />
            
           </View> */}
-
-            </View>
-            <FlatList
-              showsHorizontalScrollIndicator={false}
-              data={comments}
-              keyExtractor={(res) => res.id}
-              renderItem={({ item }) => {
-                return (
-                    <ResultComment result={item} />
-                );
-              }}
-            />
+          </View>
+          <FlatList
+            showsHorizontalScrollIndicator={false}
+            data={comments}
+            keyExtractor={(res) => res.id}
+            renderItem={({ item }) => {
+              return <ResultComment result={item} />;
+            }}
+          />
         </View>
-       </ScrollView>
+      </ScrollView>
     );
   }
 };
@@ -799,8 +779,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: "Futura-Medium",
-    fontSize: 26,
-    color: "darkgreen",
+    fontSize: 20,
+    color: "#3cb371",
     fontWeight: "bold",
     marginLeft: 15,
     marginVertical: 10,
@@ -808,10 +788,10 @@ const styles = StyleSheet.create({
   },
   commentTitle: {
     fontFamily: "Futura-Medium",
-    fontSize: 27,
-    color: "darkgreen",
+    fontSize: 24,
+    color: "#3cb371",
     fontWeight: "bold",
-    marginLeft: 1,
+    marginLeft: -100,
     marginVertical: 10,
     textAlign: "center",
   },
@@ -822,7 +802,7 @@ const styles = StyleSheet.create({
     fontFamily: "Futura-Medium",
   },
   description: {
-    color: "darkgreen",
+    color: "#3cb371",
     textAlign: "justify",
     marginHorizontal: 10,
     fontFamily: "Futura-Medium",
@@ -860,35 +840,34 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   btn: {
-        backgroundColor: "#8fbc8f",
-        borderRadius: 20,
-        fontFamily: "Futura-Medium",
+    backgroundColor: "#8fbc8f",
+    borderRadius: 20,
+    fontFamily: "Futura-Medium",
     fontSize: 26,
     color: "darkgreen",
     fontWeight: "bold",
     marginLeft: 15,
     marginRight: 15,
-    marginVertical: 0,
+    marginVertical: 5,
     textAlign: "center",
-      },
-      btnTxt: {
-        fontFamily: "Futura-Medium",
-    
-        fontSize: 20,
-        color: "white",
-        textAlign: "center",
-      },
-      err: {
-        fontFamily: "Futura-Medium",
-        color: "red",
-        fontWeight: "bold",
-      },
-      little: {
-        fontFamily: "Futura-Medium",
-    
-        fontSize: 8,
-        color: "red",
-      },
+  },
+  btnTxt: {
+    fontFamily: "Futura-Medium",
+    fontSize: 12,
+    color: "white",
+    textAlign: "center",
+  },
+  err: {
+    fontFamily: "Futura-Medium",
+    color: "red",
+    fontWeight: "bold",
+  },
+  little: {
+    fontFamily: "Futura-Medium",
+
+    fontSize: 8,
+    color: "red",
+  },
 
   input: {
     fontFamily: "Futura-Medium",

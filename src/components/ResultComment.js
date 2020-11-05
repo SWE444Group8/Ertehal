@@ -14,27 +14,23 @@ import * as firebase from "firebase";
 import Hr from "../components/Hr";
 import ScalableText from "react-native-text";
 
-import _ from 'lodash'
+import _ from "lodash";
 
 const ResultComment = ({ result }) => {
-
-  const email = result.userEmail.substring(0,result.userEmail.indexOf('@'));
+  const email = result.userEmail.substring(0, result.userEmail.indexOf("@"));
   return (
     <View>
       <View style={styles.container}>
         <SafeAreaView style={styles.container}>
-        <Image style={styles.image}
-              source={require("../../assets/ProfilePic1.png")}
-              
-            />
-            
-          <ScalableText style={styles.name} numberOfLines={8} >
+          <Image
+            style={styles.image}
+            source={require("../../assets/ProfilePic1.png")}
+          />
+
+          <ScalableText style={styles.name} numberOfLines={8}>
             {email}: {"\n"}
             <Text style={styles.comment}> {result.comment} </Text>
-        
-           
           </ScalableText>
-          
         </SafeAreaView>
       </View>
 
@@ -66,6 +62,8 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginTop: 10,
     fontFamily: "Futura-Medium",
+    flex: 1,
+    borderEndWidth: 20,
   },
   comment: {
     fontSize: 15,
@@ -73,7 +71,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginTop: 20,
     fontFamily: "Futura-Medium",
-    
   },
   description: {
     fontSize: 12,
