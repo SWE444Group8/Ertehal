@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "grey",
     marginLeft: 10,
-    marginTop: 17,
+    marginTop: 18,
     fontFamily: "Futura-Medium",
   },
   description: {
