@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontFamily: "Futura-Medium",
     flex:1,
-    borderEndWidth:20
+    borderEndWidth:16
   },
   comment: {
     fontSize: 13,
