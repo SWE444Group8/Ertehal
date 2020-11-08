@@ -9,34 +9,33 @@ import {
   Platform,
   PixelRatio,
   SafeAreaView,
+  width,
 } from "react-native";
 import * as firebase from "firebase";
 import Hr from "../components/Hr";
 import ScalableText from "react-native-text";
 
-import _ from 'lodash'
+import _ from "lodash";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 const ResultCommentList = ({ result }) => {
-
-  const email = result.userEmail.substring(0,result.userEmail.indexOf('@'));
+  const email = result.userEmail.substring(0, result.userEmail.indexOf("@"));
   const title = result.title;
 
   return (
     <View>
       <View style={styles.container}>
         <SafeAreaView style={styles.container}>
-        <Image style={styles.image}
-              source={require("../../assets/ProfilePic1.png")}
-              
-            />
-            
-         
-          <ScalableText style={styles.name} numberOfLines={8} >
-          <Text style={styles.title} >Destination: </Text>{title}{"\n"}
-            <ScalableText style={styles.comment}> {result.comment} </ScalableText>
-        
-           
+          <Image
+            style={styles.image}
+            source={require("../../assets/ProfilePic1.png")}
+          />
+
+          <ScalableText style={styles.name} numberOfLines={8}>
+            <Text style={styles.title}>Destination: </Text>
+            {title}
+            {"\n"}
+            <Text style={styles.comment}> {result.comment} </Text>
           </ScalableText>
         </SafeAreaView>
       </View>
@@ -69,20 +68,15 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginTop: 10,
     fontFamily: "Futura-Medium",
+    flex: 1,
+    borderEndWidth: 20,
   },
   title: {
     fontFamily: "Futura-Medium",
     fontSize: 15,
-    color: "darkgreen",
+    color: "#3cb371",
     fontWeight: "bold",
-    
-    
   },
-
-
-  
-
-
 
   comment: {
     fontSize: 15,
@@ -90,7 +84,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginTop: 20,
     fontFamily: "Futura-Medium",
-    
   },
   description: {
     fontSize: 12,

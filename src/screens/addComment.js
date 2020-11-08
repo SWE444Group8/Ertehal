@@ -14,6 +14,7 @@ import {
   Picker,
   ScrollView,
   Alert,
+  reload,
 } from "react-native";
 
 import ImageUpload from "../components/ImageUpload";
@@ -25,7 +26,7 @@ import * as Notifications from "expo-notifications";
 import * as Permissions from "expo-permissions";
 import Constants from "expo-constants";
 
-const addComment =  ({route, navigation}) => {
+const addComment = ({ route, navigation }) => {
   // const [name, setName] = useState("");
   // const [city, setCity] = useState("");
   // const [des, setDes] = useState("");
@@ -33,12 +34,11 @@ const addComment =  ({route, navigation}) => {
   // const [coords, setCoords] = useState({});
   // const [err, setErr] = useState("");
   const { place } = route.params;
- console.log(place)
+  console.log(place);
   const [comment, setComment] = useState("");
   const [err, setErr] = useState("");
   const [Email, setUser] = useState();
 
-  
   // const submitData = () => {
   //   if (!name) return setErr("Please Enter a Place Title");
   //   if (!city) return setErr("Please Choose a City");
@@ -70,32 +70,30 @@ const addComment =  ({route, navigation}) => {
   //       userId: firebase.auth().currentUser.uid,
   //       userEmail: Email,
   //     });
-  
-    // firebase
-    //   .database()
-    //   .ref(city + id)
-    //   .set({
-    //     id,
-    //     name,
-    //     city,
-    //     description: des,
-    //     show: false,
-    //     latitude: coords.latitude,
-    //     longitude: coords.longitude,
-    //     thumb: imageName + ".jpg",
-    //     createdAt: new Date().toJSON().slice(0, 10),
-    //     userId: firebase.auth().currentUser.uid,
-    //   });
+
+  // firebase
+  //   .database()
+  //   .ref(city + id)
+  //   .set({
+  //     id,
+  //     name,
+  //     city,
+  //     description: des,
+  //     show: false,
+  //     latitude: coords.latitude,
+  //     longitude: coords.longitude,
+  //     thumb: imageName + ".jpg",
+  //     createdAt: new Date().toJSON().slice(0, 10),
+  //     userId: firebase.auth().currentUser.uid,
+  //   });
   //   sendNotificationsToAll();
   //   navigation.pop();
   //   Alert.alert("Please wait for admin's approval! ");
   // };
 
-
   useEffect(() => {
     const email = firebase.auth().currentUser.email;
     setUser(email);
-
   }, []);
 
   const submitData = () => {
@@ -118,8 +116,9 @@ const addComment =  ({route, navigation}) => {
         createdAt: new Date().toJSON().slice(0, 10),
         userId: firebase.auth().currentUser.uid,
       });
-      navigation.pop();
-      Alert.alert("thank you for your comment! ");
+    navigation.pop();
+    // window.location.reload(false);
+    Alert.alert("Thank you for your comment! ");
   };
   //const showErr = () => err.map((e) => <Text style={styles.err}>{e}</Text>);
 
@@ -131,22 +130,22 @@ const addComment =  ({route, navigation}) => {
         {err ? <Text style={styles.err}>{err}</Text> : null}
         <Text
           style={{
-            color: "#085C06",
+            color: "darkgreen",
             marginVertical: 10,
             fontFamily: "Futura-Medium",
           }}
         >
-          Destenation Comment:
+          Share a Comment:
         </Text>
         <TextInput
-              placeholder="Comment"
-              style={[styles.input, { textAlignVertical: "top" }]}
-              value={comment}
-              onChangeText={setComment}
-              numberOfLines={8}
-              multiline={true}
-            />
-<TouchableOpacity onPress={submitData}>
+          placeholder="Comment"
+          style={[styles.input, { textAlignVertical: "top" }]}
+          value={comment}
+          onChangeText={setComment}
+          numberOfLines={8}
+          multiline={true}
+        />
+        <TouchableOpacity onPress={submitData}>
           <View style={styles.btn}>
             <Text style={styles.btnTxt}>SUBMIT</Text>
           </View>
@@ -159,7 +158,6 @@ const addComment =  ({route, navigation}) => {
 const styles = StyleSheet.create({
   container: {
     fontFamily: "Futura-Medium",
-
     alignContent: "center",
     justifyContent: "flex-start",
     flex: 1,
@@ -201,7 +199,6 @@ const styles = StyleSheet.create({
   },
   btnTxt: {
     fontFamily: "Futura-Medium",
-
     fontSize: 20,
     color: "white",
     textAlign: "center",

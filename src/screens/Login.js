@@ -48,7 +48,7 @@ export default class Login extends React.Component {
       .then(() => this.props.navigation.navigate("Main"))
       .catch((error) => {
         this.setState({ errorMessage: error.message });
-        alert("Login Faild: Your email and/or password do not match ");
+        alert("Your email and/or password do not match ");
       });
   };
   render() {

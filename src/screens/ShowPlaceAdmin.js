@@ -30,7 +30,6 @@ const ShowPlaceScreen = ({ route, navigation }) => {
   const [imgUrl, setImgUrl] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
-  
   const Approve = async () => {
     firebase.firestore().collection("places").doc(place.id).update({
       show: true,
@@ -60,8 +59,6 @@ const ShowPlaceScreen = ({ route, navigation }) => {
 
   useEffect(() => {
     (() => registerForPushNotificationsAsync())();
-  
-  
   }, []);
 
   const registerForPushNotificationsAsync = async () => {
@@ -193,9 +190,9 @@ const ShowPlaceScreen = ({ route, navigation }) => {
         <Hr />
 
         <Text style={styles.city}>Destenation info:</Text>
-          <Text style={styles.city}>City: {place.city}</Text>
-          <Text style={styles.city}>Created By: {place.userEmail}</Text>
-          <Text style={styles.city}>Created At: {place.createdAt}</Text>
+        <Text style={styles.city}>City: {place.city}</Text>
+        <Text style={styles.city}>Created By: {place.userEmail}</Text>
+        <Text style={styles.city}>Created At: {place.createdAt}</Text>
       </View>
     </ScrollView>
   );
@@ -218,7 +215,7 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: "Futura-Medium",
     fontSize: 26,
-    color: "darkgreen",
+    color: "#3cb371",
     fontWeight: "bold",
     marginLeft: 15,
     marginVertical: 10,
