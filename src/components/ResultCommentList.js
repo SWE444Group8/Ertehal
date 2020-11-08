@@ -91,6 +91,12 @@ const styles = StyleSheet.create({
     textAlign: "left",
     fontFamily: "Futura-Medium",
   },
+  extra: {
+    fontSize: 12,
+    color: "grey",
+    textAlign: "left",
+    fontFamily: "Futura-Medium",
+  },
 });
 
 export default ResultCommentList;
