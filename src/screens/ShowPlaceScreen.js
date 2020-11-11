@@ -396,6 +396,7 @@ import * as firebase from "firebase";
 import { Feather, AntDesign, FontAwesome } from "@expo/vector-icons";
 import "@firebase/firestore";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import Constants from 'expo-constants';
 
 import {
   StyleSheet,
@@ -410,6 +411,7 @@ import {
   Alert,
   FlatList,
   TextInput,
+  RefreshControl,
 } from "react-native";
 
 import { Context } from "../components/PlacesContext";
@@ -417,15 +419,23 @@ import { Context } from "../components/PlacesContext";
 //import { Context } from '../context/PlacesContext'
 import _ from "lodash";
 import ResultComment from "../components/ResultComment";
-import Hr from "../components/Hr";
 
-const ShowPlaceScreen = ({ route, navigation }) => {
-  const { id } = route.params;
+import Hr from "../components/Hr";
+const wait = (timeout) => {
+  return new Promise(resolve => {
+    setTimeout(resolve, timeout);
+  });
+}
+const ShowPlaceScreen = ({ route, navigation}) => {
+ 
+    const { id } = route.params;
   const [place, setPlace] = useState({});
   const [imgUrl, setImgUrl] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [Email, setUser] = useState();
   const [comment, setComment] = useState("");
+
+  const [refreshing, setRefreshing] = useState(false);
 
   const [err, setErr] = useState("");
   const [isFavState, setIsFavState] = useState(false);
@@ -454,6 +464,12 @@ const ShowPlaceScreen = ({ route, navigation }) => {
     getComment(id);
   }, []);
   // const { state, getPlace } = useContext(Context)
+
+
+ 
+
+
+
   const createTwoButtonAlert = () =>
     Alert.alert(
       "Are you sure?",
@@ -497,7 +513,7 @@ const ShowPlaceScreen = ({ route, navigation }) => {
   const createTwoButtonAlert2 = () =>
     Alert.alert(
       "Are you sure?",
-      "do you want to remove this destenation",
+      "do you want to remove this destenation from Favorites?",
       [
         {
           text: "Yes",
@@ -511,6 +527,16 @@ const ShowPlaceScreen = ({ route, navigation }) => {
       ],
       { cancelable: false }
     );
+
+
+
+    const onRefresh = React.useCallback(() => {
+      setRefreshing(true);
+      //navigation.navigate('ShowByCity')
+                    wait(2000).then(() => setRefreshing(false));
+    }, []);
+
+
 
   const isFav = async () => {
     const user = firebase.auth().currentUser.uid;
@@ -562,7 +588,9 @@ const ShowPlaceScreen = ({ route, navigation }) => {
   const removeFav = async () => {
     firebase.firestore().collection("fav").doc(place.id).delete();
     Alert.alert("Destenation Removed From Favorites");
-    navigation.pop();
+    navigation.pop();   
+     navigation.pop();
+
   };
   const getImage = async (name) => {
     try {
@@ -645,6 +673,7 @@ const ShowPlaceScreen = ({ route, navigation }) => {
       </ScrollView>
     );
   } else if (isFavState) {
+
     return (
       <ScrollView>
         <View style={styles.container}>
@@ -701,9 +730,15 @@ const ShowPlaceScreen = ({ route, navigation }) => {
     );
   } else {
     return (
-      <ScrollView>
-        <View onClick={this.handleRefresh}>
+      <ScrollView  contentContainerStyle={styles.scrollView}
+
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }>
+
+        <View>
           <View style={styles.container}>
+            
             <View style={styles.iconsView}>
               <TouchableOpacity onPress={openMap}>
                 <View style={styles.icon}>
@@ -878,6 +913,12 @@ const styles = StyleSheet.create({
     padding: 10,
     alignSelf: "center",
     color: "black",
+  },
+  scrollView: {
+   // flex: 1,
+   // backgroundColor: 'pink',
+    //alignItems: 'center',
+    //justifyContent: 'center',
   },
 });
 
