@@ -417,7 +417,6 @@ import { Context } from "../components/PlacesContext";
 //import { Context } from '../context/PlacesContext'
 import _ from "lodash";
 import ResultComment from "../components/ResultComment";
-
 import Hr from "../components/Hr";
 
 const ShowPlaceScreen = ({ route, navigation }) => {
@@ -703,7 +702,7 @@ const ShowPlaceScreen = ({ route, navigation }) => {
   } else {
     return (
       <ScrollView>
-        <View>
+        <View onClick={this.handleRefresh}>
           <View style={styles.container}>
             <View style={styles.iconsView}>
               <TouchableOpacity onPress={openMap}>
