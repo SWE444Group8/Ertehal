@@ -47,7 +47,11 @@ const App = () => {
           <Stack.Screen name="ManageRequests" component={ManageRequests} />
           <Stack.Screen name="ShowPlaceAdmin" component={ShowPlaceAdmin} />
           <Stack.Screen name="ResultsScreen" component={ResultsScreen} />
-          <Stack.Screen name="MyDestentions" component={MyDestentions} />
+          <Stack.Screen name="MyDestentions" component={MyDestentions} options={{
+          headerStyle: {
+          },
+          title: '',
+      }}/>
           <Stack.Screen name="ManageAccounts" component={ManageAccounts} />
           <Stack.Screen name="Accounts" component={Accounts} />
 
