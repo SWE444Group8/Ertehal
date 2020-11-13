@@ -27,9 +27,7 @@ import * as Permissions from "expo-permissions";
 import Constants from "expo-constants";
 
 const addComment = ({ route, navigation }) => {
-  function refreshPage() {
-    window.location.reload(false);
-  }
+  
   // const [name, setName] = useState("");
   // const [city, setCity] = useState("");
   // const [des, setDes] = useState("");
@@ -120,7 +118,9 @@ const addComment = ({ route, navigation }) => {
         userId: firebase.auth().currentUser.uid,
       });
     Alert.alert("Thank you for your comment! ");
-    navigation.pop();
+   // navigation.push(('ShowPlaceScreen', { id: place.id }))
+
+   navigation.pop();
 
     navigation.pop();
   };

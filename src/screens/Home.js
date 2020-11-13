@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import {
   View,
   Text,
@@ -13,6 +13,10 @@ import * as firebase from "firebase";
 
 import { useTheme } from "@react-navigation/native";
 
+import * as Notifications from "expo-notifications";
+import * as Permissions from "expo-permissions";
+import Constants from "expo-constants";
+
 import Swiper from "react-native-swiper";
 
 const Home = ({ navigation }) => {
@@ -21,6 +25,85 @@ const Home = ({ navigation }) => {
   const [term, setTerm] = useState("");
 
   if (firebase.auth().currentUser.email == "ertehaladmin@gmail.com") {
+   const id = firebase.auth().currentUser.email;
+
+  useEffect(() => {
+    (() => registerForPushNotificationsAsync())();
+  }, []);
+
+  const registerForPushNotificationsAsync = async () => {
+    let token;
+    if (Constants.isDevice) {
+      const { status: existingStatus } = await Permissions.getAsync(
+        Permissions.NOTIFICATIONS
+      );
+      let finalStatus = existingStatus;
+      if (existingStatus !== "granted") {
+        const { status } = await Permissions.askAsync(
+          Permissions.NOTIFICATIONS
+        );
+        finalStatus = status;
+      }
+      if (finalStatus !== "granted") {
+        alert("Failed to get push token for push notification!");
+        return;
+      }
+
+      let token = (await Notifications.getExpoPushTokenAsync()).data;
+
+      firebase
+      .firestore()
+      .collection("users")
+      .doc(id)
+      .update({
+        token: token,
+      })
+      console.log(token);
+    } else {
+      Alert.alert("Must use physical device for Push Notifications");
+    }
+
+    //if (email=='adminertehal.gmail.com'){
+   // }
+
+    if (Platform.OS === "android") {
+      Notifications.setNotificationChannelAsync("default", {
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: "#FF231F7C",
+      });
+    }
+   
+   // console.log(tokens)
+
+    return token;
+  };
+
+  const sendNotifications = async (token) => {
+    const message = {
+      to: token,
+      sound: "default",
+      title: "Request",
+      body: "New requests awaits you !!",
+      data: { data: "goes here" },
+    };
+
+    await fetch("https://exp.host/--/api/v2/push/send", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Accept-encoding": "gzip, deflate",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(message),
+    });
+  };
+
+  const sendNotificationsToAll = async () => {
+    const users = await firebase.firestore().collection("users").get();
+    users.docs.map((user) => sendNotifications(user.data().token));
+  };
     return (
       <ScrollView style={styles.container}>
         <View style={styles.sliderContainer}>
@@ -174,7 +257,6 @@ const Home = ({ navigation }) => {
         </View>
         <Text></Text>
         <Text></Text>
-
         <Text
           style={{
             alignSelf: "center",
@@ -184,17 +266,23 @@ const Home = ({ navigation }) => {
             fontFamily: "Futura-Medium",
           }}
         >
-          Manage The Destintions Requests
+          Manage 
         </Text>
+        <View style={styles.categoryContainer}>
+
+
+
+        
         <Text></Text>
         <View>
-          <TouchableOpacity
+          <TouchableOpacity style={styles.categoryIcon}
+          
             onPress={() => navigation.navigate("ManageRequests")}
             style={{
-              padding: 7,
+              padding: 15,
               paddingVertical: 12,
               backgroundColor: "#8fbc8f",
-              paddingHorizontal: 70,
+              paddingHorizontal: 40,
               alignSelf: "center",
               borderRadius: 40,
               marginTop: 2,
@@ -207,46 +295,37 @@ const Home = ({ navigation }) => {
                 fontWeight: "bold",
               }}
             >
-              MANAGE REQUESTS
+               REQUESTS
             </Text>
           </TouchableOpacity>
         </View>
-        <Text
-          style={{
-            alignSelf: "center",
-            fontSize: 18,
-            fontWeight: "bold",
-            color: "grey",
-            fontFamily: "Futura-Medium",
-          }}
-        >
-          Manage The Users Accounts
-        </Text>
+      
         <Text></Text>
         <View>
-          <TouchableOpacity
+          <TouchableOpacity style={styles.categoryIcon}
             onPress={() => navigation.navigate("ManageAccounts")}
             style={{
-              padding: 7,
+              padding: 15,
               paddingVertical: 12,
               backgroundColor: "#8fbc8f",
-              paddingHorizontal: 70,
+              paddingHorizontal: 40,
               alignSelf: "center",
               borderRadius: 40,
               marginTop: 2,
             }}
           >
-            <Text
+            <Text style={styles.categoryIcon}
               style={{
                 color: "white",
                 fontFamily: "Futura-Medium",
                 fontWeight: "bold",
               }}
-            >
-              MANAGE ACCOUNTS
+            > ACCOUNTS
             </Text>
           </TouchableOpacity>
         </View>
+        </View>
+
       </ScrollView>
     );
   } else {
