@@ -14,7 +14,7 @@ import * as firebase from "firebase";
 import Hr from "../components/Hr";
 import ScalableText from "react-native-text";
 
-import _ from 'lodash'
+import _ from "lodash";
 
 const ResultDetail = ({ result }) => {
   const [imgUrl, setImgUrl] = useState("");
