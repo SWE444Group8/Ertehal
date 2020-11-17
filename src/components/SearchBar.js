@@ -6,9 +6,11 @@ const SearchBar = ({ term, onTermChange, onTermSubmit }) => {
     return (
         <View style={styles.Style} >
             <Feather
+        
                 name="search"
                 style={styles.iconStyle} />
             <TextInput
+
                 placeholder="Search"
                 style={styles.inputStyle}
                 value={term}
@@ -16,9 +18,12 @@ const SearchBar = ({ term, onTermChange, onTermSubmit }) => {
                 autoCapitalize='none'
                 autoCorrect={false}
                 onEndEditing={onTermSubmit} />
+            
         </View>
     )
 }
+
+
 
 const styles = StyleSheet.create({
     Style: {
@@ -30,7 +35,7 @@ const styles = StyleSheet.create({
         marginTop: 15,
         marginBottom: 10
     },
-    inputStyle: {
+    inputStyle:  {
         flex: 1,
         fontSize: 18
     },
@@ -40,6 +45,8 @@ const styles = StyleSheet.create({
         marginHorizontal: 15
     }
 })
+
+
 
 
 export default SearchBar

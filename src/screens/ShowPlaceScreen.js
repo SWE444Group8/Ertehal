@@ -420,6 +420,7 @@ const ShowPlaceScreen = ({ route, navigation }) => {
               <TouchableOpacity
                 onPress={onShare} //{() => {
                 //  let url =
+                ////////////////////
                 ///    "twitter://post?message=Check Out Ertehal's Destantions";
                 ///   Linking.openURL(url)
                 ///    .then((data) => {
@@ -433,13 +434,16 @@ const ShowPlaceScreen = ({ route, navigation }) => {
                 <View style={styles.icon}>
                   <Icon name="share-outline" color="white" size={44} />
                 </View>
+
               </TouchableOpacity>
             </View>
             <Hr />
+
             <Text style={styles.title}>{place.name}</Text>
+
             <Image style={styles.image} source={{ uri: imgUrl }} />
             <Hr />
-            <Text style={styles.description}>About the destination: </Text>
+            <Text style={styles.description}>About the destination:  </Text>
             <Text style={styles.des}>{place.description}</Text>
             <Hr />
 
@@ -449,13 +453,17 @@ const ShowPlaceScreen = ({ route, navigation }) => {
                 <Text>{""}</Text>
               </Text>
 
+
+
               <TouchableOpacity
                 onPress={() => navigation.navigate("addComment", { place })}
                 style={styles.commicon}
               >
                 <View style={styles.btn}>
+
                   <Text style={styles.btnTxt}>ADD COMMENT</Text>
                 </View>
+
               </TouchableOpacity>
             </View>
 
