@@ -770,9 +770,9 @@ const ShowPlaceScreen = ({ route, navigation}) => {
           <Image style={styles.image} source={{ uri: imgUrl }} />
           <Hr />
           <Text style={styles.des}>{place.description}</Text>
-          <Text style={styles.des}>liked by : {likesNum} users </Text> 
-
+          <Text style={styles.likes}>liked by : {likesNum} users </Text> 
           <Hr />
+
           <View style={styles.iconsView}>
             <TouchableOpacity onPress={openMap}>
               <View style={styles.icon}>
@@ -948,6 +948,16 @@ const styles = StyleSheet.create({
     textAlign: "justify",
     marginHorizontal: 10,
     fontFamily: "Futura-Medium",
+  },
+  likes : {
+    color: "grey",
+    fontWeight: "bold",
+    textAlign: "justify",
+    marginHorizontal: 10,
+    fontFamily: "Futura-Medium",   
+     marginVertical: 5,
+     marginEnd:20,
+
   },
   description: {
     color: "#3cb371",
