@@ -40,6 +40,7 @@ return( <View>
        keyExtractor={res => res.id}
        renderItem={({ item }) => {
            return (
+
                <TouchableOpacity
                    onPress={() => navigation.navigate('ShowPlaceScreen', { id: item.id })}
                >
@@ -49,6 +50,7 @@ return( <View>
        }}
    />
 </View>);
+
 
 
 

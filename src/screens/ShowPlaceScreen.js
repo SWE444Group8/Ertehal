@@ -769,7 +769,7 @@ const ShowPlaceScreen = ({ route, navigation}) => {
           <Image style={styles.image} source={{ uri: imgUrl }} />
           <Hr />
           <Text style={styles.des}>{place.description}</Text>
-          <Text style={styles.des}>liked by : {likesNum} users </Text> 
+          <Text style={styles.des}>liked by : {likesNum} users1 </Text> 
 
           <Hr />
           <View style={styles.iconsView}>

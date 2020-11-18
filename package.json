@@ -55,7 +55,7 @@
     "react-native-reanimated": "^1.9.0",
     "react-native-safe-area-context": "~3.0.7",
     "react-native-screens": "^2.9.0",
-    "react-native-share": "^3.8.3",
+    "react-native-share": "^3.8.5",
     "react-native-swipe": "^1.0.0",
     "react-native-swiper": "^1.6.0",
     "react-native-text": "^1.0.8",
@@ -64,7 +64,9 @@
     "react-navigation": "^4.4.2",
     "react-navigation-stack": "^2.8.2",
     "reanimated-bottom-sheet": "^1.0.0-alpha.22",
-    "uid": "^1.0.0"
+    "uid": "^1.0.0",
+    "expo-sharing": "~8.2.1",
+    "expo-file-system": "~9.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
