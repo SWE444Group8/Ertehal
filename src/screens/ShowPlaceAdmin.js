@@ -103,8 +103,8 @@ const ShowPlaceScreen = ({ route, navigation }) => {
     const message = {
       to: token,
       sound: "default",
-      title: "New Destenation",
-      body: "New Destenation awaits you !!",
+      title: "Thank you",
+      body: "Your destenation" + place.name +"has been approved !!",
       data: { data: "goes here" },
     };
 
