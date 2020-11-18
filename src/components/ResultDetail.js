@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   image: {
     width: 200,
     height: 150,
-    borderRadius: 3,
+    borderRadius: 4,
     marginBottom: 10,
     marginTop: 10,
     resizeMode: "cover",
@@ -89,5 +89,5 @@ const styles = StyleSheet.create({
     fontFamily: "Futura-Medium",
   },
 });
-
+//no
 export default ResultDetail;
