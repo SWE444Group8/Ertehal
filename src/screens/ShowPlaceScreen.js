@@ -619,7 +619,8 @@ const ShowPlaceScreen = ({ route, navigation}) => {
     res.forEach((doc) => {
       arr.push(doc.data());
     });
-    setNumLikes(arr.length)
+    const arr2 = arr.filter((i) => i.id === id);
+    setNumLikes(arr2.length)
     //return arr.length
     // if (arr2.length < 1) {
     //   setIsLikedState(false);
@@ -769,7 +770,7 @@ const ShowPlaceScreen = ({ route, navigation}) => {
           <Image style={styles.image} source={{ uri: imgUrl }} />
           <Hr />
           <Text style={styles.des}>{place.description}</Text>
-          <Text style={styles.des}>liked by : {likesNum} users1 </Text> 
+          <Text style={styles.des}>liked by : {likesNum} users </Text> 
 
           <Hr />
           <View style={styles.iconsView}>
