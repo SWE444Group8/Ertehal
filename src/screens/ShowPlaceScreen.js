@@ -388,6 +388,15 @@
 //     color: "red",
 //   },
 // });
+//           {/* <View>
+//           <TextInput
+//             placeholder="Comment"
+//             style={[styles.input, { textAlignVertical: "top" }]}
+//             value={comment}
+//             onChangeText={setComment}
+//             numberOfLines={8}
+//             multiline={true}
+//
 
 // export default ShowPlaceScreen;
 
@@ -396,7 +405,7 @@ import * as firebase from "firebase";
 import { Feather, AntDesign, FontAwesome } from "@expo/vector-icons";
 import "@firebase/firestore";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import Constants from 'expo-constants';
+import Constants from "expo-constants";
 
 import {
   StyleSheet,
@@ -422,13 +431,12 @@ import ResultComment from "../components/ResultComment";
 
 import Hr from "../components/Hr";
 const wait = (timeout) => {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(resolve, timeout);
   });
-}
-const ShowPlaceScreen = ({ route, navigation}) => {
- 
-    const { id } = route.params;
+};
+const ShowPlaceScreen = ({ route, navigation }) => {
+  const { id } = route.params;
   const [place, setPlace] = useState({});
   const [imgUrl, setImgUrl] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -468,11 +476,6 @@ const ShowPlaceScreen = ({ route, navigation}) => {
     getComment(id);
   }, []);
   // const { state, getPlace } = useContext(Context)
-
-
- 
-
-
 
   const createTwoButtonAlert = () =>
     Alert.alert(
@@ -532,8 +535,7 @@ const ShowPlaceScreen = ({ route, navigation}) => {
       { cancelable: false }
     );
 
-
-    const createTwoButtonAlert3 = () =>
+  const createTwoButtonAlert3 = () =>
     Alert.alert(
       "Are you sure?",
       "do you want to remove this like?",
@@ -550,9 +552,6 @@ const ShowPlaceScreen = ({ route, navigation}) => {
       ],
       { cancelable: false }
     );
-
-
-
 
   const isFav = async () => {
     const user = firebase.auth().currentUser.uid;
@@ -579,8 +578,8 @@ const ShowPlaceScreen = ({ route, navigation}) => {
       setIsFavState(true);
     }
   };
+  //is liked
   const isLiked = async () => {
-
     const user = firebase.auth().currentUser.uid;
 
     const res = await firebase.firestore().collection("likes").get();
@@ -607,20 +606,18 @@ const ShowPlaceScreen = ({ route, navigation}) => {
   };
 
   const likesNumber = async () => {
-
     //const user = firebase.auth().currentUser.uid;
 
     const res = await firebase.firestore().collection("likes").get();
     //.find(data => data.name === name);
     //console.log(object)  const [, setNumLikes] = useState(0);
 
-
     const arr = [];
     res.forEach((doc) => {
       arr.push(doc.data());
     });
     const arr2 = arr.filter((i) => i.id === id);
-    setNumLikes(arr2.length)
+    setNumLikes(arr2.length);
     //return arr.length
     // if (arr2.length < 1) {
     //   setIsLikedState(false);
@@ -642,7 +639,7 @@ const ShowPlaceScreen = ({ route, navigation}) => {
     Alert.alert("Destantion Added In Your Favorites");
     navigation.pop();
   };
-
+  //like firebase
   const Like = () => {
     firebase.firestore().collection("likes").doc(id).set({
       id,
@@ -667,16 +664,14 @@ const ShowPlaceScreen = ({ route, navigation}) => {
   const removeFav = async () => {
     firebase.firestore().collection("fav").doc(place.id).delete();
     Alert.alert("Destenation Removed From Favorites");
-    navigation.pop();   
-     navigation.pop();
-
+    navigation.pop();
+    navigation.pop();
   };
   const removeLike = async () => {
     firebase.firestore().collection("likes").doc(place.id).delete();
     Alert.alert("like Removed From Destenation");
-    navigation.pop();   
-     navigation.pop();
-
+    navigation.pop();
+    navigation.pop();
   };
   const getImage = async (name) => {
     try {
@@ -761,67 +756,66 @@ const ShowPlaceScreen = ({ route, navigation}) => {
       </ScrollView>
     );
   } else {
-
     return (
       <ScrollView>
         <View style={styles.container}>
-          
           <Text style={styles.title}>{place.name}</Text>
           <Image style={styles.image} source={{ uri: imgUrl }} />
           <Hr />
           <Text style={styles.des}>{place.description}</Text>
-          <Text style={styles.likes}>liked by : {likesNum} users </Text> 
+          <Text style={styles.likes}>liked by : {likesNum} users </Text>
           <Hr />
 
           <View style={styles.iconsView}>
             <TouchableOpacity onPress={openMap}>
               <View style={styles.icon}>
-                <Feather name="map-pin" size={30}color="white" />
+                <Feather name="map-pin" size={30} color="white" />
               </View>
             </TouchableOpacity>
 
-            {isFavState ?  <TouchableOpacity
-              onPress={() => navigation.navigate("ImageShow", { id })}
-            >
-              <View style={styles.icon}>
-                <AntDesign
-                  name="star"
-                  size={30}
-                  color="white"
-                  onPress={createTwoButtonAlert2}
-                />                
-              </View>
-            </TouchableOpacity> : <TouchableOpacity
+            {isFavState ? (
+              <TouchableOpacity
+                onPress={() => navigation.navigate("ImageShow", { id })}
+              >
+                <View style={styles.icon}>
+                  <AntDesign
+                    name="star"
+                    size={30}
+                    color="white"
+                    onPress={createTwoButtonAlert2}
+                  />
+                </View>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
                 onPress={() => navigation.navigate("ImageShow", { id })}
               >
                 <View style={styles.icon}>
                   <Feather name="star" size={30} color="white" onPress={fav} />
                 </View>
-              </TouchableOpacity> }
+              </TouchableOpacity>
+            )}
 
-
-{isLikedState? <TouchableOpacity
-              onPress={() => navigation.navigate("ImageShow", { id })}
-            >
-              <View style={styles.icon}>
-                <AntDesign
-                  name="heart"
-                  size={30}
-                  color="white"
-                  onPress={createTwoButtonAlert3}
-                />         
-              </View>
-              
-            </TouchableOpacity>:
-            <TouchableOpacity onPress={Like}>
-              <View style={styles.icon}>
-                <Feather name="heart" size={30}color="white" />
-              </View>
-            </TouchableOpacity>
- }
-            
-            
-
+            {isLikedState ? (
+              <TouchableOpacity
+                onPress={() => navigation.navigate("ImageShow", { id })}
+              >
+                <View style={styles.icon}>
+                  <AntDesign
+                    name="heart"
+                    size={30}
+                    color="white"
+                    onPress={createTwoButtonAlert3}
+                  />
+                </View>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity onPress={Like}>
+                <View style={styles.icon}>
+                  <Feather name="heart" size={30} color="white" />
+                </View>
+              </TouchableOpacity>
+            )}
           </View>
           <Hr />
           <View style={styles.commentsView}>
@@ -847,74 +841,72 @@ const ShowPlaceScreen = ({ route, navigation}) => {
         </View>
       </ScrollView>
     );
-  // } else {
-  //   return (
-  //     <ScrollView  contentContainerStyle={styles.scrollView}
+    // } else {
+    //   return (
+    //     <ScrollView  contentContainerStyle={styles.scrollView}
 
-  //     refreshControl={
-  //       <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-  //     }>
-      
-  //       <View>
-  //         <View style={styles.container}>
-         
-  //           <View style={styles.iconsView}>
-  //             <TouchableOpacity onPress={openMap}>
-  //               <View style={styles.icon}>
-  //                 <Feather name="map-pin" size={40} color="white" />
-  //               </View>
-  //             </TouchableOpacity>
-              
+    //     refreshControl={
+    //       <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+    //     }>
 
-              
-  //           </View>
-  //           <Hr />
-  //           <Text style={styles.title}>{place.name}</Text>
-  //           <Image style={styles.image} source={{ uri: imgUrl }} />
-  //           <Hr />
-  //           <Text style={styles.description}>About the destination: </Text>
-  //           <Text style={styles.des}>{place.description}</Text>
-  //           <Hr />
+    //       <View>
+    //         <View style={styles.container}>
 
-  //           <View style={styles.iconsView}>
-  //             <Text style={styles.commentTitle}>
-  //               Comments <Text>{""}</Text>
-  //               <Text>{""}</Text>
-  //             </Text>
+    //           <View style={styles.iconsView}>
+    //             <TouchableOpacity onPress={openMap}>
+    //               <View style={styles.icon}>
+    //                 <Feather name="map-pin" size={40} color="white" />
+    //               </View>
+    //             </TouchableOpacity>
 
-  //             <TouchableOpacity
-  //               onPress={() => navigation.navigate("addComment", { place })}
-  //               style={styles.commicon}
-  //             >
-  //               <View style={styles.btn}>
-  //                 <Text style={styles.btnTxt}>ADD COMMENT</Text>
-  //               </View>
-  //             </TouchableOpacity>
-  //           </View>
+    //           </View>
+    //           <Hr />
+    //           <Text style={styles.title}>{place.name}</Text>
+    //           <Image style={styles.image} source={{ uri: imgUrl }} />
+    //           <Hr />
+    //           <Text style={styles.description}>About the destination: </Text>
+    //           <Text style={styles.des}>{place.description}</Text>
+    //           <Hr />
 
-  //           {/* <View>
-  //           <TextInput
-  //             placeholder="Comment"
-  //             style={[styles.input, { textAlignVertical: "top" }]}
-  //             value={comment}
-  //             onChangeText={setComment}
-  //             numberOfLines={8}
-  //             multiline={true}
-  //           />
-           
-  //         </View> */}
-  //         </View>
-  //         <FlatList
-  //           showsHorizontalScrollIndicator={false}
-  //           data={comments}
-  //           keyExtractor={(res) => res.id}
-  //           renderItem={({ item }) => {
-  //             return <ResultComment result={item} />;
-  //           }}
-  //         />
-  //       </View>
-     // </ScrollView>
-   // );
+    //           <View style={styles.iconsView}>
+    //             <Text style={styles.commentTitle}>
+    //               Comments <Text>{""}</Text>
+    //               <Text>{""}</Text>
+    //             </Text>
+
+    //             <TouchableOpacity
+    //               onPress={() => navigation.navigate("addComment", { place })}
+    //               style={styles.commicon}
+    //             >
+    //               <View style={styles.btn}>
+    //                 <Text style={styles.btnTxt}>ADD COMMENT</Text>
+    //               </View>
+    //             </TouchableOpacity>
+    //           </View>
+
+    //           {/* <View>
+    //           <TextInput
+    //             placeholder="Comment"
+    //             style={[styles.input, { textAlignVertical: "top" }]}
+    //             value={comment}
+    //             onChangeText={setComment}
+    //             numberOfLines={8}
+    //             multiline={true}
+    //           />
+
+    //         </View> */}
+    //         </View>
+    //         <FlatList
+    //           showsHorizontalScrollIndicator={false}
+    //           data={comments}
+    //           keyExtractor={(res) => res.id}
+    //           renderItem={({ item }) => {
+    //             return <ResultComment result={item} />;
+    //           }}
+    //         />
+    //       </View>
+    // </ScrollView>
+    // );
   }
 };
 
@@ -949,15 +941,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     fontFamily: "Futura-Medium",
   },
-  likes : {
+  likes: {
     color: "grey",
     fontWeight: "bold",
     textAlign: "justify",
     marginHorizontal: 10,
-    fontFamily: "Futura-Medium",   
-     marginVertical: 5,
-     marginEnd:20,
-
+    fontFamily: "Futura-Medium",
+    marginVertical: 5,
+    marginEnd: 20,
   },
   description: {
     color: "#3cb371",
@@ -1044,8 +1035,8 @@ const styles = StyleSheet.create({
     color: "black",
   },
   scrollView: {
-   // flex: 1,
-   // backgroundColor: 'pink',
+    // flex: 1,
+    // backgroundColor: 'pink',
     //alignItems: 'center',
     //justifyContent: 'center',
   },
