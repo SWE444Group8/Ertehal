@@ -398,8 +398,6 @@
 //             multiline={true}
 //
 
-// export default ShowPlaceScreen;
-
 import React, { useEffect, useState, useContext } from "react";
 import * as firebase from "firebase";
 import { Feather, AntDesign, FontAwesome } from "@expo/vector-icons";
@@ -449,7 +447,8 @@ const ShowPlaceScreen = ({ route, navigation }) => {
 
   const [err, setErr] = useState("");
   const [isFavState, setIsFavState] = useState(false);
-
+  //set like
+  // const [isLikedState, setIsLikedState] = useState(false);
   const [isLikedState, setIsLikedState] = useState(false);
 
   const { state, getComment } = useContext(Context);
