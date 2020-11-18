@@ -98,39 +98,27 @@ const ProfileScreen = ({ navigation }) => {
               <Text style={styles.menuItemText}> Favorites</Text>
             </View>
           </TouchableRipple>
-
-
           <TouchableRipple onPress={() => navigation.navigate("SupportScreen")}>
             <View style={styles.menuItem}>
               <Icon name="account-check-outline" color="#8fbc8f" size={25} />
               <Text style={styles.menuItemText}>Support</Text>
             </View>
           </TouchableRipple>
-
+          //
           <TouchableRipple onPress={() => navigation.navigate("MyDestentions")}>
             <View style={styles.menuItem}>
               <Icon name="map" color="#8fbc8f" size={25} />
               <Text style={styles.menuItemText}>my destinations</Text>
             </View>
           </TouchableRipple>
-
-
-
-           <TouchableRipple onPress={() => navigation.navigate("MyComments")}>
+          <TouchableRipple onPress={() => navigation.navigate("MyComments")}>
             <View style={styles.menuItem}>
               <Icon name="comment" color="#8fbc8f" size={25} />
               <Text style={styles.menuItemText}>My Comments</Text>
             </View>
           </TouchableRipple>
-          
-          
-
-   
         </View>
       </SafeAreaView>
-
-
-    
     );
   }
 };

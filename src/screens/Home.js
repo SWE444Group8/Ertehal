@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -25,85 +25,81 @@ const Home = ({ navigation }) => {
   const [term, setTerm] = useState("");
 
   if (firebase.auth().currentUser.email == "ertehaladmin@gmail.com") {
-   const id = firebase.auth().currentUser.email;
+    const id = firebase.auth().currentUser.email;
 
-  useEffect(() => {
-    (() => registerForPushNotificationsAsync())();
-  }, []);
+    useEffect(() => {
+      (() => registerForPushNotificationsAsync())();
+    }, []);
 
-  const registerForPushNotificationsAsync = async () => {
-    let token;
-    if (Constants.isDevice) {
-      const { status: existingStatus } = await Permissions.getAsync(
-        Permissions.NOTIFICATIONS
-      );
-      let finalStatus = existingStatus;
-      if (existingStatus !== "granted") {
-        const { status } = await Permissions.askAsync(
+    const registerForPushNotificationsAsync = async () => {
+      let token;
+      if (Constants.isDevice) {
+        const { status: existingStatus } = await Permissions.getAsync(
           Permissions.NOTIFICATIONS
         );
-        finalStatus = status;
+        let finalStatus = existingStatus;
+        if (existingStatus !== "granted") {
+          const { status } = await Permissions.askAsync(
+            Permissions.NOTIFICATIONS
+          );
+          finalStatus = status;
+        }
+        if (finalStatus !== "granted") {
+          alert("Failed to get push token for push notification!");
+          return;
+        }
+
+        let token = (await Notifications.getExpoPushTokenAsync()).data;
+
+        firebase.firestore().collection("users").doc(id).update({
+          token: token,
+        });
+        console.log(token);
+      } else {
+        Alert.alert("Must use physical device for Push Notifications");
       }
-      if (finalStatus !== "granted") {
-        alert("Failed to get push token for push notification!");
-        return;
+
+      //if (email=='adminertehal.gmail.com'){
+      // }
+
+      if (Platform.OS === "android") {
+        Notifications.setNotificationChannelAsync("default", {
+          name: "default",
+          importance: Notifications.AndroidImportance.MAX,
+          vibrationPattern: [0, 250, 250, 250],
+          lightColor: "#FF231F7C",
+        });
       }
 
-      let token = (await Notifications.getExpoPushTokenAsync()).data;
+      // console.log(tokens)
 
-      firebase
-      .firestore()
-      .collection("users")
-      .doc(id)
-      .update({
-        token: token,
-      })
-      console.log(token);
-    } else {
-      Alert.alert("Must use physical device for Push Notifications");
-    }
-
-    //if (email=='adminertehal.gmail.com'){
-   // }
-
-    if (Platform.OS === "android") {
-      Notifications.setNotificationChannelAsync("default", {
-        name: "default",
-        importance: Notifications.AndroidImportance.MAX,
-        vibrationPattern: [0, 250, 250, 250],
-        lightColor: "#FF231F7C",
-      });
-    }
-   
-   // console.log(tokens)
-
-    return token;
-  };
-
-  const sendNotifications = async (token) => {
-    const message = {
-      to: token,
-      sound: "default",
-      title: "Request",
-      body: "New requests awaits you !!",
-      data: { data: "goes here" },
+      return token;
     };
 
-    await fetch("https://exp.host/--/api/v2/push/send", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Accept-encoding": "gzip, deflate",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(message),
-    });
-  };
+    const sendNotifications = async (token) => {
+      const message = {
+        to: token,
+        sound: "default",
+        title: "Request",
+        body: "New requests awaits you !!",
+        data: { data: "goes here" },
+      };
 
-  const sendNotificationsToAll = async () => {
-    const users = await firebase.firestore().collection("users").get();
-    users.docs.map((user) => sendNotifications(user.data().token));
-  };
+      await fetch("https://exp.host/--/api/v2/push/send", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Accept-encoding": "gzip, deflate",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(message),
+      });
+    };
+
+    const sendNotificationsToAll = async () => {
+      const users = await firebase.firestore().collection("users").get();
+      users.docs.map((user) => sendNotifications(user.data().token));
+    };
     return (
       <ScrollView style={styles.container}>
         <View style={styles.sliderContainer}>
@@ -266,66 +262,66 @@ const Home = ({ navigation }) => {
             fontFamily: "Futura-Medium",
           }}
         >
-          Manage 
+          Manage
         </Text>
         <View style={styles.categoryContainer}>
-
-
-
-        
-        <Text></Text>
-        <View>
-          <TouchableOpacity style={styles.categoryIcon}
-          
-            onPress={() => navigation.navigate("ManageRequests")}
-            style={{
-              padding: 15,
-              paddingVertical: 12,
-              backgroundColor: "#8fbc8f",
-              paddingHorizontal: 40,
-              alignSelf: "center",
-              borderRadius: 40,
-              marginTop: 2,
-            }}
-          >
-            <Text
+          <Text></Text>
+          <View>
+            <TouchableOpacity
+              style={styles.categoryIcon}
+              //
+              onPress={() => navigation.navigate("ManageRequests")}
               style={{
-                color: "white",
-                fontFamily: "Futura-Medium",
-                fontWeight: "bold",
+                padding: 15,
+                paddingVertical: 12,
+                backgroundColor: "#8fbc8f",
+                paddingHorizontal: 40,
+                alignSelf: "center",
+                borderRadius: 40,
+                marginTop: 2,
               }}
             >
-               REQUESTS
-            </Text>
-          </TouchableOpacity>
-        </View>
-      
-        <Text></Text>
-        <View>
-          <TouchableOpacity style={styles.categoryIcon}
-            onPress={() => navigation.navigate("ManageAccounts")}
-            style={{
-              padding: 15,
-              paddingVertical: 12,
-              backgroundColor: "#8fbc8f",
-              paddingHorizontal: 40,
-              alignSelf: "center",
-              borderRadius: 40,
-              marginTop: 2,
-            }}
-          >
-            <Text style={styles.categoryIcon}
-              style={{
-                color: "white",
-                fontFamily: "Futura-Medium",
-                fontWeight: "bold",
-              }}
-            > ACCOUNTS
-            </Text>
-          </TouchableOpacity>
-        </View>
-        </View>
+              <Text
+                style={{
+                  color: "white",
+                  fontFamily: "Futura-Medium",
+                  fontWeight: "bold",
+                }}
+              >
+                REQUESTS
+              </Text>
+            </TouchableOpacity>
+          </View>
 
+          <Text></Text>
+          <View>
+            <TouchableOpacity
+              style={styles.categoryIcon}
+              onPress={() => navigation.navigate("ManageAccounts")}
+              style={{
+                padding: 15,
+                paddingVertical: 12,
+                backgroundColor: "#8fbc8f",
+                paddingHorizontal: 40,
+                alignSelf: "center",
+                borderRadius: 40,
+                marginTop: 2,
+              }}
+            >
+              <Text
+                style={styles.categoryIcon}
+                style={{
+                  color: "white",
+                  fontFamily: "Futura-Medium",
+                  fontWeight: "bold",
+                }}
+              >
+                {" "}
+                ACCOUNTS
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </ScrollView>
     );
   } else {

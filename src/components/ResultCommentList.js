@@ -21,7 +21,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 const ResultCommentList = ({ result }) => {
   const email = result.userEmail.substring(0, result.userEmail.indexOf("@"));
   const title = result.title;
-
+  //
   return (
     <View>
       <View style={styles.container}>
