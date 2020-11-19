@@ -146,7 +146,7 @@
 //       ios: "maps:0,0?q=",
 //       android: "geo:0,0?q=",
 //     });
-//     const latLng = `${place.latitude},${place.longitude}`;
+//     const latLng = `${ss.latitude},${place.longitude}`;
 //     const label = place.name;
 //     const url = Platform.select({
 //       ios: `${scheme}${label}@${latLng}`,
