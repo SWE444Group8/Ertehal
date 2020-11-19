@@ -16,12 +16,14 @@ import CardItemDetails from "./CardItemDetails";
 import AddDestenation from "./AddDestenation";
 import ShowPlaceScreen from "./ShowPlaceScreen";
 import ShowByCity from "./ShowByCity";
+
+
 import SettingsScreen from "./SettingsScreen";
 import SupportScreen from "./SupportScreen";
 import ResultsScreen from "./ResultsScreen";
-addComment
-import addComment from "./addComment";
 
+import addComment from "./addComment";
+import Rating from "./Rating";
 import MyComments from "./MyComments";
 
 const HomeStack = createStackNavigator();
@@ -211,6 +213,16 @@ const HomeStackScreen = ({ navigation }) => {
         name="MyComments"
         component={MyComments}
         onPress={() => navigation.navigate("MyComments")}
+        options={{
+          headerStyle: {
+          },
+          title: '',
+      }}
+      />
+     <HomeStack.Screen
+        name="Rating"
+        component={Rating}
+        onPress={() => navigation.navigate("Rating")}
         options={{
           headerStyle: {
           },
