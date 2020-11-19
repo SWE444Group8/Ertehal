@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useContext } from "react";
 import * as firebase from "firebase";
-import { Feather, AntDesign, FontAwesome } from "@expo/vector-icons";
+import { Feather, AntDesign, FontAwesome ,MaterialIcons } from "@expo/vector-icons";
 import "@firebase/firestore";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Constants from "expo-constants";
@@ -58,7 +58,7 @@ const ShowPlaceScreen = ({ route, navigation ,}) => {
   const [isLikedState, setIsLikedState] = useState(false);
 
   const { state, getComment } = useContext(Context);
-  const [term, setTerm] = useState("");
+  const [leng, setLeng] = useState("");
 
   const { comments } = state;
   const [rate, setRate] = useState("");
@@ -141,7 +141,7 @@ const ShowPlaceScreen = ({ route, navigation ,}) => {
     });
 console.log(arr)
 
-
+setLeng(arr.length)
     if(arr.length > 0) {
       setRate(_.sum(arr) / arr.length)
     }else{
@@ -400,6 +400,8 @@ console.log(rate)        // 2.5
           <Hr />
           <Text style={styles.des}>{place.description}</Text>
           <Text style={styles.likes}>liked by : {likesNum} users </Text>
+          <Text style={styles.likes}>Rated {rate} out of 5 by {leng} users </Text>
+
           <Hr />
 
           <View style={styles.iconsView}>
@@ -452,14 +454,20 @@ console.log(rate)        // 2.5
                 </View>
               </TouchableOpacity>
             )}
-<TouchableOpacity
+          <TouchableOpacity
               
               onPress={() => navigation.navigate("Rating", { place })}
-              style={styles.commicon}
             >
-              <View style={styles.btn}>
-            <Text style={styles.btnTxt}>Add Comment {rate}</Text>
-              </View>
+             
+              <View style={styles.icon}>
+                  <MaterialIcons
+                    name='rate-review'
+                    size={30}
+                    color="white"
+                   // onPress={createTwoButtonAlert3}
+                  />
+                </View>
+             
             </TouchableOpacity>
                 
           </View>
