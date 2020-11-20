@@ -1,5 +1,4 @@
 
-
 import React, { useEffect, useState, useContext } from "react";
 import * as firebase from "firebase";
 import { Feather, AntDesign, FontAwesome ,MaterialIcons } from "@expo/vector-icons";
@@ -400,7 +399,7 @@ console.log(rate)        // 2.5
           <Hr />
           <Text style={styles.des}>{place.description}</Text>
           <Text style={styles.likes}>liked by : {likesNum} users </Text>
-          <Text style={styles.likes}>Rated {rate} / 5 by {leng} users </Text>
+          <Text style={styles.likes}>Rated {rate} out of 5 by {leng} users </Text>
 
           <Hr />
 

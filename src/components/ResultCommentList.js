@@ -10,6 +10,7 @@ import {
   PixelRatio,
   SafeAreaView,
   width,
+  Alert,
 } from "react-native";
 import * as firebase from "firebase";
 import Hr from "../components/Hr";
@@ -18,10 +19,32 @@ import ScalableText from "react-native-text";
 import _ from "lodash";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-const ResultCommentList = ({ result }) => {
+const ResultCommentList = ({ result, navigation }) => {
   const email = result.userEmail.substring(0, result.userEmail.indexOf("@"));
   const title = result.title;
   //
+  const createTwoButtonAlert = () =>
+    Alert.alert(
+      "Are you sure?",
+      "do you want to delete your comment",
+      [
+        {
+          text: "Yes",
+          onPress: deleteComm,
+        },
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+      ],
+      { cancelable: false }
+    );
+  const deleteComm = async () => {
+    firebase.firestore().collection("comments").doc(result.id).delete();
+    Alert.alert("Comment Deleted!");
+    navigation.navigate("Home");
+  };
   return (
     <View>
       <View style={styles.container}>
@@ -37,6 +60,32 @@ const ResultCommentList = ({ result }) => {
             {"\n"}
             <Text style={styles.comment}> {result.comment} </Text>
           </ScalableText>
+
+          <TouchableOpacity onPress={createTwoButtonAlert}>
+            <Text></Text>
+
+            <View
+              style={{
+                padding: 5,
+                paddingVertical: 5,
+                backgroundColor: "red",
+                paddingHorizontal: 10,
+                alignSelf: "right",
+                borderRadius: 10,
+                marginTop: 2,
+              }}
+            >
+              <Text
+                style={{
+                  color: "white",
+                  alignItems: "center",
+                  fontFamily: "Futura-Medium",
+                }}
+              >
+                DELETE
+              </Text>
+            </View>
+          </TouchableOpacity>
         </SafeAreaView>
       </View>
 
