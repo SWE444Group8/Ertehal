@@ -104,11 +104,11 @@ const ProfileScreen = ({ navigation }) => {
               <Text style={styles.menuItemText}>Support</Text>
             </View>
           </TouchableRipple>
-          //
+
           <TouchableRipple onPress={() => navigation.navigate("MyDestentions")}>
             <View style={styles.menuItem}>
               <Icon name="map" color="#8fbc8f" size={25} />
-              <Text style={styles.menuItemText}>my destinations</Text>
+              <Text style={styles.menuItemText}>My Destinations</Text>
             </View>
           </TouchableRipple>
           <TouchableRipple onPress={() => navigation.navigate("MyComments")}>

@@ -1,11 +1,9 @@
-
-
 import React, { useEffect, useState, useContext } from "react";
 import * as firebase from "firebase";
-import { Feather, AntDesign, FontAwesome ,MaterialIcons } from "@expo/vector-icons";
+import { Feather, AntDesign, FontAwesome } from "@expo/vector-icons";
 import "@firebase/firestore";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import Constants from "expo-constants";
+//import Share from "react-native-share";
 
 import {
   StyleSheet,
@@ -20,24 +18,20 @@ import {
   Alert,
   FlatList,
   TextInput,
-  RefreshControl,
-  RadioButtonGroup,
+  TouchableRipple,
+  Share,
 } from "react-native";
 
 import { Context } from "../components/PlacesContext";
-import DialogInput from 'react-native-dialog-input';
 
 //import { Context } from '../context/PlacesContext'
 import _ from "lodash";
 import ResultComment from "../components/ResultComment";
-
 import Hr from "../components/Hr";
-const wait = (timeout) => {
-  return new Promise((resolve) => {
-    setTimeout(resolve, timeout);
-  });
-};
-const ShowPlaceScreen = ({ route, navigation ,}) => {
+import * as Sharing from "expo-sharing";
+import * as FileSystem from "expo-file-system";
+
+const ShowPlaceScreen = ({ route, navigation }) => {
   const { id } = route.params;
   const [place, setPlace] = useState({});
   const [imgUrl, setImgUrl] = useState("");
@@ -45,24 +39,17 @@ const ShowPlaceScreen = ({ route, navigation ,}) => {
   const [Email, setUser] = useState();
   const [comment, setComment] = useState("");
 
-  const [isDialogVisible2, isDialogVisible] = useState(true);
-
-  const [likesNum, setNumLikes] = useState("");
-
-  const [refreshing, setRefreshing] = useState(false);
-
   const [err, setErr] = useState("");
   const [isFavState, setIsFavState] = useState(false);
-  //set like
-  // const [isLikedState, setIsLikedState] = useState(false);
-  const [isLikedState, setIsLikedState] = useState(false);
 
   const { state, getComment } = useContext(Context);
-  const [leng, setLeng] = useState("");
+  const [term, setTerm] = useState("");
 
   const { comments } = state;
-  const [rate, setRate] = useState("");
-  //const [value, setValue] = React.useState('one');
+  const [Name, setName] = useState("");
+  const optionsPost = ["Share"];
+
+  //Share post of thread
 
   //console.log(place)
   useEffect(() => {
@@ -82,7 +69,6 @@ const ShowPlaceScreen = ({ route, navigation ,}) => {
     getComment(id);
   }, []);
   // const { state, getPlace } = useContext(Context)
-
   const createTwoButtonAlert = () =>
     Alert.alert(
       "Are you sure?",
@@ -101,83 +87,36 @@ const ShowPlaceScreen = ({ route, navigation ,}) => {
       { cancelable: false }
     );
 
-    const createTwoButtonAlert4 = () =>{
-    <DialogInput isDialogVisible={isDialogVisible}
-    title={"DialogInput 1"}
-    message={"Message for DialogInput #1"}
-    hintInput ={"HINT INPUT"}
-    submitInput={ (inputText) => {this.sendInput(inputText)} }
-    closeDialog={ () => {this.showDialog(false)}}>
-    </DialogInput>}
-
   const submitData = () => {
-    if (!value) return setErr("Please Enter Your rating!");
+    if (!comment) return setErr("Please Enter Your Comment!");
 
     // save data to rdb
     const id = uid(15);
     //try
     firebase
       .firestore()
-      .collection("rating")
+      .collection("comments")
       .doc(id)
       .set({
         id,
         desID: place.id,
+        comment: comment,
+        city: place.city,
         createdAt: new Date().toJSON().slice(0, 10),
         userEmail: Email,
         title: place.name,
         userId: firebase.auth().currentUser.uid,
-        rating : value,
       });
   };
 
-  const rating = async () =>{  
-   // const res = await firebase.firestore().collection("rating").get();
-    const res = await firebase.firestore().collection("rating").where("desID","==",id).get();
-
-    const arr = [];
-    res.forEach((doc) => {
-      arr.push((doc.data()).value);
-    });
-console.log(arr)
-
-setLeng(arr.length)
-    if(arr.length > 0) {
-      setRate(_.sum(arr) / arr.length)
-    }else{
-      setRate("Not rated yet..")
-    }
-
-console.log(rate)        // 2.5
-    
-  }
-  
   const createTwoButtonAlert2 = () =>
     Alert.alert(
       "Are you sure?",
-      "do you want to remove this destenation from Favorites?",
+      "do you want to remove this destenation",
       [
         {
           text: "Yes",
           onPress: removeFav,
-        },
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel",
-        },
-      ],
-      { cancelable: false }
-    );
-
-  const createTwoButtonAlert3 = () =>
-    Alert.alert(
-      "Are you sure?",
-      "do you want to remove this like?",
-      [
-        {
-          text: "Yes",
-          onPress: removeLike,
         },
         {
           text: "Cancel",
@@ -213,53 +152,6 @@ console.log(rate)        // 2.5
       setIsFavState(true);
     }
   };
-  //is liked
-  const isLiked = async () => {
-    const user = firebase.auth().currentUser.uid;
-
-    const res = await firebase.firestore().collection("likes").get();
-    //.find(data => data.name === name);
-    //console.log(object)
-
-    const arr = [];
-    res.forEach((doc) => {
-      arr.push(doc.data());
-    });
-
-    //res.forEach(doc => {
-    //arr.push(doc.data())
-    //})
-    const arr2 = arr.filter((i) => i.id === id);
-    // console.log("object")
-    //console.log("hello" ,arr2.length)
-
-    if (arr2.length < 1) {
-      setIsLikedState(false);
-    } else {
-      setIsLikedState(true);
-    }
-  };
-
-  const likesNumber = async () => {
-    //const user = firebase.auth().currentUser.uid;
-
-    const res = await firebase.firestore().collection("likes").get();
-    //.find(data => data.name === name);
-    //console.log(object)  const [, setNumLikes] = useState(0);
-
-    const arr = [];
-    res.forEach((doc) => {
-      arr.push(doc.data());
-    });
-    const arr2 = arr.filter((i) => i.id === id);
-    setNumLikes(arr2.length);
-    //return arr.length
-    // if (arr2.length < 1) {
-    //   setIsLikedState(false);
-    // } else {
-    //   setIsLikedState(true);
-    // }
-  };
 
   const fav = () => {
     firebase.firestore().collection("fav").doc(id).set({
@@ -274,19 +166,24 @@ console.log(rate)        // 2.5
     Alert.alert("Destantion Added In Your Favorites");
     navigation.pop();
   };
-  //like firebase
-  const Like = () => {
-    firebase.firestore().collection("likes").doc(id).set({
-      id,
-      userId: firebase.auth().currentUser.uid,
-      userEmail: Email,
-      name: place.name,
-      description: place.description,
-      thumb: place.thumb,
-    });
-
-    Alert.alert("Destantion is liked");
-    navigation.pop();
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message:
+          "Downolad Ertehal now, and enjoy the beauty of K.S.A. https://expo.io/@ertehal/projects/Ertehal ",
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const deleteDes = async () => {
@@ -300,13 +197,6 @@ console.log(rate)        // 2.5
     firebase.firestore().collection("fav").doc(place.id).delete();
     Alert.alert("Destenation Removed From Favorites");
     navigation.pop();
-    navigation.pop();
-  };
-  const removeLike = async () => {
-    firebase.firestore().collection("likes").doc(place.id).delete();
-    Alert.alert("like Removed From Destenation");
-    navigation.pop();
-    navigation.pop();
   };
   const getImage = async (name) => {
     try {
@@ -319,6 +209,64 @@ console.log(rate)        // 2.5
       console.log(e);
     }
   };
+
+  const openShareDialogAsync = async () => {
+    if (!(await Sharing.isAvailableAsync())) {
+      alert(`Uh oh, sharing isn't available on your platform`);
+      return;
+    }
+    try {
+      const downloadPath = FileSystem.cacheDirectory + { uri: imgUrl };
+      // 1 - download the file to a local cache directory
+      const localUrl = await FileSystem.downloadAsync(url, downloadPath);
+      console.log(localUrl.uri);
+      // 2 - share it from  local storage
+      let msg = place.description ? place.description + "" : "";
+      // share
+      const result = await Share.share(
+        {
+          message: msg,
+          url: localUrl.uri,
+          saveToFiles: false,
+        },
+        {
+          excludedActivityTypes: [
+            //'com.apple.UIKit.activity.PostToTwitter',
+            "com.apple.UIKit.activity.MessagetToWhatsApp",
+          ],
+        }
+      );
+
+      //await Sharing.shareAsync(uri);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // on share pressed
+  //const onPopupEvent = async (eventName, index, delet, item, threaID, userID, filePaths) => {
+  //const onPopupEvent = async (eventName, index, delet, item, threaID, userID, file,{ cancelable: false } )
+
+  const share = async () => {
+    // optionName = optionsPost[index];
+
+    openShareDialogAsync({ uri: imgUrl }, place.name);
+  };
+
+  // const myCustomShare = async () => {
+  // / const shareOptions = {
+  // message: "Check out this destination, on Ertehal",
+  // url: files.appLogo,
+  // urls: [files.image1, files.image2]
+  // };
+
+  // try {
+  ///  const ShareResponse = await Share.open(shareOptions);
+  //   console.log(JSON.stringify(ShareResponse));
+  // } catch (error) {
+  //  //  console.log("Error => ", error);
+  // }
+  // };
 
   const openMap = () => {
     const scheme = Platform.select({
@@ -336,9 +284,6 @@ console.log(rate)        // 2.5
   };
 
   isFav();
-  isLiked();
-  likesNumber();
-  rating();
 
   if (!place.hasOwnProperty("thumb") || isLoading)
     return (
@@ -391,96 +336,47 @@ console.log(rate)        // 2.5
         </View>
       </ScrollView>
     );
-  } else {
+  } else if (isFavState) {
     return (
       <ScrollView>
         <View style={styles.container}>
+          <View style={styles.iconsView}>
+            <TouchableOpacity onPress={openMap}>
+              <View style={styles.icon}>
+                <Feather name="map-pin" size={40} color="white" />
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => navigation.navigate("ImageShow", { id })}
+            >
+              <View style={styles.icon}>
+                <AntDesign
+                  name="heart"
+                  size={40}
+                  color="white"
+                  onPress={createTwoButtonAlert2}
+                />
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          <Hr />
           <Text style={styles.title}>{place.name}</Text>
           <Image style={styles.image} source={{ uri: imgUrl }} />
           <Hr />
           <Text style={styles.des}>{place.description}</Text>
-          <Text style={styles.likes}>liked by : {likesNum} users </Text>
-          <Text style={styles.likes}>Rated {rate} out of 5 by {leng} users </Text>
-
           <Hr />
 
           <View style={styles.iconsView}>
-            <TouchableOpacity onPress={openMap}>
-              <View style={styles.icon}>
-                <Feather name="map-pin" size={30} color="white" />
-              </View>
-            </TouchableOpacity>
-
-            {isFavState ? (
-              <TouchableOpacity
-                onPress={() => navigation.navigate("ImageShow", { id })}
-              >
-                <View style={styles.icon}>
-                  <AntDesign
-                    name="star"
-                    size={30}
-                    color="white"
-                    onPress={createTwoButtonAlert2}
-                  />
-                </View>
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity
-                onPress={() => navigation.navigate("ImageShow", { id })}
-              >
-                <View style={styles.icon}>
-                  <Feather name="star" size={30} color="white" onPress={fav} />
-                </View>
-              </TouchableOpacity>
-            )}
-
-            {isLikedState ? (
-              <TouchableOpacity
-                onPress={() => navigation.navigate("ImageShow", { id })}
-              >
-                <View style={styles.icon}>
-                  <AntDesign
-                    name="heart"
-                    size={30}
-                    color="white"
-                    onPress={createTwoButtonAlert3}
-                  />
-                </View>
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity onPress={Like}>
-                <View style={styles.icon}>
-                  <Feather name="heart" size={30} color="white" />
-                </View>
-              </TouchableOpacity>
-            )}
-          <TouchableOpacity
-              
-              onPress={() => navigation.navigate("Rating", { place })}
-            >
-             
-              <View style={styles.icon}>
-                  <MaterialIcons
-                    name='rate-review'
-                    size={30}
-                    color="white"
-                   // onPress={createTwoButtonAlert3}
-                  />
-                </View>
-             
-            </TouchableOpacity>
-                
-          </View>
-          <Hr />
-          <View style={styles.commentsView}>
             <Text style={styles.commentTitle}>Comments</Text>
             <TouchableOpacity
-              
+              o
               onPress={() => navigation.navigate("addComment", { place })}
               style={styles.commicon}
             >
               <View style={styles.btn}>
-                <Text style={styles.btnTxt}>Add Comment </Text>
+                <Text style={styles.btnTxt}>Add Comment</Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -495,72 +391,82 @@ console.log(rate)        // 2.5
         </View>
       </ScrollView>
     );
-    // } else {
-    //   return (
-    //     <ScrollView  contentContainerStyle={styles.scrollView}
+  } else {
+    return (
+      <ScrollView>
+        <View>
+          <View style={styles.container}>
+            <View style={styles.iconsView}>
+              <TouchableOpacity onPress={openMap}>
+                <View style={styles.icon}>
+                  <Feather name="map-pin" size={40} color="white" />
+                </View>
+              </TouchableOpacity>
 
-    //     refreshControl={
-    //       <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-    //     }>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("ImageShow", { id })}
+              >
+                <View style={styles.icon}>
+                  <Feather name="heart" size={40} color="white" onPress={fav} />
+                </View>
+              </TouchableOpacity>
 
-    //       <View>
-    //         <View style={styles.container}>
+              <View style={styles.icon}>
+                <Icon
+                  name="share-outline"
+                  color="white"
+                  size={44}
+                  onPress={onShare}
+                />
+              </View>
+            </View>
+            <Hr />
+            <Text style={styles.title}>{place.name}</Text>
+            <Image style={styles.image} source={{ uri: imgUrl }} />
+            <Hr />
+            <Text style={styles.description}>About the destination: </Text>
+            <Text style={styles.des}>{place.description}</Text>
+            <Hr />
 
-    //           <View style={styles.iconsView}>
-    //             <TouchableOpacity onPress={openMap}>
-    //               <View style={styles.icon}>
-    //                 <Feather name="map-pin" size={40} color="white" />
-    //               </View>
-    //             </TouchableOpacity>
+            <View style={styles.iconsView}>
+              <Text style={styles.commentTitle}>
+                Comments <Text>{""}</Text>
+                <Text>{""}</Text>
+              </Text>
 
-    //           </View>
-    //           <Hr />
-    //           <Text style={styles.title}>{place.name}</Text>
-    //           <Image style={styles.image} source={{ uri: imgUrl }} />
-    //           <Hr />
-    //           <Text style={styles.description}>About the destination: </Text>
-    //           <Text style={styles.des}>{place.description}</Text>
-    //           <Hr />
+              <TouchableOpacity
+                onPress={() => navigation.navigate("addComment", { place })}
+                style={styles.commicon}
+              >
+                <View style={styles.btn}>
+                  <Text style={styles.btnTxt}>ADD COMMENT</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
 
-    //           <View style={styles.iconsView}>
-    //             <Text style={styles.commentTitle}>
-    //               Comments <Text>{""}</Text>
-    //               <Text>{""}</Text>
-    //             </Text>
-
-    //             <TouchableOpacity
-    //               onPress={() => navigation.navigate("addComment", { place })}
-    //               style={styles.commicon}
-    //             >
-    //               <View style={styles.btn}>
-    //                 <Text style={styles.btnTxt}>ADD COMMENT</Text>
-    //               </View>
-    //             </TouchableOpacity>
-    //           </View>
-
-    //           {/* <View>
-    //           <TextInput
-    //             placeholder="Comment"
-    //             style={[styles.input, { textAlignVertical: "top" }]}
-    //             value={comment}
-    //             onChangeText={setComment}
-    //             numberOfLines={8}
-    //             multiline={true}
-    //           />
-
-    //         </View> */}
-    //         </View>
-    //         <FlatList
-    //           showsHorizontalScrollIndicator={false}
-    //           data={comments}
-    //           keyExtractor={(res) => res.id}
-    //           renderItem={({ item }) => {
-    //             return <ResultComment result={item} />;
-    //           }}
-    //         />
-    //       </View>
-    // </ScrollView>
-    // );
+            {/* <View>
+            <TextInput
+              placeholder="Comment"
+              style={[styles.input, { textAlignVertical: "top" }]}
+              value={comment}
+              onChangeText={setComment}
+              numberOfLines={8}
+              multiline={true}
+            />
+           
+          </View> */}
+          </View>
+          <FlatList
+            showsHorizontalScrollIndicator={false}
+            data={comments}
+            keyExtractor={(res) => res.id}
+            renderItem={({ item }) => {
+              return <ResultComment result={item} />;
+            }}
+          />
+        </View>
+      </ScrollView>
+    );
   }
 };
 
@@ -595,15 +501,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     fontFamily: "Futura-Medium",
   },
-  likes: {
-    color: "grey",
-    fontWeight: "bold",
-    textAlign: "justify",
-    marginHorizontal: 10,
-    fontFamily: "Futura-Medium",
-    marginVertical: 5,
-    marginEnd: 20,
-  },
   description: {
     color: "#3cb371",
     textAlign: "justify",
@@ -631,11 +528,6 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   iconsView: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingHorizontal: 50,
-  },
-  commentsView: {
     flexDirection: "row",
     justifyContent: "space-between",
     paddingHorizontal: 100,
@@ -687,12 +579,6 @@ const styles = StyleSheet.create({
     padding: 10,
     alignSelf: "center",
     color: "black",
-  },
-  scrollView: {
-    // flex: 1,
-    // backgroundColor: 'pink',
-    //alignItems: 'center',
-    //justifyContent: 'center',
   },
 });
 
