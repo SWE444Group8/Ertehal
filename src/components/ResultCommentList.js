@@ -42,8 +42,10 @@ const ResultCommentList = ({ result, navigation }) => {
     );
   const deleteComm = async () => {
     firebase.firestore().collection("comments").doc(result.id).delete();
+    //navigation.navigate("Home");
     Alert.alert("Comment Deleted!");
-    navigation.navigate("Home");
+    navigation.pop();
+    navigation.pop();
   };
   return (
     <View>

@@ -1,7 +1,11 @@
-
 import React, { useEffect, useState, useContext } from "react";
 import * as firebase from "firebase";
-import { Feather, AntDesign, FontAwesome ,MaterialIcons } from "@expo/vector-icons";
+import {
+  Feather,
+  AntDesign,
+  FontAwesome,
+  MaterialIcons,
+} from "@expo/vector-icons";
 import "@firebase/firestore";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Constants from "expo-constants";
@@ -21,10 +25,11 @@ import {
   TextInput,
   RefreshControl,
   RadioButtonGroup,
+  Share,
 } from "react-native";
 
 import { Context } from "../components/PlacesContext";
-import DialogInput from 'react-native-dialog-input';
+import DialogInput from "react-native-dialog-input";
 
 //import { Context } from '../context/PlacesContext'
 import _ from "lodash";
@@ -36,7 +41,7 @@ const wait = (timeout) => {
     setTimeout(resolve, timeout);
   });
 };
-const ShowPlaceScreen = ({ route, navigation ,}) => {
+const ShowPlaceScreen = ({ route, navigation }) => {
   const { id } = route.params;
   const [place, setPlace] = useState({});
   const [imgUrl, setImgUrl] = useState("");
@@ -62,6 +67,25 @@ const ShowPlaceScreen = ({ route, navigation ,}) => {
   const { comments } = state;
   const [rate, setRate] = useState("");
   //const [value, setValue] = React.useState('one');
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message:
+          "Downolad Ertehal now, and enjoy the beauty of K.S.A. https://expo.io/@ertehal/projects/Ertehal ",
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   //console.log(place)
   useEffect(() => {
@@ -100,14 +124,20 @@ const ShowPlaceScreen = ({ route, navigation ,}) => {
       { cancelable: false }
     );
 
-    const createTwoButtonAlert4 = () =>{
-    <DialogInput isDialogVisible={isDialogVisible}
-    title={"DialogInput 1"}
-    message={"Message for DialogInput #1"}
-    hintInput ={"HINT INPUT"}
-    submitInput={ (inputText) => {this.sendInput(inputText)} }
-    closeDialog={ () => {this.showDialog(false)}}>
-    </DialogInput>}
+  const createTwoButtonAlert4 = () => {
+    <DialogInput
+      isDialogVisible={isDialogVisible}
+      title={"DialogInput 1"}
+      message={"Message for DialogInput #1"}
+      hintInput={"HINT INPUT"}
+      submitInput={(inputText) => {
+        this.sendInput(inputText);
+      }}
+      closeDialog={() => {
+        this.showDialog(false);
+      }}
+    ></DialogInput>;
+  };
 
   const submitData = () => {
     if (!value) return setErr("Please Enter Your rating!");
@@ -126,31 +156,34 @@ const ShowPlaceScreen = ({ route, navigation ,}) => {
         userEmail: Email,
         title: place.name,
         userId: firebase.auth().currentUser.uid,
-        rating : value,
+        rating: value,
       });
   };
 
-  const rating = async () =>{  
-   // const res = await firebase.firestore().collection("rating").get();
-    const res = await firebase.firestore().collection("rating").where("desID","==",id).get();
+  const rating = async () => {
+    // const res = await firebase.firestore().collection("rating").get();
+    const res = await firebase
+      .firestore()
+      .collection("rating")
+      .where("desID", "==", id)
+      .get();
 
     const arr = [];
     res.forEach((doc) => {
-      arr.push((doc.data()).value);
+      arr.push(doc.data().value);
     });
-console.log(arr)
+    console.log(arr);
 
-setLeng(arr.length)
-    if(arr.length > 0) {
-      setRate(_.sum(arr) / arr.length)
-    }else{
-      setRate("Not rated yet..")
+    setLeng(arr.length);
+    if (arr.length > 0) {
+      setRate(Math.round(_.sum(arr) / arr.length));
+    } else {
+      setRate("Not rated yet..");
     }
 
-console.log(rate)        // 2.5
-    
-  }
-  
+    console.log(rate); // 2.5
+  };
+
   const createTwoButtonAlert2 = () =>
     Alert.alert(
       "Are you sure?",
@@ -398,8 +431,23 @@ console.log(rate)        // 2.5
           <Image style={styles.image} source={{ uri: imgUrl }} />
           <Hr />
           <Text style={styles.des}>{place.description}</Text>
-          <Text style={styles.likes}>liked by : {likesNum} users </Text>
-          <Text style={styles.likes}>Rated {rate} out of 5 by {leng} users </Text>
+          <Hr />
+
+          <Text>
+            {""}
+            {""}
+            <Text style={styles.titlelike}>Liked By: </Text>
+            <Text style={styles.likes}>{likesNum} users </Text>
+          </Text>
+          <Text>
+            {""}
+            {""}
+
+            <Text style={styles.titlelike}>Rated: </Text>
+            <Text style={styles.likes}>
+              {rate} out of 5 by {leng} users
+            </Text>
+          </Text>
 
           <Hr />
 
@@ -453,28 +501,33 @@ console.log(rate)        // 2.5
                 </View>
               </TouchableOpacity>
             )}
-          <TouchableOpacity
-              
+            <TouchableOpacity
               onPress={() => navigation.navigate("Rating", { place })}
             >
-             
               <View style={styles.icon}>
-                  <MaterialIcons
-                    name='rate-review'
-                    size={30}
-                    color="white"
-                   // onPress={createTwoButtonAlert3}
-                  />
-                </View>
-             
+                <MaterialIcons
+                  name="rate-review"
+                  size={30}
+                  color="white"
+                  // onPress={createTwoButtonAlert3}
+                />
+              </View>
             </TouchableOpacity>
-                
+            <TouchableOpacity>
+              <View style={styles.icon}>
+                <Icon
+                  name="share-outline"
+                  color="white"
+                  size={30}
+                  onPress={onShare}
+                />
+              </View>
+            </TouchableOpacity>
           </View>
           <Hr />
           <View style={styles.commentsView}>
             <Text style={styles.commentTitle}>Comments</Text>
             <TouchableOpacity
-              
               onPress={() => navigation.navigate("addComment", { place })}
               style={styles.commicon}
             >
@@ -631,8 +684,8 @@ const styles = StyleSheet.create({
   },
   iconsView: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    paddingHorizontal: 50,
+    // justifyContent: "space-between",
+    paddingHorizontal: 10,
   },
   commentsView: {
     flexDirection: "row",
@@ -692,6 +745,15 @@ const styles = StyleSheet.create({
     // backgroundColor: 'pink',
     //alignItems: 'center',
     //justifyContent: 'center',
+  },
+  titlelike: {
+    color: "#3cb371",
+    fontWeight: "bold",
+    textAlign: "justify",
+    marginHorizontal: 10,
+    fontFamily: "Futura-Medium",
+    marginVertical: 5,
+    marginEnd: 20,
   },
 });
 

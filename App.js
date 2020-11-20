@@ -16,6 +16,7 @@ import ResultsScreen from "./src/screens/ResultsScreen";
 import MyDestentions from "./src/screens/MyDestentions";
 import ManageAccounts from "./src/screens/ManageAccounts";
 import Accounts from "./src/screens/Accounts";
+import ResultCommentList from "./src/components/ResultCommentList";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -46,12 +47,18 @@ const App = () => {
           <Stack.Screen name="Signup" component={Signup} />
           <Stack.Screen name="ManageRequests" component={ManageRequests} />
           <Stack.Screen name="ShowPlaceAdmin" component={ShowPlaceAdmin} />
-          <Stack.Screen name="ResultsScreen" component={ResultsScreen} />
-          <Stack.Screen name="MyDestentions" component={MyDestentions} options={{
-          headerStyle: {
-          },
-          title: '',
-      }}/>
+          <Stack.Screen
+            name="ResultCommentList"
+            component={ResultCommentList}
+          />
+          <Stack.Screen
+            name="MyDestentions"
+            component={MyDestentions}
+            options={{
+              headerStyle: {},
+              title: "",
+            }}
+          />
           <Stack.Screen name="ManageAccounts" component={ManageAccounts} />
           <Stack.Screen name="Accounts" component={Accounts} />
 
