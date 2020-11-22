@@ -22,7 +22,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 const ResultCommentList = ({ result, navigation }) => {
   const email = result.userEmail.substring(0, result.userEmail.indexOf("@"));
   const title = result.title;
-  //
+  //1
   const createTwoButtonAlert = () =>
     Alert.alert(
       "Are you sure?",
