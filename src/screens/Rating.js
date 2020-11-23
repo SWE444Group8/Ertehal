@@ -26,10 +26,22 @@ import Hr from "../components/Hr";
 import * as Notifications from "expo-notifications";
 import * as Permissions from "expo-permissions";
 import Constants from "expo-constants";
-import { RadioButton } from 'react-native-paper';
+import { RadioButton } from "react-native-paper";
 
 const Rating = ({ route, navigation }) => {
-    const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(0);
+
+  //const Rating = ({ route, navigation }) => {
+  //const [value, setValue] = React.useState(0);
+  // const { place } = route.params;
+  //console.log(place);
+  //const [comment, setComment] = useState("");
+  //const [err, setErr] = useState("");
+  // const [Email, setUser] = useState();
+  // useEffect(() => {
+  //const email = firebase.auth().currentUser.email;
+  //setUser(email);
+  //}, []);
 
   // const [name, setName] = useState("");
   // const [city, setCity] = useState("");
@@ -42,7 +54,6 @@ const Rating = ({ route, navigation }) => {
   const [comment, setComment] = useState("");
   const [err, setErr] = useState("");
   const [Email, setUser] = useState();
-
 
   useEffect(() => {
     const email = firebase.auth().currentUser.email;
@@ -69,10 +80,9 @@ const Rating = ({ route, navigation }) => {
         userId: firebase.auth().currentUser.uid,
         value: parseInt(value),
       });
-      console.log(value)
+    console.log(value);
     Alert.alert("Thank you for your rating! ");
-   // navigation.push(('ShowPlaceScreen', { id: place.id }))
-
+    // navigation.push(('ShowPlaceScreen', { id: place.id }))
 
     navigation.pop();
   };
@@ -99,11 +109,11 @@ const Rating = ({ route, navigation }) => {
       value={value}
       onChange={(event) => setValue(event.target.value)}
     /> */}
-    
-    
-    <View style={styles.pickerStyle}>
-          <Text style={{ color: "#085C06", fontFamily: "Futura-Medium" }}>
-          </Text>
+
+        <View style={styles.pickerStyle}>
+          <Text
+            style={{ color: "#085C06", fontFamily: "Futura-Medium" }}
+          ></Text>
           <Picker
             placeholder="Choose rating"
             selectedValue={value}
@@ -191,6 +201,14 @@ const styles = StyleSheet.create({
     color: "red",
   },
   pickerStyle: {
+    width: "90%",
+    backgroundColor: "white",
+    margin: 10,
+    padding: 10,
+    alignSelf: "center",
+    borderRadius: 10,
+  },
+  h: {
     width: "90%",
     backgroundColor: "white",
     margin: 10,
