@@ -34,10 +34,13 @@ const ShowPlaceScreen = ({ route, navigation }) => {
     firebase.firestore().collection("places").doc(place.id).update({
       show: true,
     });
+    sendNotificationsToAll();
     navigation.navigate("Home");
 
     Alert.alert("Destintion Approved!");
   };
+
+
   const Dissaprove = async () => {
     firebase.firestore().collection("places").doc(place.id).delete();
     navigation.navigate("Home");
@@ -85,7 +88,6 @@ const ShowPlaceScreen = ({ route, navigation }) => {
       Alert.alert("Must use physical device for Push Notifications");
     }
 
-    //const res = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).update({tokens:token});
 
     if (Platform.OS === "android") {
       Notifications.setNotificationChannelAsync("default", {
@@ -95,6 +97,7 @@ const ShowPlaceScreen = ({ route, navigation }) => {
         lightColor: "#FF231F7C",
       });
     }
+    const res = firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).set({token:token});
 
     return token;
   };
@@ -104,7 +107,7 @@ const ShowPlaceScreen = ({ route, navigation }) => {
       to: token,
       sound: "default",
       title: "Thank you",
-      body: "Your destenation" + place.name +"has been approved !!",
+      body: "Your destenation " + place.name +"has been approved !!",
       data: { data: "goes here" },
     };
 
@@ -191,7 +194,6 @@ const ShowPlaceScreen = ({ route, navigation }) => {
 
         <Text style={styles.city}>Destenation info:</Text>
         <Text style={styles.city}>City: {place.city}</Text>
-        <Text style={styles.city}>Created By: {place.userEmail}</Text>
         <Text style={styles.city}>Created At: {place.createdAt}</Text>
       </View>
     </ScrollView>

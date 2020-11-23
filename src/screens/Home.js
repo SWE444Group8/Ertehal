@@ -268,7 +268,7 @@ const Home = ({ navigation }) => {
           <Text></Text>
           <View>
             <TouchableOpacity
-              style={styles.categoryIcon}
+              style={styles.categoryIcon2}
               //
               onPress={() => navigation.navigate("ManageRequests")}
               style={{
@@ -294,33 +294,7 @@ const Home = ({ navigation }) => {
           </View>
 
           <Text></Text>
-          <View>
-            <TouchableOpacity
-              style={styles.categoryIcon}
-              onPress={() => navigation.navigate("ManageAccounts")}
-              style={{
-                padding: 15,
-                paddingVertical: 12,
-                backgroundColor: "#8fbc8f",
-                paddingHorizontal: 40,
-                alignSelf: "center",
-                borderRadius: 40,
-                marginTop: 2,
-              }}
-            >
-              <Text
-                style={styles.categoryIcon}
-                style={{
-                  color: "white",
-                  fontFamily: "Futura-Medium",
-                  fontWeight: "bold",
-                }}
-              >
-                {" "}
-                ACCOUNTS
-              </Text>
-            </TouchableOpacity>
-          </View>
+        
         </View>
       </ScrollView>
     );
@@ -565,6 +539,16 @@ const styles = StyleSheet.create({
   },
   categoryIcon: {
     borderWidth: 0,
+    alignItems: "center",
+    justifyContent: "center",
+    alignSelf: "center",
+    width: 70,
+    height: 70,
+    backgroundColor: "#8fbc8f" /* '#FF6347' */,
+    borderRadius: 50,
+  },
+  categoryIcon2: {
+    marginHorizontal: 40,
     alignItems: "center",
     justifyContent: "center",
     alignSelf: "center",
