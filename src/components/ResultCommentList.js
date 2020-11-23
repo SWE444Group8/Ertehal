@@ -23,6 +23,7 @@ const ResultCommentList = ({ result, navigation }) => {
   const email = result.userEmail.substring(0, result.userEmail.indexOf("@"));
   const title = result.title;
   //1
+
   const createTwoButtonAlert = () =>
     Alert.alert(
       "Are you sure?",
@@ -31,6 +32,7 @@ const ResultCommentList = ({ result, navigation }) => {
         {
           text: "Yes",
           onPress: deleteComm,
+          
         },
         {
           text: "Cancel",
@@ -41,11 +43,12 @@ const ResultCommentList = ({ result, navigation }) => {
       { cancelable: false }
     );
   const deleteComm = async () => {
+
     firebase.firestore().collection("comments").doc(result.id).delete();
+
     //navigation.navigate("Home");
     Alert.alert("Comment Deleted!");
-    navigation.pop();
-    navigation.pop();
+
   };
   return (
     <View>
@@ -63,34 +66,11 @@ const ResultCommentList = ({ result, navigation }) => {
             <Text style={styles.comment}> {result.comment} </Text>
           </ScalableText>
 
-          <TouchableOpacity onPress={createTwoButtonAlert}>
-            <Text></Text>
-
-            <View
-              style={{
-                padding: 5,
-                paddingVertical: 5,
-                backgroundColor: "red",
-                paddingHorizontal: 10,
-                alignSelf: "right",
-                borderRadius: 10,
-                marginTop: 2,
-              }}
-            >
-              <Text
-                style={{
-                  color: "white",
-                  alignItems: "center",
-                  fontFamily: "Futura-Medium",
-                }}
-              >
-                DELETE
-              </Text>
-            </View>
-          </TouchableOpacity>
+         
         </SafeAreaView>
+        
       </View>
-
+     
       <Hr />
     </View>
   );

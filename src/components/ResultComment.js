@@ -9,6 +9,8 @@ import {
   Platform,
   PixelRatio,
   SafeAreaView,
+  TouchableOpacity,
+  Alert,
 } from "react-native";
 import * as firebase from "firebase";
 import Hr from "../components/Hr";
@@ -16,8 +18,32 @@ import ScalableText from "react-native-text";
 
 import _ from "lodash";
 
-const ResultComment = ({ result }) => {
+const ResultComment = ({ result ,navigation}) => {
   const email = result.userEmail.substring(0, result.userEmail.indexOf("@"));
+
+  const createTwoButtonAlert = () =>
+    Alert.alert(
+      "Are you sure?",
+      "do you want to delete your comment",
+      [
+        {
+          text: "Yes",
+          onPress: deleteComm,
+          
+        },
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+      ],
+      { cancelable: false }
+    );
+  const deleteComm = async () => {
+    firebase.firestore().collection("comments").doc(result.id).delete();
+    Alert.alert("Comment Deleted!");
+    navigation.pop();
+  };
   return (
     <View>
       <View style={styles.container}>
@@ -30,6 +56,8 @@ const ResultComment = ({ result }) => {
           <ScalableText style={styles.name} numberOfLines={8}>
             {email}: {"\n"}
             <Text style={styles.comment}> {result.comment} </Text>
+
+           
           </ScalableText>
         </SafeAreaView>
       </View>
