@@ -364,6 +364,56 @@ const ShowPlaceScreen = ({ route, navigation }) => {
       android: `${scheme}${latLng}(${label})`,
     });
 
+
+/*
+const deleteDes = async () => {
+    firebase.firestore().collection("places").doc(place.id).delete();
+    firebase.firestore().collection("fav").doc(place.id).delete();
+    Alert.alert("Destintion Deleted!");
+    navigation.navigate("Home");
+  };
+
+  const removeFav = async () => {
+    firebase.firestore().collection("fav").doc(place.id).delete();
+    Alert.alert("Destenation Removed From Favorites");
+    navigation.pop();
+    navigation.pop();
+  };
+  const removeLike = async () => {
+    firebase.firestore().collection("likes").doc(place.id).delete();
+    Alert.alert("like Removed From Destenation");
+    navigation.pop();
+    navigation.pop();
+  };
+  const getImage = async (name) => {
+    try {
+      var ref = firebase.storage().ref(name);
+      const res = await ref.getDownloadURL();
+      setImgUrl(res);
+      setIsLoading(false);
+      console.log(res);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const openMap = () => {
+    const scheme = Platform.select({
+      ios: "maps:0,0?q=",
+      android: "geo:0,0?q=",
+    });
+    const latLng = `${place.latitude},${place.longitude}`;
+    const label = place.name;
+    const url = Platform.select({
+      ios: `${scheme}${label}@${latLng}`,
+      android: `${scheme}${latLng}(${label})`,
+    });
+
+
+*/
+
+
+
     Linking.openURL(url);
   };
 

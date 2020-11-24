@@ -31,12 +31,15 @@ const MyComments = ({ navigation }) => {
   return (
     <View>
       <FlatList
+      
         showsHorizontalScrollIndicator={false}
         data={comments}
         keyExtractor={(res) => res.id}
         renderItem={({ item }) => {
           return (
             <TouchableOpacity
+
+
               onPress={() =>
                 navigation.navigate("ShowPlaceScreen", { id: item.desID})
               }

@@ -279,6 +279,8 @@ const Home = ({ navigation }) => {
                 alignSelf: "center",
                 borderRadius: 40,
                 marginTop: 2,
+                marginLeft:100,
+
               }}
             >
               <Text
@@ -331,6 +333,7 @@ const Home = ({ navigation }) => {
               />
             </View>
             <View style={styles.slide}>
+
               <Image
                 source={require("../../assets/t5.jpg")}
                 resizeMode="cover"
