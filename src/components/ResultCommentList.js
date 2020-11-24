@@ -32,7 +32,6 @@ const ResultCommentList = ({ result, navigation }) => {
         {
           text: "Yes",
           onPress: deleteComm,
-          
         },
         {
           text: "Cancel",
@@ -43,12 +42,10 @@ const ResultCommentList = ({ result, navigation }) => {
       { cancelable: false }
     );
   const deleteComm = async () => {
-
     firebase.firestore().collection("comments").doc(result.id).delete();
 
     //navigation.navigate("Home");
     Alert.alert("Comment Deleted!");
-
   };
   return (
     <View>
@@ -65,12 +62,9 @@ const ResultCommentList = ({ result, navigation }) => {
             {"\n"}
             <Text style={styles.comment}> {result.comment} </Text>
           </ScalableText>
-
-         
         </SafeAreaView>
-        
       </View>
-     
+
       <Hr />
     </View>
   );
@@ -108,7 +102,8 @@ const styles = StyleSheet.create({
     color: "#3cb371",
     fontWeight: "bold",
   },
-
+  //
+  //////
   comment: {
     fontSize: 15,
     color: "grey",
